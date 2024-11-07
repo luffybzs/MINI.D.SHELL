@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:47:04 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/07 16:51:19 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/07 18:08:39 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int main ()
 {
-    char *res;
-    while (1)
-    {
-        res = readline("mini.d.shell ");
-        printf("%s\n", res);
-    }
+    // char *res;
+    // while (1)
+    // {
+    //     res = readline("mini.d.shell ");
+    //     printf("%s\n", res);
+    // }
     return (0);
 }
