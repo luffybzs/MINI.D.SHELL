@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/15 18:29:55 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/15 18:35:32 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # define HEREDOC 7
 # define RR_RED 8
 # define FIL 10
+
 typedef struct s_token
 {
 	char			*content;

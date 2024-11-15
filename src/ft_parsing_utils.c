@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: utilisateur <utilisateur@student.42.fr>    +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:58:44 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/11/15 17:52:22 by utilisateur      ###   ########.fr       */
+/*   Updated: 2024/11/15 19:34:45 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,21 @@ int ft_len_word(char *command, int i, char c)
     return (len);
 }
 
-int ft_find_len_for_quote(char *cmd, int i, char c)
-{
+// int ft_find_len_for_quote(char *cmd, int i, char c)
+// {
 
-	int len;
-	len = 0;
-	while (cmd[i + len])
-	{
-		while(cmd[i + len] && cmd[i + len] != c)
-			len++;
-		if  (ft_isspace(cmd[i + len]) && !ft_isspace(cmd[i + len + 1]))
-			break;
-		len++;
-	}
-	return (len);
-}
+// 	int len;
+// 	len = 0;
+// 	while (cmd[i + len])
+// 	{
+// 		while(cmd[i + len] && cmd[i + len] != c)
+// 			len++;
+// 		if  (ft_isspace(cmd[i + len]) && !ft_isspace(cmd[i + len + 1]))
+// 			break;
+// 		len++;
+// 	}
+// 	return (len);
+// }
 
 char *ft_supp_quote(char *command, int i, int *j, char c)
 {
