@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: utilisateur <utilisateur@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/15 15:28:20 by utilisateur      ###   ########.fr       */
+/*   Updated: 2024/11/15 22:07:54 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void ft_add_elem(t_command_line *line,char *command, int *i)
 			ft_add_redirect(command,line,i);
 	else if (!is_redirect(&command[*i]))
 			ft_add_cmd(command, line, i);
-	
+
 }
 
 t_command_line	*ft_loop_token(char *prompt)
@@ -49,11 +49,15 @@ void	ft_display(t_command_line *line)
 	current = line->first;
 	while (current)
 	{
-		printf("CONTENT -> [%s] | TOKEN -> [%d]\n ", current->content, current->type);
+		// printf("CONTENT -> [%s] | TOKEN -> [%d]\n ", current->content, current->type);
+		printf("[%s]", current->content);
 		current = current->next;
 		if (current)
-			printf(" | \n \\/");
+			printf(" -> ");
+		// if (current)
+		// 	printf("            |\n"); //             \\/\n
 	}
+	printf("\n");
 }
 
 int	ft_parsing_prompt(char *prompt, t_shell *shell)
@@ -66,7 +70,7 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 	line = ft_loop_token(prompt);
 	if (line == NULL)
 		return (EXIT_FAILURE);
-
+	
 	ft_display(line);
 	return (0);
 }

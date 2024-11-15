@@ -13,12 +13,18 @@ t_command_line	*ft_init_queue(void)
 
 int	is_redirect(char *content)
 {
+	if (ft_strncmp(content, "||", 2) == 0)		/*	error	*/
+		return (-1);
 	if (ft_strncmp(content, "|", 1) == 0)
 		return (PIPE);
+	if (ft_strncmp(content, ">>>", 3) == 0)		/*	error	*/
+		return (-1);
 	if (ft_strncmp(content, ">>", 2) == 0)
 		return (RR_RED);
 	if (ft_strncmp(content, ">", 1) == 0)
 		return (R_RED);
+	if (ft_strncmp(content, "<<<", 3) == 0)		/*	error	*/
+		return (-1);
 	if (ft_strncmp(content, "<<", 2) == 0)
 		return (HEREDOC);
 	if (ft_strncmp(content, "<", 1) == 0)
@@ -30,13 +36,11 @@ int	ft_compute_token(t_token *before, char *new)
 {
 	if (is_redirect(new))
 		return (is_redirect(new));
-	if (is_redirect(before->content) == R_RED && !is_redirect(new))
-		return (FIL);
-	if (is_redirect(before->content) && !is_redirect(new))
+	if (is_redirect(before->content) == PIPE && !is_redirect(new))
 		return (WORD);
 	if (!is_redirect(before->content) && !is_redirect(new))
 		return (SFX);
-	return (WORD);
+	return (FILE);
 }
 
 void	ft_add_token(char *content, t_command_line *command)

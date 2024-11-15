@@ -1,8 +1,10 @@
 CC = cc
 
+GARBAGE = $(addprefix garbage_collector/, gc.c gc_utils.c );
+
 SRCS = $(addprefix src/, main.c ft_start_parsing.c queue_functions.c ft_parsing_utils.c ft_add_cmd.c )
 
-INCLUDES = ./includes 
+INCLUDES = ./includes
 
 LIB_DIR = ./libft
 LIBFT = $(LIB_DIR)/libft.a
