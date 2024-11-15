@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: utilisateur <utilisateur@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/12 01:40:45 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/14 22:18:46 by utilisateur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 	{
 		prompt = readline("./mini.d.shell ");
 		if (ft_parsing_prompt(prompt, shell) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+			break;
 		printf("%s\n", prompt);
 	}
+	return EXIT_FAILURE;
 }
 
 int	main(int ac, char **av, char **env)
@@ -35,6 +36,5 @@ int	main(int ac, char **av, char **env)
 	shell.env = env;
 	if (ft_loop_shell(prompt, &shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-
 	return (0);
 }

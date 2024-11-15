@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: utilisateur <utilisateur@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/12 07:13:59 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/15 15:35:07 by utilisateur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define R_RED 6
 # define HEREDOC 7
 # define RR_RED 8
-
+# define FIL 10
 typedef struct s_token
 {
 	char			*content;
@@ -73,5 +73,10 @@ int					is_redirect(char *content);
 void				ft_add_token(char *content, t_command_line *command);
 int					ft_compute_token(t_token *before, char *new);
 int					ft_parsing_prompt(char *prompt, t_shell *shell);
-
+void ft_add_cmd(char *command, t_command_line *line, int *i);
+void ft_add_redirect(char *command,t_command_line *line, int *i);
+void	ft_skip_spaces(char *str, int *i);
+int ft_next_char(char *str, char c, int *i , int *j);
+int ft_len_word(char *command, int i, char c);
+char *ft_supp_quote(char *command, int i, int *j, char c);
 #endif

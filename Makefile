@@ -1,6 +1,6 @@
 CC = cc
 
-SRCS = $(addprefix src/, main.c ft_start_parsing.c queue_functions.c)
+SRCS = $(addprefix src/, main.c ft_start_parsing.c queue_functions.c ft_parsing_utils.c ft_add_cmd.c )
 
 INCLUDES = ./includes 
 
