@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:58:44 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/11/15 22:16:40 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/16 16:37:39 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	ft_next_char(char *str, char c, int *i , int *j)
+int	ft_next_char(char *str, char c, int *i, int *j)
 {
-	(*j)++;	
+	(*j)++;
 	while (str[*i + *j] != c)
 		(*j)++;
 	if (str[*i + *j] == c)
@@ -45,13 +45,13 @@ int	ft_check_open_quote(char *prompt)
 				return (EXIT_FAILURE);
 		}
 		i++;
-	} 
+	}
 	return (EXIT_SUCCESS);
 }
 
-int ft_len_word(char *command, int i, char c)
+int	ft_len_word(char *command, int i, char c)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (command[i + len])
@@ -64,7 +64,7 @@ int ft_len_word(char *command, int i, char c)
 			++len;
 		}
 		if (ft_isspace(command[i + len]))
-			break;
+			break ;
 		if (command[i + len])
 			++len;
 	}
@@ -81,26 +81,27 @@ int ft_len_word(char *command, int i, char c)
 // 		while(cmd[i + len] && cmd[i + len] != c)
 // 			++len;
 // 		if  (ft_isspace(cmd[i + len]) && !ft_isspace(cmd[i + len + 1]))
-// 			break;
+// 			break ;
 // 		len++;
 // 	}
 // 	return (len);
 // }
 
-char *ft_supp_quote(char *command, int i, int *j, char c)
+char	*ft_supp_quote(char *command, int i, int *j, char c)
 {
-	char *word;
-	int len;
-	int tmp;
+	char	*word;
+	int		len;
+	int		tmp;
+
 	tmp = 0;
-	len = ft_len_word(command, i,c);
+	len = ft_len_word(command, i, c);
 	if (len == -1)
 		return (NULL);
 	*j = len + (command[i + len] != '\0');
 	word = malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
-	while(len)
+	while (len)
 	{
 		if (command[i] == c)
 			i++;
@@ -109,5 +110,5 @@ char *ft_supp_quote(char *command, int i, int *j, char c)
 		len--;
 	}
 	word[tmp] = '\0';
-	return (word);   
+	return (word);
 }

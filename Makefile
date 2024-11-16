@@ -2,7 +2,8 @@ CC = cc
 
 GARBAGE = $(addprefix garbage_collector/, gc.c gc_utils.c );
 
-SRCS = $(addprefix src/, main.c ft_start_parsing.c ft_queue_functions.c ft_parsing_utils.c ft_add_cmd.c ft_check_list.c ft_parsing_utils2.c)
+SRCS = $(addprefix src/, main.c tokenization/ft_start_parsing.c tokenization/ft_queue_functions.c tokenization/ft_parsing_utils.c \
+tokenization/ft_add_cmd.c tokenization/ft_check_list.c tokenization/ft_parsing_utils2.c)
 
 INCLUDES = ./includes
 

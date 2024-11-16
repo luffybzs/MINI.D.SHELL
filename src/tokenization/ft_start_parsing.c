@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/16 15:28:48 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/16 16:37:45 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-void ft_add_elem(t_command_line *line,char *command, int *i)
+void	ft_add_elem(t_command_line *line, char *command, int *i)
 {
 	if (is_redirect(&command[*i]))
-			ft_add_redirect(command,line,i);
+		ft_add_redirect(command, line, i);
 	else if (!is_redirect(&command[*i]))
-			ft_add_cmd(command, line, i);
-
+		ft_add_cmd(command, line, i);
 }
 
 t_command_line	*ft_loop_token(char *prompt)
@@ -41,7 +40,6 @@ t_command_line	*ft_loop_token(char *prompt)
 	return (line);
 }
 
-
 void	ft_display(t_command_line *line)
 {
 	t_token	*current;
@@ -49,11 +47,12 @@ void	ft_display(t_command_line *line)
 	current = line->first;
 	while (current)
 	{
-		 printf("CONTENT -> [%s] | TOKEN -> [%d]\n ", current->content, current->type);
+		printf("CONTENT -> [%s] | TOKEN -> [%d]\n ", current->content,
+				current->type);
 		//printf("[%s]", current->content);
 		current = current->next;
 		//if (current)
-			//printf(" -> ");
+		//printf(" -> ");
 		if (current)
 			printf("           |\n"); //             \\/\n
 	}
@@ -63,8 +62,8 @@ void	ft_display(t_command_line *line)
 int	ft_parsing_prompt(char *prompt, t_shell *shell)
 {
 	t_command_line *line;
-	
-	(void) shell;
+
+	(void)shell;
 	if (ft_check_open_quote(prompt) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	line = ft_loop_token(prompt);

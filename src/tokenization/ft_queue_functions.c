@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 t_command_line	*ft_init_queue(void)
 {
@@ -13,17 +13,17 @@ t_command_line	*ft_init_queue(void)
 
 int	is_redirect(char *content)
 {
-	if (ft_strncmp(content, "||", 2) == 0)		/*	error	*/
+	if (ft_strncmp(content, "||", 2) == 0) /*	error	*/
 		return (-1);
 	if (ft_strncmp(content, "|", 1) == 0)
 		return (PIPE);
-	if (ft_strncmp(content, ">>>", 3) == 0)		/*	error	*/
+	if (ft_strncmp(content, ">>>", 3) == 0) /*	error	*/
 		return (-1);
 	if (ft_strncmp(content, ">>", 2) == 0)
 		return (RR_RED);
 	if (ft_strncmp(content, ">", 1) == 0)
 		return (R_RED);
-	if (ft_strncmp(content, "<<<", 3) == 0)		/*	error	*/
+	if (ft_strncmp(content, "<<<", 3) == 0) /*	error	*/
 		return (-1);
 	if (ft_strncmp(content, "<<", 2) == 0)
 		return (LL_RED);
@@ -47,8 +47,8 @@ int	ft_compute_token(t_token *before, char *new)
 
 void	ft_add_token(char *content, t_command_line *command)
 {
-	t_token *current;
-	t_token *new;
+	t_token	*current;
+	t_token	*new;
 
 	new = malloc(sizeof(t_token));
 	if (!new)
@@ -72,7 +72,7 @@ void	ft_add_token(char *content, t_command_line *command)
 }
 t_token	*ft_lstlast_mini(t_command_line *lst)
 {
-	t_token	*tmp;
+	t_token *tmp;
 
 	if (!lst)
 		return (NULL);
