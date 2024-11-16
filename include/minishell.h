@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/16 15:57:26 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/16 19:40:15 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,19 @@ typedef struct s_command_line
 	t_token			*first;
 }					t_command_line;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
+
 typedef struct s_shell
 {
 	char			**env;
+	t_env			*head;
 }					t_shell;
+
 
 //-------------------------------------//
 
@@ -81,8 +90,23 @@ void				ft_skip_spaces(char *str, int *i);
 int					ft_next_char(char *str, char c, int *i, int *j);
 int					ft_len_word(char *command, int i, char c);
 char				*ft_supp_quote(char *command, int i, int *j, char c);
-int ft_check_list(t_command_line *line);
-t_token	*ft_lstlast_mini(t_command_line *lst);
-int ft_check_all_list(t_command_line *line);
-int ft_isredirect(int token);
+int					ft_check_list(t_command_line *line);
+t_token				*ft_lstlast_mini(t_command_line *lst);
+int					ft_check_all_list(t_command_line *line);
+int					ft_isredirect(int token);
+
+//environnement management
+
+t_shell				*env_init(char **env);
+int			fill_env_list(t_shell *shell);
+t_env		*create_env_node(char *env_str);
+void				free_env_list(t_shell *shell);
+void			free_env_node(t_env *node);
+int					ft_findchar(const char *str, int c);
+
+//test
+
+void	print_list(t_shell *list);
+
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:17:16 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/15 18:24:59 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/16 17:00:50 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@
 
 # define DESTROY ((void *)-1)
 
-typedef struct s_garbage // s_to_destroy
+typedef struct s_garbage 
 {
 	void				*ptr;
 	struct s_garbage	*next;
 	struct s_garbage	*prev;
 }			t_garbage;
 
-typedef struct s_gc // s_garbage
+typedef struct s_gc
 {
 	t_garbage	*head;
 	size_t		count_alloc;
