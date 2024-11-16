@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/16 04:06:06 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/16 15:57:26 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 # define WHITE "\001\033[0m\002"
 
 # define PIPE 5
-# define REDIR 3
 # define WORD 0
 # define SFX 1
 # define L_RED 4
@@ -85,4 +84,5 @@ char				*ft_supp_quote(char *command, int i, int *j, char c);
 int ft_check_list(t_command_line *line);
 t_token	*ft_lstlast_mini(t_command_line *lst);
 int ft_check_all_list(t_command_line *line);
+int ft_isredirect(int token);
 #endif

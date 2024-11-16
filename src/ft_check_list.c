@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 02:28:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/16 04:46:18 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/16 16:21:51 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int ft_check_pipe(t_command_line *line)
 			ft_putstr_fd(" ERROR PIPE\n", 2);
 			return (EXIT_FAILURE);
 		}
-	while (current)
+	while (current->next)
 	{
 		if (current->type == PIPE && current->next->type == PIPE)
 		{
@@ -57,6 +57,26 @@ int ft_check_pipe(t_command_line *line)
 	}
 	return (EXIT_SUCCESS);
 }
+int ft_check_redir(t_command_line *line)
+{
+	t_token *current;
+
+	current = line->first;
+	while (current->next)
+	{
+		if (!ft_isredirect(current->type) && !ft_isredirect(current->next->type))
+		{
+			ft_putstr_fd("MINI.D.SHELL: syntax error near unexpected token ", 2);
+			ft_putstr_fd("« ", 2);
+			ft_putstr_fd(current->next->content, 2);
+			ft_putstr_fd(" »\n", 2);
+			return (EXIT_FAILURE);
+		}
+		current = current->next;
+	}
+	return (EXIT_SUCCESS);
+}
+
 
 int ft_check_all_list(t_command_line *line)
 {
@@ -64,6 +84,7 @@ int ft_check_all_list(t_command_line *line)
 		return (EXIT_FAILURE);
 	if (ft_check_pipe(line) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-		
+	if (ft_check_redir(line) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
