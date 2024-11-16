@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/15 22:07:54 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/16 04:05:37 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	ft_display(t_command_line *line)
 	current = line->first;
 	while (current)
 	{
-		// printf("CONTENT -> [%s] | TOKEN -> [%d]\n ", current->content, current->type);
-		printf("[%s]", current->content);
+		 printf("CONTENT -> [%s] | TOKEN -> [%d]\n ", current->content, current->type);
+		//printf("[%s]", current->content);
 		current = current->next;
+		//if (current)
+			//printf(" -> ");
 		if (current)
-			printf(" -> ");
-		// if (current)
-		// 	printf("            |\n"); //             \\/\n
+			printf("           |\n"); //             \\/\n
 	}
 	printf("\n");
 }
@@ -70,7 +70,8 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 	line = ft_loop_token(prompt);
 	if (line == NULL)
 		return (EXIT_FAILURE);
-	
-	ft_display(line);
+	if (ft_check_all_list(line) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	//ft_display(line);
 	return (0);
 }

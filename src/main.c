@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/15 21:59:20 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/16 04:49:25 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 {
 	while (1)
 	{
-		prompt = readline("./mini.d.shell ");
+		prompt = readline("Mini.D.Shell -> ");
 		if (ft_parsing_prompt(prompt, shell) == EXIT_FAILURE)
 			break;
 		// printf("%s\n", prompt);

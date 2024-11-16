@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/15 22:37:11 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/16 04:06:06 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@
 # define SFX 1
 # define L_RED 4
 # define R_RED 6
-# define HEREDOC 7
 # define RR_RED 8
 # define FILE 10
+# define LL_RED 13
+# define END_OF_FILE 14
 
 typedef struct s_token
 {
@@ -81,4 +82,7 @@ void				ft_skip_spaces(char *str, int *i);
 int					ft_next_char(char *str, char c, int *i, int *j);
 int					ft_len_word(char *command, int i, char c);
 char				*ft_supp_quote(char *command, int i, int *j, char c);
+int ft_check_list(t_command_line *line);
+t_token	*ft_lstlast_mini(t_command_line *lst);
+int ft_check_all_list(t_command_line *line);
 #endif
