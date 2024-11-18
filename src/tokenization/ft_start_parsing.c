@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/16 23:20:34 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/18 14:39:16 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,16 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 
 	(void)shell;
 	if (ft_check_open_quote(prompt) == EXIT_FAILURE)
-		return (ft_error_quote(),EXIT_FAILURE);
+		return (ft_error_quote(), EXIT_FAILURE);
 	line = ft_loop_token(prompt);
 	if (line == NULL)
 		return (EXIT_FAILURE);
 	if (ft_check_all_list(line) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	ft_display(line);
+
+	shell->command = line;
+	if(execute_command(shell) == EXIT_FAILURE)
+		return(EXIT_FAILURE);
+	// ft_display(line);
 	return (0);
 }

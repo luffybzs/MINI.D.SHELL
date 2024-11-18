@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/16 23:01:21 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/18 14:37:50 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ typedef struct s_shell
 {
 	char			**env;
 	t_env			*head;
+	t_command_line *command;
 }					t_shell;
-
 
 //-------------------------------------//
 
@@ -94,22 +94,22 @@ int					ft_check_list(t_command_line *line);
 t_token				*ft_lstlast_mini(t_command_line *lst);
 int					ft_check_all_list(t_command_line *line);
 int					ft_isredirect(int token);
-void ft_error_token(char *content);
-void ft_error_pide(char *content);
-void ft_error_double_redir(char *content);
-void ft_error_quote(void);
+void				ft_error_token(char *content);
+void				ft_error_pide(char *content);
+void				ft_error_double_redir(char *content);
+void				ft_error_quote(void);
+
 //environnement management
 
 t_shell				*env_init(char **env);
-int			fill_env_list(t_shell *shell);
-t_env		*create_env_node(char *env_str);
+int					fill_env_list(t_shell *shell);
+t_env				*create_env_node(char *env_str);
 void				free_env_list(t_shell *shell);
-void			free_env_node(t_env *node);
+void				free_env_node(t_env *node);
 int					ft_findchar(const char *str, int c);
 
 //test
 
-void	print_list(t_shell *list);
-
+void				print_list(t_shell *list);
 
 #endif
