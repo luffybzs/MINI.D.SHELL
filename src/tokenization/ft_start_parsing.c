@@ -6,11 +6,12 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/18 14:39:16 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:03:48 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/builtin.h" 
 
 void	ft_add_elem(t_command_line *line, char *command, int *i)
 {
@@ -73,7 +74,7 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 		return (EXIT_FAILURE);
 
 	shell->command = line;
-	if(execute_command(shell) == EXIT_FAILURE)
+	if(ft_execute_command(shell) == EXIT_FAILURE)
 		return(EXIT_FAILURE);
 	// ft_display(line);
 	return (0);

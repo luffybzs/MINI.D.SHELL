@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/18 14:37:50 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:54:37 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_shell
 {
 	char			**env;
 	t_env			*head;
-	t_command_line *command;
+	t_command_line	*command;
 }					t_shell;
 
 //-------------------------------------//
