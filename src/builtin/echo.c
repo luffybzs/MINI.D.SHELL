@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:02:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/18 16:05:38 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:12:37 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	ft_echo(t_token *cmd, t_shell *shell)
 	t_token *current;
 	int is_n;
     int fd;
+	(void)shell;
     
     fd = 1;
 	is_n = 0;
@@ -30,7 +31,8 @@ int	ft_echo(t_token *cmd, t_shell *shell)
 	}
 	while (current)
 	{
-        if(current->content == "")
+        // if(current->content == "")
+			//ajouter le cas ou la double quote
         ft_putstr_fd(current->content, fd);
         if (current->next)
             ft_putchar_fd(' ',fd);
