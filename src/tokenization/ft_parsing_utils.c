@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:58:44 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/11/16 23:14:21 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/19 22:51:32 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ int	ft_next_char(char *str, char c, int *i, int *j)
 	return (0);
 }
 
-void	ft_skip_spaces(char *str, int *i)
+int	ft_skip_spaces(char *str, int *i)
 {
 	while (str[*i] && ft_isspace(str[*i]))
 		(*i)++;
+	if (!str[*i])
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	ft_check_open_quote(char *prompt)
@@ -97,3 +100,31 @@ char	*ft_supp_quote(char *command, int i, int *j, char c)
 	word[tmp] = '\0';
 	return (word);
 }
+
+// char *ft_supp_quote2(char *command)
+// {
+// 		char	*word;
+// 	int		len;
+// 	int		tmp;
+// 	char	c;
+
+// 	c = '\"'
+// 	tmp = 0;
+// 	len = ft_len_word(command, '\"');
+// 	if (len == -1)
+// 		return (NULL);
+// 	*j = len + (command[i + len] != '\0');
+// 	word = malloc(sizeof(char) * (len + 1));
+// 	if (!word)
+// 		return (NULL);
+// 	while (len)
+// 	{
+// 		if (command[i] == c)
+// 			i++;
+// 		else
+// 			word[tmp++] = command[i++];
+// 		len--;
+// 	}
+// 	word[tmp] = '\0';
+// 	return (word);
+// }

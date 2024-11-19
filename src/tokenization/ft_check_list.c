@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 02:28:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/16 23:04:31 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/19 22:24:43 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,22 @@ int	ft_check_redir(t_command_line *line)
 	}
 	return (EXIT_SUCCESS);
 }
+int ft_check_pide_and_redir(t_command_line *line)
+{
+	t_token *current;
+
+	current = line->first;
+	while (current->next)
+	{
+		if (!ft_isnotr_ed(current->type) && current->next->type == PIPE)
+		{
+			ft_error_pide(current->content);
+			return (EXIT_FAILURE);
+		}
+		current = current->next;
+	}
+	return (EXIT_SUCCESS);
+}
 
 int	ft_check_all_list(t_command_line *line)
 {
@@ -77,6 +93,8 @@ int	ft_check_all_list(t_command_line *line)
 	if (ft_check_pipe(line) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (ft_check_redir(line) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (ft_check_pide_and_redir(line) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

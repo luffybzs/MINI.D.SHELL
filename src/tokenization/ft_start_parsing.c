@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/19 12:13:04 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/19 22:36:19 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ t_command_line	*ft_loop_token(char *prompt)
 	i = 0;
 	while (prompt[i])
 	{
-		ft_skip_spaces(prompt, &i);
+		if (ft_skip_spaces(prompt, &i) == EXIT_FAILURE)
+			return (line);
 		if (prompt[i])
 		{
 			ft_add_elem(line, prompt, &i);
@@ -72,10 +73,10 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 		return (EXIT_FAILURE);
 	if (ft_check_all_list(line) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-
+ 
 	shell->command = line;
-	// if(ft_execute_command(shell) == EXIT_FAILURE)
-	// 	return(EXIT_FAILURE);
+	//if(ft_execute_command(shell) == EXIT_FAILURE)
+	//	return(EXIT_FAILURE);
 	ft_display(line);
 	return (0);
 }

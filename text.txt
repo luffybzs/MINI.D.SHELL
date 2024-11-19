@@ -1,0 +1,71 @@
+$ echo hello world
+hello world
+
+$ echo -n hello world
+hello world$  # (pas de newline, le prompt suit directement)
+
+$ echo '--help'
+--help
+
+$ echo "--help"
+--help
+
+$ HOME=/home/user
+$ echo '$HOME'
+$HOME
+
+$ echo "$HOME"
+/home/user
+
+$ USER=john
+$ echo "hello $USER"
+hello john
+
+$ echo "hello $USER world $HOME"
+hello john world /home/user
+
+$ echo hello$USER
+hellojohn
+
+$ echo '$USER$HOME'
+$USER$HOME
+
+$ echo "$USER$HOME"
+john/home/user
+
+$ echo $?  # après une commande réussie
+0
+
+$ ls /nonexistent  # pour générer une erreur
+$ echo $?
+2
+
+$ echo "test $? test"
+test 2 test
+
+$ echo -n -n hello
+hello$  # (pas de newline)
+
+$ echo "-n" hello
+-n hello
+
+$ echo hello "" world
+hello  world
+
+$ echo hello ''world
+helloworld
+
+$ echo "hello    world"  # multiple espaces dans les quotes
+hello    world
+
+$ echo hello    world    # multiple espaces hors quotes
+hello world
+
+$ echo "hello\nworld"  # \n dans les doubles quotes
+hello\nworld
+
+$ echo 'hello\nworld'  # \n dans les simples quotes
+hello\nworld
+
+$ echo hello > ""
+error: ambiguous redirect

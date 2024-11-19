@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/18 15:54:37 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/19 22:23:46 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ int					ft_parsing_prompt(char *prompt, t_shell *shell);
 void				ft_add_cmd(char *command, t_command_line *line, int *i);
 void				ft_add_redirect(char *command, t_command_line *line,
 						int *i);
-void				ft_skip_spaces(char *str, int *i);
+int				ft_skip_spaces(char *str, int *i);
 int					ft_next_char(char *str, char c, int *i, int *j);
 int					ft_len_word(char *command, int i, char c);
-char				*ft_supp_quote(char *command, int i, int *j, char c);
+//char				*ft_supp_quote(char *command, int i, int *j, char c);
 int					ft_check_list(t_command_line *line);
 t_token				*ft_lstlast_mini(t_command_line *lst);
 int					ft_check_all_list(t_command_line *line);
@@ -98,7 +98,8 @@ void				ft_error_token(char *content);
 void				ft_error_pide(char *content);
 void				ft_error_double_redir(char *content);
 void				ft_error_quote(void);
-
+int 				ft_isnotr_ed(int token);
+int 				ft_check_pide_and_redir(t_command_line *line);
 //environnement management
 
 t_shell				*env_init(char **env);

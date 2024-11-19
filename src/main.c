@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/18 15:39:40 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:39:23 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 	{
 		prompt = readline("Mini.D.Shell -> ");
 		if (ft_parsing_prompt(prompt, shell) == EXIT_FAILURE)
-			break ;
+			continue ;
 		// printf("%s\n", prompt);
 	}
 	return (EXIT_FAILURE);
