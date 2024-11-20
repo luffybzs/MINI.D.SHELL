@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/20 17:52:12 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:11:17 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 	while (current)
 	{
 		i = 0;
-		if (ft_find_dollar(current->content, &i) == 1 && ft_state_quote(current->content) != 2)
+		if (ft_find_dollar(current->content, &i) == 1
+			&& ft_state_quote(current->content) != 2)
 		{
 			current->content = expand_var(current->content, &i, shell);
 		}
@@ -74,7 +75,8 @@ int	get_var_len(char *str)
 
 	i = 0;
 	if (str[i] == '?')
-		return (1); // creer une valeur dans la liste s_shell avec le code erreur qui printera
+		return (1);
+	// creer une valeur dans la liste s_shell avec le code erreur qui printera
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 	{
 		i++;
@@ -105,18 +107,31 @@ char	*get_var_value(char *var_name, t_shell *shell)
 	return (ft_strdup(""));
 }
 
-int ft_state_quote(char *str)
+int	ft_state_quote(char *str)
 {
-    int i = 0;
-    int state = 0;
+	int	i;
+	int	state;
 
-    while (str[i])
-    {
-        if(str[i] == '"' && state == 0)
-            state = 1;
-        else if (str[i] == '\'' && state == 0)
-            state = 2;
-        i ++;
-    }
-    return (state);
+	i = 0;
+	state = 0;
+	while (str[i] )
+	{
+		if (str[i] == '"' && state == 0)
+			state = 1;
+		else if (str[i] == '"' && state == 1)
+			state = 0;
+		if (str[i] == '\'' && state == 0)
+			state = 2;
+		else if (str[i] == '\'' && state == 2)
+			state = 0;
+		i++;
+	}
+	printf("%d\n", state);
+	return (state);
 }
+
+/*
+state	normal = 0
+state	dquote = 1
+state	squote = 2
+*/
