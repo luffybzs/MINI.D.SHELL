@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 02:28:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/19 22:24:43 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:58:51 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	ft_check_pipe(t_command_line *line)
 
 	current = line->first;
 	last = ft_lstlast_mini(line);
+	
 	if (current->type == PIPE || last->type == PIPE)
 	{
 		ft_error_pide("|");	

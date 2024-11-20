@@ -77,6 +77,8 @@ t_token	*ft_lstlast_mini(t_command_line *lst)
 	if (!lst)
 		return (NULL);
 	tmp = lst->first;
+	if (!tmp)
+		return (NULL);
 	while (tmp->next)
 		tmp = tmp->next;
 	return (tmp);

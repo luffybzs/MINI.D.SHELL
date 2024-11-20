@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/19 22:23:46 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:06:10 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@
 # define CYAN "\001\033[1;36m\002"
 # define WHITE "\001\033[0m\002"
 
-# define PIPE 5
 # define WORD 0
 # define SFX 1
-# define L_RED 4
-# define R_RED 6
-# define RR_RED 8
-# define FILE 10
-# define LL_RED 13
-# define END_OF_FILE 14
+# define PIPE 5
+# define L_RED 6
+# define R_RED 7
+# define RR_RED 11
+# define LL_RED 10
+# define FILE 20
+# define END_OF_FILE 19
 
 typedef struct s_token
 {
@@ -86,10 +86,10 @@ int					ft_parsing_prompt(char *prompt, t_shell *shell);
 void				ft_add_cmd(char *command, t_command_line *line, int *i);
 void				ft_add_redirect(char *command, t_command_line *line,
 						int *i);
-int				ft_skip_spaces(char *str, int *i);
-int					ft_next_char(char *str, char c, int *i, int *j);
+int					ft_skip_spaces(char *str, int *i);
+void				ft_next_char(char *str, char c, int *i, int *j);
 int					ft_len_word(char *command, int i, char c);
-//char				*ft_supp_quote(char *command, int i, int *j, char c);
+// char				*ft_supp_quote(char *command, int i, int *j, char c);
 int					ft_check_list(t_command_line *line);
 t_token				*ft_lstlast_mini(t_command_line *lst);
 int					ft_check_all_list(t_command_line *line);
@@ -98,9 +98,9 @@ void				ft_error_token(char *content);
 void				ft_error_pide(char *content);
 void				ft_error_double_redir(char *content);
 void				ft_error_quote(void);
-int 				ft_isnotr_ed(int token);
-int 				ft_check_pide_and_redir(t_command_line *line);
-//environnement management
+int					ft_isnotr_ed(int token);
+int					ft_check_pide_and_redir(t_command_line *line);
+// environnement management
 
 t_shell				*env_init(char **env);
 int					fill_env_list(t_shell *shell);
@@ -109,7 +109,7 @@ void				free_env_list(t_shell *shell);
 void				free_env_node(t_env *node);
 int					ft_findchar(const char *str, int c);
 
-//test
+// test
 
 void				print_list(t_shell *list);
 

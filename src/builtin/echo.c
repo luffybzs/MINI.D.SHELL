@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:02:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/19 22:47:28 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:19:31 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	ft_echo(t_token *cmd, t_shell *shell)
 	 {
 		while (current->content[i])
 		{
-        	if(current->content == "\"")
-				handle_double_quote(shell,is_n,current,fd);
+        	//if(current->content == "\"")
+			//	handle_double_quote(shell,is_n,current,fd);
 			i++;
 		} //ajouter le cas ou la double quote
 		 ft_putstr_fd(current->content, fd);

@@ -3,30 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:58:44 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/11/19 22:51:56 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:05:44 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_next_char(char *str, char c, int *i, int *j)
+void	ft_next_char(char *str, char c, int *i, int *j)
 {
 	(*j)++;
 	while (str[*i + *j] != c)
 		(*j)++;
-	if (str[*i + *j] == c)
-		return (1);
-	return (0);
 }
 
 int	ft_skip_spaces(char *str, int *i)
 {
 	while (str[*i] && ft_isspace(str[*i]))
 		(*i)++;
-	if (!str[*i])
+	if (str[*i] == '\0')
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

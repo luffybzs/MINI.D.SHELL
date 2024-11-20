@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/19 22:36:19 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:59:23 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/builtin.h"
 #include "../../include/minishell.h"
-#include "../../include/builtin.h" 
 
 void	ft_add_elem(t_command_line *line, char *command, int *i)
 {
@@ -33,11 +33,9 @@ t_command_line	*ft_loop_token(char *prompt)
 	while (prompt[i])
 	{
 		if (ft_skip_spaces(prompt, &i) == EXIT_FAILURE)
-			return (line);
+			break;
 		if (prompt[i])
-		{
 			ft_add_elem(line, prompt, &i);
-		}
 	}
 	return (line);
 }
@@ -50,11 +48,11 @@ void	ft_display(t_command_line *line)
 	while (current)
 	{
 		printf("CONTENT -> [%s] | TOKEN -> [%d]\n ", current->content,
-				current->type);
-		//printf("[%s]", current->content);
+			current->type);
+		// printf("[%s]", current->content);
 		current = current->next;
-		//if (current)
-		//printf(" -> ");
+		// if (current)
+		// printf(" -> ");
 		if (current)
 			printf("           |\n"); //             \\/\n
 	}
@@ -69,13 +67,13 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 	if (ft_check_open_quote(prompt) == EXIT_FAILURE)
 		return (ft_error_quote(), EXIT_FAILURE);
 	line = ft_loop_token(prompt);
-	if (line == NULL)
+	if (line->first == NULL)
 		return (EXIT_FAILURE);
 	if (ft_check_all_list(line) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
- 
+
 	shell->command = line;
-	//if(ft_execute_command(shell) == EXIT_FAILURE)
+	// if(ft_execute_command(shell) == EXIT_FAILURE)
 	//	return(EXIT_FAILURE);
 	ft_display(line);
 	return (0);

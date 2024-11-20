@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:29:13 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/11/19 21:33:45 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:09:00 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ void	ft_add_cmd(char *command, t_command_line *line, int *i)
 	j = 0;
 	while (command[*i + j] && !ft_isspace(command[*i + j])
 		&& !ft_isseparator(command[*i + j]))
-		j++;
+	{
+		if (command[*i + j] == '\'' || command[*i + j] == '"')
+			ft_next_char(command, command[*i + j], i, &j);
+		if (command[*i + j])
+			j++;
+	}
 	ft_add_token(ft_substr(command, *i, j), line);
 	(*i) += j;
 }
