@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/20 18:11:17 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:43:35 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 int	ft_expand(t_command_line *line, t_shell *shell)
 {
-	t_token	*current;
-	int		i;
+	t_token		*current;
+	t_expand	exp;
+	int			i;
 
 	current = line->first;
 	while (current)
 	{
 		i = 0;
-		if (ft_find_dollar(current->content, &i) == 1
-			&& ft_state_quote(current->content) != 2)
+		check_expand_state(current->content, &exp);
+		if (should_expand(&exp) == 1 && ft_find_dollar(current->content, &i))
 		{
-			current->content = expand_var(current->content, &i, shell);
+			current->content = expand_var(current->content,&i, shell);
 		}
 		current = current->next;
 	}
@@ -107,27 +108,65 @@ char	*get_var_value(char *var_name, t_shell *shell)
 	return (ft_strdup(""));
 }
 
-int	ft_state_quote(char *str)
+int	check_expand_state(char *str, t_expand *exp)
 {
 	int	i;
-	int	state;
 
+	exp->state = 0;
+	exp->quote_start = -1;
+	exp->quote_end = -1;
+	exp->dollar_pos = -1;
+	exp->current_quote = 0;
 	i = 0;
-	state = 0;
-	while (str[i] )
+	while (str[i])
 	{
-		if (str[i] == '"' && state == 0)
-			state = 1;
-		else if (str[i] == '"' && state == 1)
-			state = 0;
-		if (str[i] == '\'' && state == 0)
-			state = 2;
-		else if (str[i] == '\'' && state == 2)
-			state = 0;
+		if (str[i] == '$' && exp->dollar_pos == -1)
+			exp->dollar_pos = i;
+		if (str[i] == '"')
+		{
+			if (exp->state == 0)
+			{
+				exp->state = 1;
+				exp->quote_start = i;
+				exp->current_quote = '"';
+			}
+			else if (exp->state == 1 && exp->current_quote == '"')
+			{
+				exp->state = 0;
+				exp->quote_end = i;
+				exp->current_quote = 0;
+			}
+		}
+		else if (str[i] == '\'')
+		{
+			if (exp->state == 0)
+			{
+				exp->state = 2;
+				exp->quote_start = i;
+				exp->current_quote = '\'';
+			}
+			else if (exp->state == 2 && exp->current_quote == '\'')
+			{
+				exp->state = 0;
+				exp->quote_end = i;
+				exp->current_quote = 0;
+			}
+		}
 		i++;
 	}
-	printf("%d\n", state);
-	return (state);
+	return (exp->state);
+}
+
+int	should_expand(t_expand *exp)
+{
+	if (exp->dollar_pos == -1)
+		return (0);
+	if (exp->quote_start == -1 || exp->quote_end == -1)
+		return (1);
+	if (exp->current_quote == '\'' && exp->dollar_pos > exp->quote_start
+		&& exp->dollar_pos < exp->quote_end)
+		return (0);
+	return (1);
 }
 
 /*
