@@ -4,7 +4,7 @@ GARBAGE = $(addprefix garbage_collector/, gc.c gc_utils.c );
 
 SRCS = $(addprefix src/, main.c tokenization/ft_start_parsing.c tokenization/ft_queue_functions.c tokenization/ft_parsing_utils.c \
 tokenization/ft_add_cmd.c tokenization/ft_check_list.c tokenization/ft_parsing_utils2.c tokenization/ft_error_parsing.c \
-builtin/gen.c builtin/echo.c )
+builtin/gen.c builtin/echo.c env/env_list.c expand/ft_expand.c)
 
 INCLUDES = ./includes
 

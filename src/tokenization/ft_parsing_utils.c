@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:58:44 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/11/20 13:05:44 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/20 14:23:08 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	ft_len_word(char *command, int i, char c)
 	return (len);
 }
 
-
 char	*ft_supp_quote(char *command, int i, int *j, char c)
 {
 	char	*word;
@@ -98,30 +97,27 @@ char	*ft_supp_quote(char *command, int i, int *j, char c)
 	return (word);
 }
 
-// char *ft_supp_quote2(char *command)
-// {
-// 		char	*word;
-// 	int		len;
-// 	int		tmp;
-// 	char	c;
+char	*ft_supp_quote2(char *command, char c, int i)
+{
+	char	*word;
+	int		len;
+	int		tmp;
 
-// 	c = '\"'
-// 	tmp = 0;
-// 	len = ft_len_word(command, '\"');
-// 	if (len == -1)
-// 		return (NULL);
-// 	*j = len + (command[i + len] != '\0');
-// 	word = malloc(sizeof(char) * (len + 1));
-// 	if (!word)
-// 		return (NULL);
-// 	while (len)
-// 	{
-// 		if (command[i] == c)
-// 			i++;
-// 		else
-// 			word[tmp++] = command[i++];
-// 		len--;
-// 	}
-// 	word[tmp] = '\0';
-// 	return (word);
-// }
+	tmp = 0;
+	len = ft_len_word(command,i,c);
+	if (len == -1)
+		return (NULL);
+	word = malloc(sizeof(char) * (len + 1));
+	if (!word)
+		return (NULL);
+	while (len)
+	{
+		if (command[i] == c)
+			i++;
+		else
+			word[tmp++] = command[i++];
+		len--;
+	}
+	word[tmp] = '\0';
+	return (word);
+}

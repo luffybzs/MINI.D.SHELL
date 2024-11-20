@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:44:10 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/16 17:33:30 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/20 14:14:46 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,11 @@ void ft_error_double_redir(char *content)
 void ft_error_quote(void)
 {
 	ft_putstr_fd("MINI.D.SHELL: error open quote\n", 2);
+}
+
+void ft_error_end_redir(void)
+{
+	ft_putstr_fd("MINI.D.SHELL: syntax error near unexpected token « ",
+							2);
+	ft_putstr_fd("newline »\n", 2);						
 }

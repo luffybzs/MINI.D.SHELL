@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 02:28:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/20 12:58:51 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/20 14:15:38 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ int	ft_check_pipe(t_command_line *line)
 int	ft_check_redir(t_command_line *line)
 {
 	t_token	*current;
-
+	t_token *tmp;
 	current = line->first;
+	tmp = ft_lstlast_mini(line);
+	if(!ft_isredirect(tmp->type))
+		return (ft_error_end_redir(), EXIT_FAILURE); 
 	while (current->next)
 	{
 		if (!ft_isredirect(current->type)

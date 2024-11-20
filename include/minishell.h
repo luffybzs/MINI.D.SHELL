@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/20 13:06:10 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/20 17:50:46 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void				ft_error_double_redir(char *content);
 void				ft_error_quote(void);
 int					ft_isnotr_ed(int token);
 int					ft_check_pide_and_redir(t_command_line *line);
+void				ft_error_end_redir(void);
 // environnement management
 
 t_shell				*env_init(char **env);
@@ -108,7 +109,17 @@ t_env				*create_env_node(char *env_str);
 void				free_env_list(t_shell *shell);
 void				free_env_node(t_env *node);
 int					ft_findchar(const char *str, int c);
+char				*ft_supp_quote2(char *command, char c, int i);
 
+// expand
+
+int					ft_expand(t_command_line *line, t_shell *shell);
+int					ft_find_dollar(char *content, int *i);
+char				*expand_var(char *str, int *i, t_shell *shell);
+char				*get_var_name(char *content);
+int					get_var_len(char *str);
+char				*get_var_value(char *var_name, t_shell *shell);
+int					ft_state_quote(char *str);
 // test
 
 void				print_list(t_shell *list);
