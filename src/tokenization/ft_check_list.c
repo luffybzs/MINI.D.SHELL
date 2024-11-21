@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 02:28:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/20 14:15:38 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/21 12:25:35 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int ft_check_pide_and_redir(t_command_line *line)
 	current = line->first;
 	while (current->next)
 	{
-		if (!ft_isnotr_ed(current->type) && current->next->type == PIPE)
+		if (!ft_isredirect(current->type) && current->next->type == PIPE)
 		{
 			ft_error_pide(current->content);
 			return (EXIT_FAILURE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:02:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/20 14:45:23 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/21 12:22:18 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_echo(t_token *cmd, t_shell *shell)
 		{
 			if (current->content[i] == '"' || current->content[i] == '\'')
 			{
-				handle_double_quote(shell, is_n, current->content, i);
+				//handle_double_quote(shell, is_n, current->content, i);
 				break ;
 			}
 			i++;
@@ -50,6 +50,7 @@ int	ft_echo(t_token *cmd, t_shell *shell)
 		ft_putchar_fd('\n', 1);
 	return (0);
 }
+/*
 void	handle_double_quote(t_shell *shell, int is_n, char *current, int i)
 {
 	int is_double_quote;
@@ -68,3 +69,4 @@ void	handle_double_quote(t_shell *shell, int is_n, char *current, int i)
 		ft_putchar_fd('\n',1);
 	// ft_putstr_fd(current->content,1);
 }
+*/
