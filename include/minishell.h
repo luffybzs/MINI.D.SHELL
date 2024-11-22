@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/20 18:40:32 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:53:13 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,15 @@ typedef struct s_shell
 	char			**env;
 	t_env			*head;
 	t_command_line	*command;
+	int exit_status; // ajout de l exit status a recuperer dnas l exec
 }					t_shell;
 
-typedef struct s_expand
+typedef struct s_expand_state
 {
-	int				state;
-	int				quote_start;
-	int				quote_end;
-	int				dollar_pos;
-	char			current_quote;
-
-}					t_expand;
+	int				in_quote;
+	char			*result;
+	int				exit_status;
+}					t_expand_state;
 
 //-------------------------------------//
 
@@ -125,12 +123,20 @@ char				*ft_supp_quote2(char *command, char c, int i);
 
 int					ft_expand(t_command_line *line, t_shell *shell);
 int					ft_find_dollar(char *content, int *i);
-char				*expand_var(char *str, int *i, t_shell *shell);
 char				*get_var_name(char *content);
 int					get_var_len(char *str);
 char				*get_var_value(char *var_name, t_shell *shell);
-int					check_expand_state(char *str, t_expand *exp);
-int					should_expand(t_expand *exp);
+int					check_expand_state(char *str, t_expand_state *exp);
+int					should_expand(t_expand_state *exp);
+
+char				*expand_var(char *input, t_shell *shell);
+int					handle_quotes(char c, t_expand_state *state);
+void				handle_expansion(char *input, int *i, t_expand_state *state,
+						t_shell *shell);
+int					get_var_name_length(const char *str);
+void				append_char(char **str, char c);
+void				append_string(char **dst, const char *src);
+char				*get_env_value(const char *name, t_shell *shell);
 
 // test
 
