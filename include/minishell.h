@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/21 16:53:13 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:59:33 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,11 @@ typedef struct s_shell
 	char			**env;
 	t_env			*head;
 	t_command_line	*command;
-	int exit_status; // ajout de l exit status a recuperer dnas l exec
+
+	//gerer les cas speciaux de l expand
+	char *shell_name; // $0
+	pid_t shell_pid;  //$$
+	int exit_status;  // $?
 }					t_shell;
 
 typedef struct s_expand_state
@@ -132,6 +136,8 @@ int					should_expand(t_expand_state *exp);
 char				*expand_var(char *input, t_shell *shell);
 int					handle_quotes(char c, t_expand_state *state);
 void				handle_expansion(char *input, int *i, t_expand_state *state,
+						t_shell *shell);
+int					handle_special_var(char c, int *i, t_expand_state *state,
 						t_shell *shell);
 int					get_var_name_length(const char *str);
 void				append_char(char **str, char c);

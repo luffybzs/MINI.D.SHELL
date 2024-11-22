@@ -6,11 +6,13 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/21 15:59:30 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:59:13 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+// penser a initialiser dans la struccture shell le pid, le nom, et le code d exit
 
 int	ft_expand(t_command_line *line, t_shell *shell) // parcours les token et appell expand var pour chaque token
 {
@@ -97,14 +99,18 @@ void	handle_expansion(char *input, int *i, t_expand_state *state,
 		append_char(&state->result, '$');
 		return ;
 	}
-	if (input[*i] == '?')
-	{
-		var_value = ft_itoa(state->exit_status);
-		append_string(&state->result, var_value);
-		free(var_value);
-		(*i)++;
+	if(handle_special_var(input[*i], i, state, shell))
 		return ;
-	}
+	//
+	// if (input[*i] == '?')
+	// {
+	// 	var_value = ft_itoa(state->exit_status);
+	// 	append_string(&state->result, var_value);
+	// 	free(var_value);
+	// 	(*i)++;
+	// 	return ;
+	// }
+	//
 	len = get_var_name_length(input + *i);
 	if (len == 0)
 	{
@@ -183,3 +189,38 @@ char	*get_env_value(const char *name, t_shell *shell)
 	}
 	return (ft_strdup(""));
 }
+
+int handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
+{
+	char *tmp;
+
+	if (c == '?')
+	{
+		tmp = ft_itoa(state->exit_status);
+		append_string(&state->result, tmp);
+		free(tmp);
+		(*i)++;
+		return(1) ;
+	}
+	else if (c == '$')
+	{
+		tmp = ft_itoa(shell->shell_pid);
+		append_string(&state->result, tmp);
+		free(tmp);
+		(*i)++;
+		return (1);
+	}
+	else if(c == '0')
+	{
+		append_string(&state->result, shell->shell_name);
+		(*i)++;
+		return (1);
+	}
+	return (0);
+	
+}
+
+/*
+$$ -> pid du shell
+$? -> statut de sortie 
+$0 -> nom du shell*/

@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/21 17:41:49 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:41:51 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 	shell->command = line;
 	if(ft_execute_command(shell) == EXIT_FAILURE)
 		return(EXIT_FAILURE);
-	// ft_display(line);
+	ft_display(line);
 	return (0);
 }

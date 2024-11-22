@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/20 17:00:24 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:53:35 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,20 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 
 int	main(int ac, char **av, char **env)
 {
-	(void)ac;
-	(void)av;
-	char *prompt = NULL;
-	t_shell *shell;
+	char	*prompt;
+	t_shell	*shell;
 
+	(void)ac;
+	prompt = NULL;
 	shell = env_init(env);
 	if (!shell)
 		return (printf("Failed to initialize shell environement\n"), 1);
 	if (fill_env_list(shell) != 0)
 		return (printf("Failed to initialize the linked environement list\n"),
 				1); // needed to be freed later
-
+	shell->shell_pid = getpid();
+	shell->shell_name = ft_strdup(av[0]);
+	shell->exit_status = 0;
 	if (ft_loop_shell(prompt, shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (0);
