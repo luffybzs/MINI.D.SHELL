@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/22 15:41:51 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:04:02 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 {
 	t_command_line *line;
 
-	(void)shell;
 	if (ft_check_open_quote(prompt) == EXIT_FAILURE)
 		return (ft_error_quote(), EXIT_FAILURE);
 	line = ft_loop_token(prompt);
@@ -74,8 +73,10 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 	if (ft_expand(line, shell) ==  EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	shell->command = line;
-	if(ft_execute_command(shell) == EXIT_FAILURE)
-		return(EXIT_FAILURE);
-	ft_display(line);
+	if (ft_struc_for_exec(shell) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	//if(ft_execute_command(shell) == EXIT_FAILURE)
+	//	return(EXIT_FAILURE);
+	//ft_display(line);
 	return (0);
 }
