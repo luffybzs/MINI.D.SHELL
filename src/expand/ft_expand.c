@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/22 15:59:13 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/23 02:12:07 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,6 @@ void	handle_expansion(char *input, int *i, t_expand_state *state,
 	}
 	if(handle_special_var(input[*i], i, state, shell))
 		return ;
-	//
-	// if (input[*i] == '?')
-	// {
-	// 	var_value = ft_itoa(state->exit_status);
-	// 	append_string(&state->result, var_value);
-	// 	free(var_value);
-	// 	(*i)++;
-	// 	return ;
-	// }
-	//
 	len = get_var_name_length(input + *i);
 	if (len == 0)
 	{
@@ -127,6 +117,7 @@ void	handle_expansion(char *input, int *i, t_expand_state *state,
 	free(var_value);
 	*i += len;
 }
+
 
 int	get_var_name_length(const char *str)
 {
@@ -217,7 +208,6 @@ int handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 		return (1);
 	}
 	return (0);
-	
 }
 
 /*

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gen.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:30:54 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/22 15:40:46 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/22 17:13:14 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ int execute_builtin(t_token *cmd, t_shell *shell)
         return (ft_echo(cmd, shell));
 	//  else if (ft_strcmp(cmd->content, "cd") == 0)
     //      return (ft_cd(cmd,shell));
-	//  else if (ft_strcmp(cmd->content, "pwd") == 0)
-    //      return (ft_pwd(cmd,shell));
+	else if (ft_strcmp(cmd->content, "env") == 0)
+		return (ft_env(shell));
+	else if (ft_strcmp(cmd->content, "pwd") == 0)
+    	   return (ft_pwd(shell));
     //implementer les autres builtins
     return (0);
 }
