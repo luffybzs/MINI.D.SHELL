@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/24 13:36:51 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/24 14:18:42 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_display(t_command_line *line)
 		if (current)
 			printf("           |\n"); //             \\/\n
 	}
-	printf("\n FIN DE LA PREMIER LIST \n\n\n\n\n\n");
+	printf("\nFIN DE LA PREMIER LIST\n");
 }
 
 int	ft_parsing_prompt(char *prompt, t_shell *shell)

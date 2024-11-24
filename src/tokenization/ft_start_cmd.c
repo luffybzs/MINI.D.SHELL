@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 19:31:33 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/24 13:38:15 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/24 14:16:33 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ char **ft_add_to_tab(t_token *current, char **tab)
 
 	i = 0;
 	while (current && current->type != PIPE)
+	{
+		if (current->type == WORD || current->type == SFX)
 			{
-				if (current->type == WORD || current->type == SFX)
-					{
-						tab[i] = ft_strdup(current->content);
-						i++;
-					}
-				current = current->next;
+				tab[i] = ft_strdup(current->content);
+				i++;
 			}
-			tab[i] = NULL;
+			current = current->next;
+	}
+	tab[i] = NULL;
 	return (tab);
 }
 
@@ -117,14 +117,28 @@ void ft_display_exec(t_exec_line *line)
 		}
 		current = current->next;
 	}
-	printf("\n\n\nFIN DE LA LIST DE EXEC\n\n\n\n");
+	printf("\nFIN DE LA LIST DE EXEC\n");
 }
+int ft_check_word(t_shell *shell)
+{
+	t_token *current;
 
+	current = shell->command->first;
+	while (current)
+	{
+		if (current->type == WORD)
+			return (EXIT_SUCCESS);
+		current = current->next;
+	}
+	return (EXIT_FAILURE);
+}
 
 
 int ft_start_cmd(t_shell *shell)
 {
 	t_exec_line *line;
+	if (ft_check_word(shell) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	line = ft_init_queue_exec();
 	ft_cpy_cmd(line,shell);
 	ft_display_exec(line);
