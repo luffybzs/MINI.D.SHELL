@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:09:23 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/24 15:05:39 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/24 15:10:37 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,18 @@ int	ft_cd(t_shell *shell, char *path)
 	}
     else 
         new_path = path;
+
+    if (chdir(new_path) != 0)
+    {
+        free(old_pwd);
+        perror("cd");
+        shell->exit_status = 1;
+        return (1);
+    }
+
+    free(old_pwd);
+    shell->exit_status = 0;
+    return (0);
 }
 
 /*
