@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/23 19:30:00 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/24 01:51:02 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,14 @@ int ft_struc_for_exec(t_shell *shell)
 {
 	t_redir_line *lst;
 	
-	if (ft_check_file(shell) == EXIT_FAILURE)
+	if (ft_check_file(shell) == EXIT_SUCCESS)
+		{
+			lst = ft_init_queue_redir();
+			ft_cpy_file(shell, lst);
+		}
+	if (ft_start_cmd(shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	lst = ft_init_queue_redir();
-	ft_cpy_file(shell, lst);
-	if (ft_start_cmd(shell) == EXIT_FAILURE);
-		return (EXIT_FAILURE);
+	
 	return (EXIT_SUCCESS);
 }
 //	ft_display_file(lst);

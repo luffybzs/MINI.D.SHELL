@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: utilisateur <utilisateur@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:28:19 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/14 17:05:17 by utilisateur      ###   ########.fr       */
+/*   Updated: 2024/11/23 23:06:17 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ int					ft_isspace(char c);
 char				*ft_strjoin_free(char *s1, char *s2);
 int					ft_strcmp(char *s1, char *s2);
 int 				ft_isseparator(char c);
-
+int ft_strlen_2d(char **tab);
+char **ft_strjoin_2d(char **tab, char *str);
 #endif

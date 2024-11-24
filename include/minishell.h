@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/23 19:36:48 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/23 22:25:25 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ int ft_is_file(int token);
 int					ft_check_pide_and_redir(t_command_line *line);
 void				ft_error_end_redir(void);
 int ft_struc_for_exec(t_shell *shell);
+int ft_start_cmd(t_shell *shell);
 // environnement management
 
 t_shell				*env_init(char **env);
