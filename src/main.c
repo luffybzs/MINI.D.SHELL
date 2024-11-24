@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/23 18:44:29 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/24 13:55:43 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int ac, char **av, char **env)
 		return (printf("Failed to initialize shell environement\n"), 1);
 	if (fill_env_list(shell) != 0)
 		return (printf("Failed to initialize the linked environement list\n"),
-				1); // needed to be freed later
+				1); // needed to be freed later + retour d erreur
 	shell->shell_pid = getpid();
 	shell->shell_name = ft_strdup(av[0]);
 	shell->exit_status = 0;
