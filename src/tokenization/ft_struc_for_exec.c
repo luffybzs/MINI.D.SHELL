@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/24 01:51:02 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/24 13:37:23 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void ft_display_file(t_redir_line *lst)
 		printf("file [%s] ---> type [%d]\n", current->file, current->type);
 		current = current->next;
 	}
+	printf("\n\n\nFIN DE LA DEUXIME LIST DE FILE \n\n\n");
 }
 
 int ft_struc_for_exec(t_shell *shell)
@@ -93,10 +94,10 @@ int ft_struc_for_exec(t_shell *shell)
 		{
 			lst = ft_init_queue_redir();
 			ft_cpy_file(shell, lst);
+			ft_display_file(lst);
 		}
 	if (ft_start_cmd(shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	
 	return (EXIT_SUCCESS);
 }
-//	ft_display_file(lst);

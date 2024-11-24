@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 19:31:33 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/24 02:32:05 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/24 13:38:15 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,12 @@ void ft_add_tab_cmd(t_exec_line *line, char **tab)
 		current->next = new;
 	}
 }
-void ft_cpy_cmd(t_exec_line *line, t_shell *shell)
+char **ft_add_to_tab(t_token *current, char **tab)
 {
-	t_token *current;
-	int len;
-	char **tab;
 	int i;
 
-	current = shell->command->first;
-	while (current)
-	{
-		if(current->type == WORD)
-		{
-			i = 0;
-			len = ft_nb_cmd(current);
-			tab = malloc(sizeof(char *) * (len + 1));
-			if (!tab)
-				return ;
-			while (current && current->type != PIPE)
+	i = 0;
+	while (current && current->type != PIPE)
 			{
 				if (current->type == WORD || current->type == SFX)
 					{
@@ -84,12 +72,36 @@ void ft_cpy_cmd(t_exec_line *line, t_shell *shell)
 				current = current->next;
 			}
 			tab[i] = NULL;
+	return (tab);
+}
+
+
+void ft_cpy_cmd(t_exec_line *line, t_shell *shell)
+{
+	t_token *current;
+	int len;
+	char **tab;
+
+	current = shell->command->first;
+	while (current)
+	{
+		if(current->type == WORD)
+		{
+			len = ft_nb_cmd(current);
+			tab = malloc(sizeof(char *) * (len + 1));
+			if (!tab)
+				return ;
+			tab = ft_add_to_tab(current, tab);
+			while (current && current->type != PIPE)
+				current = current->next;
 			ft_add_tab_cmd(line,tab);	
 		}
 		if (current)
 			current = current->next;
 	}	
 }
+
+
 void ft_display_exec(t_exec_line *line)
 {
 	t_exec *current;
@@ -105,6 +117,7 @@ void ft_display_exec(t_exec_line *line)
 		}
 		current = current->next;
 	}
+	printf("\n\n\nFIN DE LA LIST DE EXEC\n\n\n\n");
 }
 
 
