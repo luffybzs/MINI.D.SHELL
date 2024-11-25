@@ -3,26 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/23 02:12:07 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/25 18:25:11 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// penser a initialiser dans la struccture shell le pid, le nom, et le code d exit
+// penser a initialiser dans la struccture shell le pid, le nom,
+// et le code d exit
 
-int	ft_expand(t_command_line *line, t_shell *shell) // parcours les token et appell expand var pour chaque token
+int	ft_expand(t_command_line *line, t_shell *shell)
+		// parcours les token et appell expand var pour chaque token
 {
-	t_token	*current;
-	char	*expanded;
+	t_token *current;
+	char *expanded;
 
 	current = line->first;
 	while (current)
 	{
-		expanded = expand_var(current->content, shell);
+		expanded = expand_var(current->content, shell, current);
 		if (expanded)
 		{
 			free(current->content);
@@ -33,10 +35,10 @@ int	ft_expand(t_command_line *line, t_shell *shell) // parcours les token et app
 	return (EXIT_SUCCESS);
 }
 
-char	*expand_var(char *input, t_shell *shell) // s occupe de l expand
+char	*expand_var(char *input, t_shell *shell, t_token *current)// s occupe de l expand
 {
-	t_expand_state	state;
-	int				i;
+	t_expand_state state;
+	int i;
 
 	i = 0;
 	state.in_quote = 0;
@@ -50,7 +52,8 @@ char	*expand_var(char *input, t_shell *shell) // s occupe de l expand
 	{
 		if (handle_quotes(input[i], &state) == 1)
 			i++;
-		else if (input[i] == '$' && state.in_quote != 2)
+		else if (input[i] == '$' && state.in_quote != 2 && current->type != 19
+			&& current->type != 20)
 			handle_expansion(input, &i, &state, shell);
 		else
 			append_char(&state.result, input[i++]);
@@ -87,11 +90,12 @@ int	handle_quotes(char c, t_expand_state *state) // gerer l etat des quotes
 }
 
 void	handle_expansion(char *input, int *i, t_expand_state *state,
-		t_shell *shell) // determine le nom, l extrait, obtient la valeur et l ajoute au resultat
+						t_shell *shell) // determine le nom, l extrait,
+							//obtient la valeur et l ajoute au resultat
 {
-	char	*var_name;
-	char	*var_value;
-	int		len;
+	char *var_name;
+	char *var_value;
+	int len;
 
 	(*i)++;
 	if (!input[*i])
@@ -99,7 +103,7 @@ void	handle_expansion(char *input, int *i, t_expand_state *state,
 		append_char(&state->result, '$');
 		return ;
 	}
-	if(handle_special_var(input[*i], i, state, shell))
+	if (handle_special_var(input[*i], i, state, shell))
 		return ;
 	len = get_var_name_length(input + *i);
 	if (len == 0)
@@ -117,7 +121,6 @@ void	handle_expansion(char *input, int *i, t_expand_state *state,
 	free(var_value);
 	*i += len;
 }
-
 
 int	get_var_name_length(const char *str)
 {
@@ -164,8 +167,8 @@ void	append_string(char **dst, const char *src)
 
 char	*get_env_value(const char *name, t_shell *shell)
 {
-	char *full_var;
-	int i;
+	char	*full_var;
+	int		i;
 
 	i = 0;
 	while (shell->env[i])
@@ -181,9 +184,9 @@ char	*get_env_value(const char *name, t_shell *shell)
 	return (ft_strdup(""));
 }
 
-int handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
+int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (c == '?')
 	{
@@ -191,7 +194,7 @@ int handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 		append_string(&state->result, tmp);
 		free(tmp);
 		(*i)++;
-		return(1) ;
+		return (1);
 	}
 	else if (c == '$')
 	{
@@ -201,7 +204,7 @@ int handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 		(*i)++;
 		return (1);
 	}
-	else if(c == '0')
+	else if (c == '0')
 	{
 		append_string(&state->result, shell->shell_name);
 		(*i)++;
@@ -212,5 +215,8 @@ int handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 
 /*
 $$ -> pid du shell
-$? -> statut de sortie 
-$0 -> nom du shell*/
+$? -> statut de sortie
+$0 -> nom du shell
+
+gerer aussi les cas ou j export apres je dois expand a verifier?
+*/

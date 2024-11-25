@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 19:31:33 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/24 14:16:33 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/25 17:55:14 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,11 @@ int ft_check_word(t_shell *shell)
 int ft_start_cmd(t_shell *shell)
 {
 	t_exec_line *line;
+	
 	if (ft_check_word(shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	line = ft_init_queue_exec();
+	shell->exec_line = line;
 	ft_cpy_cmd(line,shell);
 	ft_display_exec(line);
 	return (EXIT_SUCCESS);

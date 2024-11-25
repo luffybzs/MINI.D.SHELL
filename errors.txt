@@ -1,0 +1,57 @@
+Code 0 : Succès
+
+
+Commande exécutée avec succès
+Programme terminé normalement
+
+
+Code 1 : Erreur générale
+
+
+Erreurs de commande basiques
+Erreurs d'utilisation
+Erreurs d'arguments invalides
+
+
+Code 2 : Erreur de syntaxe
+
+
+Parsing errors (quotes non fermées, pipes mal placés)
+Erreurs de syntaxe dans les commandes
+Utilisation incorrecte des opérateurs
+
+
+Code 126 : Commande trouvée mais non exécutable
+
+
+Problème de permissions
+Fichier existe mais n'est pas exécutable
+
+
+Code 127 : Commande non trouvée
+
+
+Programme/commande introuvable dans le PATH
+Commande inexistante
+
+
+Code 128 : Erreur d'argument invalide pour exit
+
+
+Argument non numérique pour exit
+Nombre en dehors de la plage valide (0-255)
+
+
+Code 128+n : Signaux
+
+
+130 (128+2) : SIGINT (Ctrl+C)
+131 (128+3) : SIGQUIT (Ctrl+)
+Les autres signaux suivent la même logique
+
+
+Code 255 : Exit avec statut out of range
+
+
+Valeur de retour hors de la plage 0-255
+Se wrap autour pour rester dans cette plage

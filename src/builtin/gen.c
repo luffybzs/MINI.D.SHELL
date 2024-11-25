@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:30:54 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/24 15:50:39 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:25:56 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int	execute_builtin(t_token *cmd, t_shell *shell)
 		return (ft_env(shell));
 	else if (ft_strcmp(cmd->content, "pwd") == 0)
 		return (ft_pwd(shell));
+	else if (ft_strcmp(cmd->content, "export") == 0)
+		return (ft_export(shell));
+	
 	//implementer les autres builtins
 	return (0);
 }

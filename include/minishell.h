@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/24 15:13:59 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:57:03 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,26 @@
 typedef struct s_redir
 {
 	char *file; // le nom du ficher a open et dup2
-	int type; // soit infile ou outfile
-	struct s_redir *next;
-}       t_redir; 
+	int type;   // soit infile ou outfile
+	struct s_redir	*next;
+}					t_redir;
 
 typedef struct s_redir_line
 {
-	t_redir *head;
-}       t_redir_line;
-
+	t_redir			*head;
+}					t_redir_line;
 
 typedef struct s_exec
 {
-	char **cmd; // le double tableau avc les suffix exemple "ls", "-la"
-	t_redir  *redir; // la liste de redir (pide, <, >, >> )  
-	struct s_exec *next;
-}       t_exec;
+	char **cmd;     // le double tableau avc les suffix exemple "ls", "-la"
+	t_redir *redir; // la liste de redir (pide, <, >, >> )
+	struct s_exec	*next;
+}					t_exec;
+
 typedef struct s_exec_line
 {
-	t_exec *first;
-}      t_exec_line;
+	t_exec			*first;
+}					t_exec_line;
 
 typedef struct s_token
 {
@@ -98,8 +98,8 @@ typedef struct s_shell
 	char			**env;
 	t_env			*head;
 	t_command_line	*command;
-	t_exec_line *exec_line;
-	//gerer les cas speciaux de l expand
+	t_exec_line		*exec_line;
+	// gerer les cas speciaux de l expand
 	char *shell_name; // $0
 	pid_t shell_pid;  //$$
 	int exit_status;  // $?
@@ -137,11 +137,11 @@ void				ft_error_token(char *content);
 void				ft_error_pide(char *content);
 void				ft_error_double_redir(char *content);
 void				ft_error_quote(void);
-int ft_is_file(int token);
+int					ft_is_file(int token);
 int					ft_check_pide_and_redir(t_command_line *line);
 void				ft_error_end_redir(void);
-int ft_struc_for_exec(t_shell *shell);
-int ft_start_cmd(t_shell *shell);
+int					ft_struc_for_exec(t_shell *shell);
+int					ft_start_cmd(t_shell *shell);
 // environnement management
 
 t_shell				*env_init(char **env);
@@ -162,7 +162,7 @@ char				*get_var_value(char *var_name, t_shell *shell);
 int					check_expand_state(char *str, t_expand_state *exp);
 int					should_expand(t_expand_state *exp);
 
-char				*expand_var(char *input, t_shell *shell);
+char				*expand_var(char *input, t_shell *shell, t_token *current);
 int					handle_quotes(char c, t_expand_state *state);
 void				handle_expansion(char *input, int *i, t_expand_state *state,
 						t_shell *shell);
