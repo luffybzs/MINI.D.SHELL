@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:09:23 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/24 16:15:47 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:10:23 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,8 @@ gerer: cd sans arguments (va au repertoire HOME)
 cd - (va OLDPWD remonte au repertoire precedent)
 cd chemin (vas au chemin precisee absolu ou relatif)
 
-gestion des erreurs : -droits d accees
+gestion des erreurs :
+ - droits d accees
  - repertoire inexistant
  - chemin invalide
  - variable d environnement manquant
