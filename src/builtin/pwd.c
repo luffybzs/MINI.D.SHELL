@@ -3,28 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:48:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/23 15:56:27 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/24 15:58:57 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
-int ft_pwd(t_shell *shell)
+int	ft_pwd(t_shell *shell)
 {
-	t_env *current;
+	char *cwd;
 
-	current = shell->head;
-	while (current)
+	(void)shell;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
 	{
-		if (ft_strcmp(current->key, "OLDPWD") == 0) // ne marche pas il faut utlise la fonction getcwd psk si je unset le chemin il faut comme le trouvrer
-		{
-			printf("%s\n", current->value);
-			return (EXIT_SUCCESS);
-		}
-		current = current->next;
+		shell->exit_status = 1;
+		perror("pwd");
+		return (1);
 	}
-	return (EXIT_FAILURE);
+	printf("%s\n", cwd);
+	free(cwd);
+	shell->exit_status = 0;
+	return (0);
 }

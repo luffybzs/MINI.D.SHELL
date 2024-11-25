@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/23 22:25:25 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/24 15:13:59 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,9 +172,7 @@ int					get_var_name_length(const char *str);
 void				append_char(char **str, char c);
 void				append_string(char **dst, const char *src);
 char				*get_env_value(const char *name, t_shell *shell);
-// bulltin
-int ft_env(t_shell *shell);
-int ft_pwd(t_shell *shell);
+
 // test
 
 void				print_list(t_shell *list);

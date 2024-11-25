@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:30:54 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/24 15:11:59 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/24 15:50:39 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,16 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-int execute_builtin(t_token *cmd, t_shell *shell)
+int	execute_builtin(t_token *cmd, t_shell *shell)
 {
-    if (ft_strcmp(cmd->content, "echo") == 0)
-        return (ft_echo(cmd, shell));
-	 else if (ft_strcmp(cmd->content, "cd") == 0)
-         return (ft_cd(cmd,shell));
+	if (ft_strcmp(cmd->content, "echo") == 0)
+		return (ft_echo(cmd, shell));
+	else if (ft_strcmp(cmd->content, "cd") == 0)
+			return (ft_cd(shell));
 	else if (ft_strcmp(cmd->content, "env") == 0)
 		return (ft_env(shell));
 	else if (ft_strcmp(cmd->content, "pwd") == 0)
-    	   return (ft_pwd(shell));
-    //implementer les autres builtins
-    return (0);
+		return (ft_pwd(shell));
+	//implementer les autres builtins
+	return (0);
 }
-
