@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:02:29 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/26 15:34:07 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:00:28 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,26 @@ int	ft_export(t_shell *shell)
 {
 	char	*looking_for;
 	t_exec	*current;
-	int i;
-	
+	int		i;
+
 	i = 1;
-	printf("entrer dans la boucle export\n");
+	// printf("entrer dans la boucle export\n");
 	current = shell->exec_line->first;
 	if (!current->cmd[0] || !current->cmd[1])
 		return (printf("encore moins a gratter"), 1);
-	// censer afficheer les variable exporte
+	// censer afficheer les variable exporte a vori ulterieurement
 	while (shell->exec_line->first->cmd[i])
 	{
-	looking_for = shell->exec_line->first->cmd[i];
-	if (!looking_for)
-		return (printf("rien a gratter\n"), 1); // gerer l erreur
-	if (is_name_ok(looking_for, shell) == 1)
-		return (printf("%d\n", is_name_ok(looking_for, shell)), 0);
-	i++;
+		looking_for = shell->exec_line->first->cmd[i];
+		if (!looking_for)
+			return (printf("rien a gratter\n"), 1); // gerer l erreur
+		if (is_name_ok(looking_for, shell) == 1)
+			return (/*printf("%d\n", is_name_ok(looking_for, shell)),*/ 0);
+		if(is_already_in_list(looking_for, shell) == 0)
+			handle_modif(looking_for, shell);
+		else
+			add_new_env(looking_for,shell);	
+		i++;
 	}
 	printf("parfait\n");
 	return (0);
@@ -56,6 +60,42 @@ int	is_name_ok(char *str, t_shell *shell)
 	}
 	return (0);
 }
+
+int 	is_already_in_list(char *looking_for, t_shell *shell)
+{
+	int i = 0;
+	t_env *current;
+	t_env *prev;
+	
+	while (looking_for[i] != '=')
+		i++;
+	current = shell->head;
+	prev = NULL;
+	while(current)
+	{
+		
+		if(ft_strncmp(looking_for, current->key,i) == 0)
+		{
+			
+			
+			return (handle_modif(looking_for, shell));
+		}	
+		prev = current;
+		current = current->next;
+	}
+	return (1);
+}
+
+void	handle_modif(char *looking_for,t_shell *shell)
+{
+	t_env *current;
+	current = shell->head;
+	while (current)
+	{
+	
+	}	
+}
+
 // rependre dedans et continuer les verification avant de modifier sur la liste chaionee
 
 /*

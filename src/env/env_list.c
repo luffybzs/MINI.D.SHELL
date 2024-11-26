@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:49:34 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/16 19:28:14 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:40:10 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_env	*create_env_node(char *env_str)
 		free_env_node(new);
 		return (NULL);
 	}
+	new->export = 0;
 	new->next = NULL;
 	return (new);
 }
