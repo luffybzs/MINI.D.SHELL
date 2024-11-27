@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/25 14:47:49 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:58:07 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_command_line	*ft_loop_token(char *prompt)
 	while (prompt[i])
 	{
 		if (ft_skip_spaces(prompt, &i) == EXIT_FAILURE)
-			break;
+			break ;
 		if (prompt[i])
 			ft_add_elem(line, prompt, &i);
 	}
@@ -61,7 +61,7 @@ void	ft_display(t_command_line *line)
 
 int	ft_parsing_prompt(char *prompt, t_shell *shell)
 {
-	t_command_line *line;
+	t_command_line	*line;
 
 	if (ft_check_open_quote(prompt) == EXIT_FAILURE)
 		return (ft_error_quote(), EXIT_FAILURE);
@@ -70,13 +70,13 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 		return (EXIT_FAILURE);
 	if (ft_check_all_list(line) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (ft_expand(line, shell) ==  EXIT_FAILURE)
+	if (ft_expand(line, shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	shell->command = line;
-	ft_display(line);
+	// ft_display(line);
 	if (ft_struc_for_exec(shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if(ft_execute_command(shell) == EXIT_FAILURE)
-		return(EXIT_FAILURE);
+	if (ft_execute_command(shell) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (0);
 }

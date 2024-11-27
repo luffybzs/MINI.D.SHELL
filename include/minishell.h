@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/26 18:39:13 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:08:30 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
-	int 			export;
+	// int 			export;
 	struct s_env	*next;
 }					t_env;
 

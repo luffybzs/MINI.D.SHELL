@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:02:29 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/26 19:00:28 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:42:38 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,34 @@
 
 int	ft_export(t_shell *shell)
 {
-	char	*looking_for;
 	t_exec	*current;
+	t_env	*existing;
 	int		i;
+	int		status;
 
 	i = 1;
-	// printf("entrer dans la boucle export\n");
+	status = 0;
 	current = shell->exec_line->first;
-	if (!current->cmd[0] || !current->cmd[1])
-		return (printf("encore moins a gratter"), 1);
-	// censer afficheer les variable exporte a vori ulterieurement
-	while (shell->exec_line->first->cmd[i])
+	if (!current->cmd[1])
+		return (ft_export_without_arg(shell));
+	while (current->cmd[i])
 	{
-		looking_for = shell->exec_line->first->cmd[i];
-		if (!looking_for)
-			return (printf("rien a gratter\n"), 1); // gerer l erreur
-		if (is_name_ok(looking_for, shell) == 1)
-			return (/*printf("%d\n", is_name_ok(looking_for, shell)),*/ 0);
-		if(is_already_in_list(looking_for, shell) == 0)
-			handle_modif(looking_for, shell);
+		if (is_name_ok(current->cmd[i], shell))
+			status = 1;
 		else
-			add_new_env(looking_for,shell);	
+		{
+			existing = ft_find_env(shell, current->cmd[i]);
+			if (!existing)
+				add_new_env(current->cmd[i], shell);
+			else if (ft_strchr(current->cmd[i], '='))
+			{
+				free(existing->value);
+				existing->value = get_value(current->cmd[i]);
+			}
+		}
 		i++;
 	}
-	printf("parfait\n");
-	return (0);
+	return (status);
 }
 
 int	is_name_ok(char *str, t_shell *shell)
@@ -46,14 +49,15 @@ int	is_name_ok(char *str, t_shell *shell)
 	int	i;
 
 	i = 0;
-	if ((str[i] != '_' && !ft_isalpha(str[i])) || str[i] == '=')
+	if (!str || !*str)
 		return (printf("%s: export '%s': not a valid identifier\n",
 				shell->shell_name, str), 1); // gerer l erreur
-	i++;
+	if ((str[0] != '_' && !ft_isalpha(str[i])))
+		return (printf("%s: export '%s': not a valid identifier\n",
+				shell->shell_name, str), 1); // gerer l erreur
 	while (str[i] && str[i] != '=')
 	{
-		if ((str[i] != '_' && !ft_isalpha(str[i]) && !ft_isalnum(str[i])
-				&& str[i] != '='))
+		if ((str[i] != '_' && !ft_isalnum(str[i]) && str[i] != '='))
 			return (printf("%s: export '%s': not a valid identifier\n",
 					shell->shell_name, str), 1); // gerer l erreur
 		i++;
@@ -61,44 +65,133 @@ int	is_name_ok(char *str, t_shell *shell)
 	return (0);
 }
 
-int 	is_already_in_list(char *looking_for, t_shell *shell)
+t_env	*ft_find_env(t_shell *shell, char *key)
 {
-	int i = 0;
-	t_env *current;
-	t_env *prev;
-	
-	while (looking_for[i] != '=')
-		i++;
-	current = shell->head;
-	prev = NULL;
-	while(current)
-	{
-		
-		if(ft_strncmp(looking_for, current->key,i) == 0)
-		{
-			
-			
-			return (handle_modif(looking_for, shell));
-		}	
-		prev = current;
-		current = current->next;
-	}
-	return (1);
-}
+	t_env	*current;
+	size_t	key_len;
+	char	*equal_sign;
 
-void	handle_modif(char *looking_for,t_shell *shell)
-{
-	t_env *current;
+	if (!key || !shell || !shell->head)
+		return (NULL);
+	equal_sign = ft_strchr(key, '=');
+	if (equal_sign)
+		key_len = (size_t)(equal_sign - key);
+	else
+		key_len = ft_strlen(key);
 	current = shell->head;
 	while (current)
 	{
-	
-	}	
+		if (ft_strlen(current->key) == key_len && !ft_strncmp(key, current->key,
+				key_len))
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
 }
 
-// rependre dedans et continuer les verification avant de modifier sur la liste chaionee
+char	*get_value(char *str)
+{
+	char	*part;
 
+	part = ft_strchr(str, '=');
+	if (!part)
+		return (NULL);
+	if (*(part + 1) == '\0')
+		return (ft_strdup(""));
+	return (ft_strdup(part + 1));
+}
+
+void	add_new_env(char *str, t_shell *shell)
+{
+	char	*new_key;
+	char	*new_value;
+	char	*equal_sign;
+	t_env	*new;
+	t_env	*current;
+
+	if (!str || !shell)
+		return ;
+	current = shell->head;
+	new = malloc(sizeof(t_env));
+	if (!new)
+		return ;
+	new->key = NULL;
+	new->value = NULL;
+	equal_sign = ft_strchr(str, '=');
+	if (!equal_sign)
+	{
+		new_key = ft_strdup(str);
+		new_value = ft_strdup("");
+		if (!new_key || !new_value)
+		{
+			ft_free_env_node(new);
+			return ; // free tout
+		}
+	}
+	else
+	{
+		new_key = ft_substr(str, 0, equal_sign - str);
+		if (*(equal_sign + 1) == '\0')
+			new_value = ft_strdup("");
+		else
+			new_value = ft_strdup(equal_sign + 1);
+		if (!new_key || !new_value)
+			return ; // free tout
+	}
+	if (!new_key || !new_value)
+	{
+		free_env_node(new);
+		free_env_node(current);
+		return ;
+	}
+	new->key = new_key;
+	new->value = new_value;
+	if (!shell->head)
+		shell->head = new;
+	else
+	{
+		while (current->next)
+			current = current->next;
+		current->next = new;
+	}
+	new->next = NULL;
+	return ;
+}
+
+int	ft_export_without_arg(t_shell *shell)
+{
+	t_env	*current;
+
+	current = shell->head;
+	while (current)
+	{
+		if (current->value[0])
+			printf("declare -x %s=\"%s\"\n", current->key, current->value);
+		else
+			printf("declare -x %s\n", current->key);
+		current = current->next;
+	}
+	return (EXIT_SUCCESS);
+}
+
+void	*ft_free_env_node(t_env *node)
+{
+	if (!node)
+		return (NULL);
+	if (node->key)
+		free(node->key);
+	if (node->value)
+		free(node->value);
+	free(node);
+	return (NULL);
+}
 /*
+
+
+
+commande env: affiche toute la liste chainee qui possede une value
+diffference avec export sans argument qui affihce toute la liste chainee sans distinction
+
 if first caractere is not a _ or a letter error:
 bash-5.1$ export  5test=abc
 bash: export: `5test=abc': not a valid identifier

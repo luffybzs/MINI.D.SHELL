@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/25 18:25:11 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:06:30 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 // et le code d exit
 
 int	ft_expand(t_command_line *line, t_shell *shell)
-		// parcours les token et appell expand var pour chaque token
 {
 	t_token *current;
 	char *expanded;
@@ -165,24 +164,46 @@ void	append_string(char **dst, const char *src)
 	*dst = new;
 }
 
+// char	*get_env_value(const char *name, t_shell *shell)
+// {
+// 	char	*full_var;
+// 	int		i;
+
+// 	i = 0;
+// 	while (shell->env[i])
+// 	{
+// 		full_var = shell->env[i];
+// 		if (ft_strncmp(full_var, name, ft_strlen(name)) == 0
+// 			&& full_var[ft_strlen(name)] == '=')
+// 		{
+// 			return (ft_strdup(full_var + ft_strlen(name) + 1));
+// 		}
+// 		i++;
+// 	}
+// 	return (ft_strdup(""));
+// }
+
 char	*get_env_value(const char *name, t_shell *shell)
 {
 	char	*full_var;
 	int		i;
-
+	t_env *env;
+	
 	i = 0;
-	while (shell->env[i])
+	env = shell->head;
+	while (env)
 	{
-		full_var = shell->env[i];
-		if (ft_strncmp(full_var, name, ft_strlen(name)) == 0
-			&& full_var[ft_strlen(name)] == '=')
+		full_var = env->key;
+		if (ft_strcmp(full_var,name) == 0
+			&& env->value[0] != 0)
 		{
-			return (ft_strdup(full_var + ft_strlen(name) + 1));
+			return (ft_strdup(env->value));
 		}
-		i++;
+		env = env->next;
 	}
 	return (ft_strdup(""));
 }
+
 
 int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 {

@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:02:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/25 16:46:41 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:57:56 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_echo(t_token *cmd, t_shell *shell)
 	if (current && ft_strcmp(current->content, "-n") == 0)
 	{
 		is_n = 1;
-		if(!current->next)
+		if (!current->next)
 			return (1); // gerer le bon code de retour
 		current = current->next;
 		while (ft_strcmp(current->content, "-n") == 0)
