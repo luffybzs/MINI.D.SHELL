@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/28 17:17:31 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:01:58 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char *ft_good_path(t_shell *shell, t_exec *current)
 		free(res);
 		i++;	
 	}
-	printf("%s not good\n", current->cmd[0]);
+	//printf("%s not good\n", current->cmd[0]);
 	return (NULL);
 }
 

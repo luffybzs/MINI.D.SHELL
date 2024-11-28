@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/28 17:49:36 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:39:29 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_shell
 	char			**path;
 	t_env			*head;
 	t_command_line	*command;
-	t_exec		*first_exec;
+	t_exec			*first_exec;
 	// gerer les cas speciaux de l expand
 	char *shell_name; // $0
 	pid_t shell_pid;  //$$
@@ -115,9 +115,13 @@ typedef struct s_expand_state
 }					t_expand_state;
 
 //-------------------------------------//
-char *ft_good_path(t_shell *shell, t_exec *current);
-int ft_test(t_shell *shell);
-int ft_get_env(t_shell *shell);
+t_token				*ft_add_redir_exec(t_token *current, t_redir *file,
+						t_exec *new_cmd);
+void				ft_lstadd_back_exec(t_exec **current, t_exec *newcmd);
+void				ft_print_exec(t_shell *shell);
+char				*ft_good_path(t_shell *shell, t_exec *current);
+int					ft_test(t_shell *shell);
+int					ft_get_env(t_shell *shell);
 int					ft_parsing_prompt(char *prompt, t_shell *shell);
 int					ft_check_open_quote(char *prompt);
 
@@ -146,8 +150,8 @@ int					ft_check_pide_and_redir(t_command_line *line);
 void				ft_error_end_redir(void);
 int					ft_struc_for_exec(t_shell *shell);
 int					ft_start_cmd(t_token *current);
-t_exec_line	*ft_init_queue_exec(void);
-int ft_nb_cmd(t_token *current);
+t_exec_line			*ft_init_queue_exec(void);
+int					ft_nb_cmd(t_token *current);
 // environnement management
 
 t_shell				*env_init(char **env);

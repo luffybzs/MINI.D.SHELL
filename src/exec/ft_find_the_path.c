@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 00:42:24 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/27 23:25:41 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/28 20:29:28 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int ft_len_env(t_shell *shell)
 	
 	i = 0;
 	current = shell->head;
-	while (current->next)
+	while (current)
 	{
 		i++;
 		current = current->next;
