@@ -5,6 +5,7 @@
 		"libft.h": "c",
 		"minishell.h": "c",
 		"gc.h": "c",
-		"builtin.h": "c"
+		"builtin.h": "c",
+		"type_traits": "c"
 	}
 }

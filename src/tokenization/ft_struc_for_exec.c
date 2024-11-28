@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_struc_for_exec.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/28 01:01:02 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/28 17:23:08 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,76 @@ void ft_display_file(t_redir_line *lst)
 	printf("\nFIN DE LA DEUXIME LIST DE FILE\n\n");
 }
 
+void ft_cpy_cmd(t_token *current, t_exec *exec_current)
+{
+	int len;
+	char **tab;
+	int i;
+
+	i = 0;
+	len = ft_nb_cmd(current);
+	tab = malloc(sizeof(char *) * (len + 1));
+	while (current && current->type != PIPE)
+	{
+		if (current->type == WORD)
+		{
+			tab[i] = current->content;
+			i++;
+		}
+		current = current->next;
+	}
+	tab[i] = NULL;
+	exec_current->cmd = tab;
+}
+
 int ft_struc_for_exec(t_shell *shell)
 {
-	t_redir_line *lst;
+	t_token *current;
+	t_exec *first_cmd;
+	t_exec *buff_exec;
+	t_exec *new_cmd;
+	t_redir *file;
+	t_redir *buff;
 	
-	if (ft_check_file(shell) == EXIT_SUCCESS)
+	first_cmd = NULL;
+	current = shell->command->first;
+	while (current)
+	{
+		new_cmd = malloc(sizeof(t_exec));
+		ft_bzero(new_cmd, sizeof(t_exec));
+		ft_cpy_cmd(current, new_cmd);
+		while (current && current->type != PIPE)
 		{
-			lst = ft_init_queue_redir();
-			ft_cpy_file(shell, lst);
-			ft_display_file(lst);
+			if (ft_is_file(current->type) != -1)
+			{
+				file = malloc(sizeof(t_redir));
+				file->file = current->next->content;
+				file->type = ft_is_file(current->type);
+				file->next = NULL;
+				if (new_cmd->redir == NULL)
+					new_cmd->redir = file;
+				else
+				{
+					buff = new_cmd->redir;
+					while (buff->next)
+						buff = buff->next;
+					buff->next = file;
+				}
+			}
+			current = current->next;
 		}
-	if (ft_start_cmd(shell) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		if (first_cmd == NULL)
+			first_cmd = new_cmd;
+		else
+		{
+			buff_exec = first_cmd;
+			while (buff_exec->next)
+				buff_exec = buff_exec->next;
+			buff_exec->next = new_cmd;
+		}
+		if (current)
+			current = current->next;
+	}
+	shell->first_exec = first_cmd;
 	return (EXIT_SUCCESS);
 }

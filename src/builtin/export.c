@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:02:29 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/27 16:42:38 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:19:10 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_export(t_shell *shell)
 
 	i = 1;
 	status = 0;
-	current = shell->exec_line->first;
+	current = shell->first_exec;
 	if (!current->cmd[1])
 		return (ft_export_without_arg(shell));
 	while (current->cmd[i])

@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:02:25 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/27 18:49:31 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:20:13 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	ft_unset(t_shell *shell)
 
 	i = 1;
 	status = 0;
-	current = shell->exec_line->first;
-	if (!shell || !shell->exec_line || !shell->exec_line->first
+	current = shell->first_exec;
+	if (!shell || !shell->first_exec
 		|| !current->cmd)
 		return (1);
 	if (!current->cmd)

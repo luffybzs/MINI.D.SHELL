@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:58:44 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/11/20 14:23:08 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:10:59 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,6 @@ int	ft_skip_spaces(char *str, int *i)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_check_open_quote(char *prompt)
-{
-	int		i;
-	char	quote;
-
-	i = 0;
-	while (prompt[i])
-	{
-		if (prompt[i] == '\'' || prompt[i] == '"')
-		{
-			quote = prompt[i++];
-			while (prompt[i] && prompt[i] != quote)
-				i++;
-			if (!prompt[i])
-				return (EXIT_FAILURE);
-		}
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
 
 int	ft_len_word(char *command, int i, char c)
 {

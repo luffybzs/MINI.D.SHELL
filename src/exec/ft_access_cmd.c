@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/27 23:20:48 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/28 17:17:31 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int ft_test(t_shell *shell)
 	t_exec *current;
 	char *goodpath;
 	
-	current = shell->exec_line->first;
+	current = shell->first_exec;
 	while (current)
 	{
 		goodpath = ft_good_path(shell, current);
