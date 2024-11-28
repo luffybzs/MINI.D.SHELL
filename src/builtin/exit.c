@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:51:54 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/28 17:23:08 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:07:28 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,39 +44,39 @@ static long	ft_atoi_spe(char *str)
 	}
 	return (res * sign);
 }
-// static int is_valid_exit_arg(char *cmd)
-// {
-// 	unsigned char value;
+static int is_valid_exit_arg(char *cmd)
+{
+	unsigned char value;
 	
-// 	value = ft_atoi_spe(cmd);
-// 	printf("valeur de l exit = %d\n", value);
-// 	return (value);
-// }
+	value = ft_atoi_spe(cmd);
+	printf("valeur de l exit = %d\n", value);
+	return (value);
+}
 
 
-// int	ft_exit(t_shell *shell)
-// {
-// 	t_exec	*current;
-// 	int		i;
+int	ft_exit(t_shell *shell)
+{
+	t_exec	*current;
+	int		i;
 
-// 	i = 0;
-// 	current = shell->exec_line->first;
-// 	if (!current->cmd[1])
-// 	{
-// 		return (0);
-// 		// retour de exit sans argument numerique
-// 	}
-// 	while (current->cmd[i])
-// 		i++;
-// 	if(i > 2)
-// 		return (printf("exit: too many arguments\n"), shell->exit_status);
-// 	i = 0;
-// 	if (is_valid_exit_arg(current->cmd[1]) == 0)
-// 		return(printf("\n"), shell->exit_status);
+	i = 0;
+	current = shell->first_exec;
+printf("arrive ici avec cmd[0] == %s et cmd[1] == %s\n", current->cmd[0], current->cmd[1]);
+	if (!current->cmd[1])
+	{
+		printf("no args so %d\n", shell->exit_status);
+		return (shell->exit_status);
+	}
+	while (current->cmd[i])
+		i++;
+	if(i > 2)
+		return (printf("exit: too many arguments\n"), shell->exit_status);
+	i = 0;
+	if (is_valid_exit_arg(current->cmd[1]) == 0)
+		return(printf("\n"), shell->exit_status);
 	
-	
-// 	// if(ft_isalnum_spe(current->cmd[1]) == 1)
-// }
+	return (printf("exit fini\n"), shell->exit_status);
+}
 
 /*
 "exit: [arg]: numeric argument required" :
@@ -95,14 +95,41 @@ si l'argument n'est pas numérique
 
 4.Conversion du string en nombre avec gestion d'erreurs
 	itoa...;
-*/
 
-int main(int ac, char **av)
-{
-	(void)ac;
-	unsigned char	test;
-	test = ft_atoi_spe(av[1]);
-	printf("valeur de test = %d", test);
-	return 0;
-	 
-}
+Code 0 : Succès
+
+
+Commande exécutée avec succès
+Programme terminé normalement
+
+
+Code 1 : Erreur générale
+
+
+Erreurs de commande basiques
+Erreurs d'utilisation
+Erreurs d'arguments invalides
+
+
+Code 2 : Erreur de syntaxe
+
+
+Parsing errors (quotes non fermées, pipes mal placés)
+Erreurs de syntaxe dans les commandes
+Utilisation incorrecte des opérateurs
+
+
+Code 126 : Commande trouvée mais non exécutable
+
+
+Problème de permissions
+Fichier existe mais n'est pas exécutable
+
+
+Code 127 : Commande non trouvée
+
+
+Programme/commande introuvable dans le PATH
+Commande inexistante
+
+*/

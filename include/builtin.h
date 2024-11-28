@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:55:51 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/27 18:48:46 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:34:09 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int	ft_unset(t_shell *shell);
 int	is_name_ok_unset(char *str, t_shell *shell);
 void	looking_and_sup(char *str, t_shell *shell);
 
+/* exit */
+
+int	ft_exit(t_shell *shell);
 
 
 #endif

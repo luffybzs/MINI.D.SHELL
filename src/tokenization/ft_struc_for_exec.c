@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/28 17:23:08 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:06:47 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void ft_cpy_cmd(t_token *current, t_exec *exec_current)
 	tab = malloc(sizeof(char *) * (len + 1));
 	while (current && current->type != PIPE)
 	{
-		if (current->type == WORD)
+		if (current->type == WORD || current->type == SFX)
 		{
 			tab[i] = current->content;
 			i++;
