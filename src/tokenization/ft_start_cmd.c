@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 19:31:33 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/25 17:55:14 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/28 01:02:46 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ char **ft_add_to_tab(t_token *current, char **tab)
 		if (current->type == WORD || current->type == SFX)
 			{
 				tab[i] = ft_strdup(current->content);
+				if (!tab[i])
+					return (NULL);
 				i++;
 			}
 			current = current->next;
@@ -92,6 +94,8 @@ void ft_cpy_cmd(t_exec_line *line, t_shell *shell)
 			if (!tab)
 				return ;
 			tab = ft_add_to_tab(current, tab);
+			if(!tab)
+				return ;
 			while (current && current->type != PIPE)
 				current = current->next;
 			ft_add_tab_cmd(line,tab);	

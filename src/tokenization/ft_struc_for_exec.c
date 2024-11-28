@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/24 14:21:21 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/28 01:01:02 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ void  ft_cpy_file(t_shell *shell, t_redir_line *redir)
 		type = ft_is_file(current->type);
 		if (type != -1)
 		{
-			ft_init_lst_redir(redir, type, current->next->content);
+			if (type == PIPE)
+				ft_init_lst_redir(redir, type, current->content);
+			else
+				ft_init_lst_redir(redir, type, current->next->content);
 		}
 		current = current->next;
 	}

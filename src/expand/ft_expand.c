@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/27 18:06:30 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/27 22:52:59 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,10 +186,8 @@ void	append_string(char **dst, const char *src)
 char	*get_env_value(const char *name, t_shell *shell)
 {
 	char	*full_var;
-	int		i;
 	t_env *env;
 	
-	i = 0;
 	env = shell->head;
 	while (env)
 	{

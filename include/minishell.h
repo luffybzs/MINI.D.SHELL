@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/27 14:08:30 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/11/27 23:27:19 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ typedef struct s_env
 typedef struct s_shell
 {
 	char			**env;
+	char			**env_upt;
+	char			**path;
 	t_env			*head;
 	t_command_line	*command;
 	t_exec_line		*exec_line;
@@ -114,7 +116,9 @@ typedef struct s_expand_state
 }					t_expand_state;
 
 //-------------------------------------//
-
+char *ft_good_path(t_shell *shell, t_exec *current);
+int ft_test(t_shell *shell);
+int ft_get_env(t_shell *shell);
 int					ft_parsing_prompt(char *prompt, t_shell *shell);
 int					ft_check_open_quote(char *prompt);
 

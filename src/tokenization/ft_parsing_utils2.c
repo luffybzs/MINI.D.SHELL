@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:49:24 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/23 19:23:34 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/28 00:56:18 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ int ft_is_file(int token)
 		return (INFILE);
 	else if (token == LL_RED)
 		return (END_OF_FILE);
+	else if (token == PIPE)
+			return (PIPE);
 	return (-1);
 }
