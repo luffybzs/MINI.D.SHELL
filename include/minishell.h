@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/30 02:15:20 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/30 23:07:19 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 
 typedef struct s_redir
 {
-	char **heredoc; // cpy le contenu du heredoc
+	char *heredoc; // cpy le contenu du heredoc
 	char *file; // le nom du ficher a open et dup2
 	int type;   // soit infile ou outfile
 	struct s_redir	*next;
@@ -117,8 +117,9 @@ typedef struct s_expand_state
 }					t_expand_state;
 
 //-------------------------------------//
+int ft_check_heredoc(t_shell *shell);
 t_token				*ft_add_redir_exec(t_token *current, t_redir *file,
-						t_exec *new_cmd);
+						t_exec *new_cmd);					
 int 				ft_start_exec(t_shell *shell);
 void				ft_lstadd_back_exec(t_exec **current, t_exec *newcmd);
 void				ft_print_exec(t_shell *shell);

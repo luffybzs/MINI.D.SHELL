@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/30 03:03:12 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 00:52:31 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,21 @@ void ft_open_outfile_append(char *file, t_shell *shell)
 	close(fd);
 }
 
+void ft_open_heredoc(t_redir *current, t_shell *shell)
+{
+	int fd[2];
+	(void) shell;
+	if (pipe(fd) == -1)
+	{
+		ft_putstr_fd("Mini.D.Shell : Error pipe\n", 2);
+		exit(-1);
+	}
+	ft_putstr_fd(current->heredoc, fd[1]);
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+}
+
 int ft_open_file(t_shell *shell,t_redir *current)
 {
 	while (current)
@@ -89,7 +104,8 @@ int ft_open_file(t_shell *shell,t_redir *current)
 			ft_open_outfile(current->file, shell);
 		else if (current->type == APPEND)
 			ft_open_outfile_append(current->file, shell);
-		// heredoc a faire plus tard
+		else if (current->type == END_OF_FILE)
+			ft_open_heredoc(current,shell);
 		current = current->next;
 	}
 	return (EXIT_SUCCESS);
@@ -125,11 +141,13 @@ int ft_fork(t_shell *shell,t_exec *current)
 			if (current->redir)
 			{
 				if (ft_open_file(shell,current->redir) == EXIT_FAILURE)
-					return (EXIT_FAILURE);
+					exit(EXIT_FAILURE);
 			}
+			if (!current->cmd)
+				exit(EXIT_SUCCESS);
 			goodpath = ft_good_path(shell, current);
 			if (!goodpath)
-				return (EXIT_FAILURE);
+				exit(EXIT_FAILURE);
 			execve(goodpath,current->cmd,shell->env_upt);
 		}
 		if (current->next)

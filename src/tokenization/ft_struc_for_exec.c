@@ -6,44 +6,13 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/29 00:49:11 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/30 22:26:44 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_redir_line	*ft_init_queue_redir(void)
-{
-	t_redir_line	*list;
 
-	list = malloc(sizeof(t_redir_line));
-	if (!list)
-		return (NULL);
-	list->head = NULL;
-	return (list);
-}
-
-void	ft_init_lst_redir(t_redir_line *lst, int type, char *file)
-{
-	t_redir	*current;
-	t_redir	*new;
-
-	new = malloc(sizeof(t_redir));
-	if (!new)
-		return ;
-	current = lst->head;
-	new->file = file;
-	new->type = type;
-	new->next = NULL;
-	if (!current)
-		lst->head = new;
-	else
-	{
-		while (current->next)
-			current = current->next;
-		current->next = new;
-	}
-}
 int	ft_check_file(t_shell *shell)
 {
 	t_token	*current;
@@ -57,37 +26,8 @@ int	ft_check_file(t_shell *shell)
 	}
 	return (EXIT_FAILURE);
 }
-void	ft_cpy_file(t_shell *shell, t_redir_line *redir)
-{
-	t_token	*current;
-	int		type;
 
-	current = shell->command->first;
-	while (current->next)
-	{
-		type = ft_is_file(current->type);
-		if (type != -1)
-		{
-			if (type == PIPE)
-				ft_init_lst_redir(redir, type, current->content);
-			else
-				ft_init_lst_redir(redir, type, current->next->content);
-		}
-		current = current->next;
-	}
-}
-void	ft_display_file(t_redir_line *lst)
-{
-	t_redir	*current;
 
-	current = lst->head;
-	while (current)
-	{
-		printf("file [%s] ---> type [%d]\n", current->file, current->type);
-		current = current->next;
-	}
-	printf("\nFIN DE LA DEUXIME LIST DE FILE\n\n");
-}
 
 void	ft_cpy_cmd(t_token *current, t_exec *exec_current)
 {
@@ -170,6 +110,13 @@ void	ft_print_exec(t_shell *shell)
 		current = current->next;
 	}
 }
+void fill_redir(t_redir *file,t_token *current)
+{
+	file->file = current->next->content;
+	file->type = ft_is_file(current->type);
+	file->heredoc = NULL;
+	file->next = NULL;
+}
 t_token	*ft_add_redir_exec(t_token *current, t_redir *file, t_exec *new_cmd)
 {
 	t_redir	*buff;
@@ -181,9 +128,7 @@ t_token	*ft_add_redir_exec(t_token *current, t_redir *file, t_exec *new_cmd)
 			file = malloc(sizeof(t_redir));
 			if (!file)
 				return (NULL);
-			file->file = current->next->content;
-			file->type = ft_is_file(current->type);
-			file->next = NULL;
+			fill_redir(file,current);
 			if (new_cmd->redir == NULL)
 				new_cmd->redir = file;
 			else
@@ -198,7 +143,6 @@ t_token	*ft_add_redir_exec(t_token *current, t_redir *file, t_exec *new_cmd)
 	}
 	return (current);
 }
-
 void	ft_lstadd_back_exec(t_exec **current, t_exec *newcmd)
 {
 	t_exec *ite;
