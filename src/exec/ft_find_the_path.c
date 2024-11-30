@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 00:42:24 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/28 20:29:28 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/30 02:27:10 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,14 @@ int ft_get_env(t_shell *shell)
 	if (!path)
 		return (EXIT_FAILURE);
 	shell->path = path;
-	if (ft_test(shell) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+int ft_start_exec(t_shell *shell)
+{
+	if (ft_get_env(shell) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (ft_exec_loop(shell) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return(EXIT_SUCCESS);
 }

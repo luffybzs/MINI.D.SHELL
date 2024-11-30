@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/28 19:50:14 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/29 00:49:11 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int	ft_struc_for_exec(t_shell *shell)
 		if (current && current->type != PIPE)
 			current = ft_add_redir_exec(current, file, new_cmd);
 		ft_lstadd_back_exec(&first_cmd, new_cmd);
+		new_cmd->pidt = -1;
 		if (current)
 			current = current->next;
 	}

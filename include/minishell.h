@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/28 19:53:53 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/11/30 02:15:20 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 
 typedef struct s_redir
 {
+	char **heredoc; // cpy le contenu du heredoc
 	char *file; // le nom du ficher a open et dup2
 	int type;   // soit infile ou outfile
 	struct s_redir	*next;
@@ -66,6 +67,7 @@ typedef struct s_exec
 {
 	char **cmd;     // le double tableau avc les suffix exemple "ls", "-la"
 	t_redir *redir; // la liste de redir (pide, <, >, >> )
+	int pidt;
 	struct s_exec	*next;
 }					t_exec;
 
@@ -117,6 +119,7 @@ typedef struct s_expand_state
 //-------------------------------------//
 t_token				*ft_add_redir_exec(t_token *current, t_redir *file,
 						t_exec *new_cmd);
+int 				ft_start_exec(t_shell *shell);
 void				ft_lstadd_back_exec(t_exec **current, t_exec *newcmd);
 void				ft_print_exec(t_shell *shell);
 char				*ft_good_path(t_shell *shell, t_exec *current);
@@ -124,7 +127,7 @@ int					ft_test(t_shell *shell);
 int					ft_get_env(t_shell *shell);
 int					ft_parsing_prompt(char *prompt, t_shell *shell);
 int					ft_check_open_quote(char *prompt);
-
+int ft_exec_loop(t_shell *shell);
 t_command_line		*ft_init_queue(void);
 int					is_redirect(char *content);
 void				ft_add_token(char *content, t_command_line *command);
