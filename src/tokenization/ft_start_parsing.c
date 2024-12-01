@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 17:19:32 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 20:27:55 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,22 @@ void	ft_display(t_command_line *line)
 	printf("\nFIN DE LA PREMIER LIST\n");
 }
 
+void	free_line(t_command_line *line)
+{
+	t_token	*current;
+	t_token	*tmp;
+
+	current = line->first;
+	while (current)
+	{
+		tmp = current;
+		current = current->next;
+		free(tmp->content);
+		free(tmp);
+	}
+	free(line);
+}
+
 int	ft_parsing_prompt(char *prompt, t_shell *shell)
 {
 	t_command_line	*line;
@@ -67,21 +83,21 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 		return (ft_error_quote(), EXIT_FAILURE);
 	line = ft_loop_token(prompt);
 	if (line->first == NULL)
-		return (EXIT_FAILURE);
+		return (ft_free(line), EXIT_FAILURE);
 	if (ft_check_all_list(line) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		return (free_line(line), EXIT_FAILURE);
 	if (ft_expand(line, shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	shell->command = line;
 	// ft_display(line);
 	if (ft_struc_for_exec(shell) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		return (free_line(line), EXIT_FAILURE);
 	//ft_print_exec(shell);
 	if (ft_check_heredoc(shell) == EXIT_FAILURE)
-		return(EXIT_FAILURE);
+		return(free_line(line), EXIT_FAILURE);
 	 if (ft_start_exec(shell) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		return (free_line(line), EXIT_FAILURE);
 	if (ft_execute_command(shell) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		return (free_line(line), EXIT_FAILURE);
 	return (0);
 }

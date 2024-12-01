@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 18:10:18 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 19:29:02 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,20 +145,27 @@ int ft_fork(t_shell *shell,t_exec *current)
 			if (current->redir)
 			{
 				if (ft_open_file(shell,current->redir) == EXIT_FAILURE)
+				{
+					ft_free(DESTROY);
 					exit(EXIT_FAILURE);
+				}
 			}
 			
 			if (!current->cmd || !current->cmd[0])
+			{
+				ft_free(DESTROY);
 				exit(EXIT_SUCCESS);
+			}
 			goodpath = ft_good_path(shell, current);
 			if (!goodpath)
+			{
+				ft_free(DESTROY);
 				exit(EXIT_FAILURE);
+			}
 			execve(goodpath,current->cmd,shell->env_upt);
 		}
 		if (current->next)
-			close(fd[1]);
-		if (current->next)
-			close(fd[0]);
+			(close(fd[1]),  close(fd[0])); 
 		current = current->next;
 	}
 	return(EXIT_SUCCESS);

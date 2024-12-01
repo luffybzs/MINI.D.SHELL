@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 01:39:14 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 20:31:33 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // penser a initialiser dans la struccture shell le pid, le nom,
 // et le code d exit
 
-int	ft_expand(t_command_line *line, t_shell *shell)
+int	\ft_expand(t_command_line *line, t_shell *shell)
 {
 	t_token *current;
 	char *expanded;
