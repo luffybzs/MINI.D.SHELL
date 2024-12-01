@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/28 14:53:03 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:39:14 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 	current = line->first;
 	while (current)
 	{
+	
 		expanded = expand_var(current->content, shell, current);
 		if (expanded)
 		{
-			free(current->content);
+			ft_free(current->content);
 			current->content = expanded;
 		}
 		current = current->next;
@@ -116,8 +117,8 @@ void	handle_expansion(char *input, int *i, t_expand_state *state,
 	var_value = get_env_value(var_name, shell);
 	if (var_value)
 		append_string(&state->result, var_value);
-	free(var_name);
-	free(var_value);
+	ft_free(var_name);
+	ft_free(var_value);
 	*i += len;
 }
 
@@ -141,13 +142,13 @@ void	append_char(char **str, char c)
 	if (!*str)
 		return ;
 	len = ft_strlen(*str);
-	new = malloc(len + 2);
+	new = ft_malloc(len + 2);
 	if (!new)
 		return ;
 	ft_strlcpy(new, *str, len + 1);
 	new[len] = c;
 	new[len + 1] = '\0';
-	free(*str);
+	ft_free(*str);
 	*str = new;
 }
 
@@ -160,7 +161,7 @@ void	append_string(char **dst, const char *src)
 	new = ft_strjoin(*dst, src);
 	if (!new)
 		return ;
-	free(*dst);
+	ft_free(*dst);
 	*dst = new;
 }
 
@@ -192,7 +193,7 @@ int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 	{
 		tmp = ft_itoa(state->exit_status);
 		append_string(&state->result, tmp);
-		free(tmp);
+		ft_free(tmp);
 		(*i)++;
 		return (1);
 	}
@@ -200,7 +201,7 @@ int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 	{
 		tmp = ft_itoa(shell->shell_pid);
 		append_string(&state->result, tmp);
-		free(tmp);
+		ft_free(tmp);
 		(*i)++;
 		return (1);
 	}

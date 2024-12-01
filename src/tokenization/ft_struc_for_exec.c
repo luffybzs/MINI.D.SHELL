@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/30 22:26:44 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 01:48:34 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ void	ft_cpy_cmd(t_token *current, t_exec *exec_current)
 
 	i = 0;
 	len = ft_nb_cmd(current);
-	tab = malloc(sizeof(char *) * (len + 1));
+	if (len == 0)
+		return ;
+	tab = ft_malloc(sizeof(char *) * (len + 1));
 	while (current && current->type != PIPE)
 	{
 		if (current->type == WORD || current->type == SFX)
@@ -125,7 +127,7 @@ t_token	*ft_add_redir_exec(t_token *current, t_redir *file, t_exec *new_cmd)
 	{
 		if (ft_is_file(current->type) != -1)
 		{
-			file = malloc(sizeof(t_redir));
+			file = ft_malloc(sizeof(t_redir));
 			if (!file)
 				return (NULL);
 			fill_redir(file,current);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 20:11:39 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/10/22 17:07:41 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:36:47 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_read_to_left_str(int fd, char *left_str)
 	char	*buff;
 	int		rd_bytes;
 
-	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buff = ft_malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
 		return (NULL);
 	rd_bytes = 1;
@@ -26,13 +26,13 @@ char	*ft_read_to_left_str(int fd, char *left_str)
 		rd_bytes = read(fd, buff, BUFFER_SIZE);
 		if (rd_bytes == -1)
 		{
-			free(buff);
+			ft_free(buff);
 			return (NULL);
 		}
 		buff[rd_bytes] = '\0';
 		left_str = ft_strjoin_spe(left_str, buff);
 	}
-	free(buff);
+	ft_free(buff);
 	return (left_str);
 }
 
@@ -45,7 +45,7 @@ char	*get_next_line(int fd)
 	{
 		if (left_str)
 		{
-			free(left_str);
+			ft_free(left_str);
 			left_str = NULL;
 		}
 		return (NULL);
@@ -57,7 +57,7 @@ char	*get_next_line(int fd)
 	left_str = ft_new_left_str(left_str);
 	if (!line && left_str)
 	{
-		free(left_str);
+		ft_free(left_str);
 		left_str = NULL;
 	}
 	return (line);
@@ -81,17 +81,17 @@ char	*get_next_line(int fd)
 // 	{
 
 // 		printf("line : %s", line);
-// 		free(line);
+// 		ft_free(line);
 // 		line = get_next_line(fd1);
 // 		// line = get_next_line(fd2);
 // 		// printf("line [%02d]: %s", i, line);
-// 		// free(line);
+// 		// ft_free(line);
 // 		// line = get_next_line(fd3);
 // 		// printf("line [%02d]: %s", i, line);
-// 		// free(line);
+// 		// ft_free(line);
 // 		// i++;
 // 	}
-// 	free(line);
+// 	ft_free(line);
 // 	close(fd1);
 // 	// close(fd2);
 // 	// close(fd3);

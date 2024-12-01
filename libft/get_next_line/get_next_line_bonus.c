@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 20:11:39 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/09/23 15:14:54 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:36:47 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ char	*ft_save(char *string)
 		i++;
 	if (!string[i])
 	{
-		free(string);
+		ft_free(string);
 		return (NULL);
 	}
 	tmp = ft_substr_spe(string, i + 1, ft_strlen(string));
-	free(string);
+	ft_free(string);
 	return (tmp);
 }
 
@@ -50,7 +50,7 @@ char	*ft_read_fd(int fd, char *string)
 	char	*buffer;
 	int		res;
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = ft_malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
 	res = 1;
@@ -58,11 +58,11 @@ char	*ft_read_fd(int fd, char *string)
 	{
 		res = read(fd, buffer, BUFFER_SIZE);
 		if (res == -1)
-			return (free(buffer), free(string), NULL);
+			return (ft_free(buffer), ft_free(string), NULL);
 		buffer[res] = '\0';
 		string = ft_strjoin(string, buffer);
 	}
-	free(buffer);
+	ft_free(buffer);
 	return (string);
 }
 

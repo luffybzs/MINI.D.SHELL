@@ -6,13 +6,14 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/30 23:07:19 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 01:13:10 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "gc.h"
 # include "../libft/libft.h"
 # include <dirent.h>
 # include <errno.h>

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:48:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/24 15:58:57 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:36:47 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_pwd(t_shell *shell)
 		return (1);
 	}
 	printf("%s\n", cwd);
-	free(cwd);
+	ft_free(cwd);
 	shell->exit_status = 0;
 	return (0);
 }

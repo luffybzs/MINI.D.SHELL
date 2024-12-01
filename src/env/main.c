@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:41:11 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/22 16:01:13 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:36:47 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	main(int ac, char **av, char **env)
 				1); //needed to be freed later
 	print_list(shell);
 	free_env_list(shell);
-	free(shell);
+	ft_free(shell);
 	return (0);
 }
 /*
  
 	-dans la version finale dnas le main definir le t_shell puis env init et enfin 
  fill_env_list
-  -ajouter les free a voir si le garbage collector ffonctionne avec 
+  -ajouter les ft_free a voir si le garbage collector ffonctionne avec 
  
  */
 // void	print_list(t_shell *list)

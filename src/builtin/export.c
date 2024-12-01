@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:02:29 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/28 17:19:10 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:36:47 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_export(t_shell *shell)
 				add_new_env(current->cmd[i], shell);
 			else if (ft_strchr(current->cmd[i], '='))
 			{
-				free(existing->value);
+				ft_free(existing->value);
 				existing->value = get_value(current->cmd[i]);
 			}
 		}
@@ -112,7 +112,7 @@ void	add_new_env(char *str, t_shell *shell)
 	if (!str || !shell)
 		return ;
 	current = shell->head;
-	new = malloc(sizeof(t_env));
+	new = ft_malloc(sizeof(t_env));
 	if (!new)
 		return ;
 	new->key = NULL;
@@ -125,7 +125,7 @@ void	add_new_env(char *str, t_shell *shell)
 		if (!new_key || !new_value)
 		{
 			ft_free_env_node(new);
-			return ; // free tout
+			return ; // ft_free tout
 		}
 	}
 	else
@@ -136,7 +136,7 @@ void	add_new_env(char *str, t_shell *shell)
 		else
 			new_value = ft_strdup(equal_sign + 1);
 		if (!new_key || !new_value)
-			return ; // free tout
+			return ; // ft_free tout
 	}
 	if (!new_key || !new_value)
 	{
@@ -179,10 +179,10 @@ void	*ft_free_env_node(t_env *node)
 	if (!node)
 		return (NULL);
 	if (node->key)
-		free(node->key);
+		ft_free(node->key);
 	if (node->value)
-		free(node->value);
-	free(node);
+		ft_free(node->value);
+	ft_free(node);
 	return (NULL);
 }
 /*

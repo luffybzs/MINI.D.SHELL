@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   gc_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 18:34:25 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/14 17:24:14 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:27:32 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/gc.h"
+#include "../../include/gc.h"
 
 t_gc	*gc_init(void)
 {

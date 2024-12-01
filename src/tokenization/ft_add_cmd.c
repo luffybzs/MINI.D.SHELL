@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:29:13 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/11/20 13:09:00 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 01:17:21 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_add_redirect(char *command, t_command_line *line, int *i)
 	c = command[*i];
 	while (command[*i + j] == c)
 		j++;
-	red = malloc(sizeof(char) * (j + 1));
+	red = ft_malloc(sizeof(char) * (j + 1));
 	if (!red)
 		return ;
 	j = 0;

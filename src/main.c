@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/28 20:05:20 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 01:43:37 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 			return 0;
 		if (ft_parsing_prompt(prompt, shell) == EXIT_FAILURE)
 			continue ;
+		ft_free(destroy);
 		// printf("%s\n", prompt);
 	}
 	return (EXIT_FAILURE);
@@ -42,6 +43,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	prompt = NULL;
+	memset(shell, 0, 0);
 	shell = env_init(env);
 	if (!shell)
 		return (printf("Failed to initialize shell environement\n"), 1);

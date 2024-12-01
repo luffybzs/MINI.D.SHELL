@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 00:28:15 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 01:17:21 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void ft_loop_heredoc(t_redir *current)
 		tmp = ft_strjoin_free(tmp, here);
 		if (!tmp)
 		{
-			ft_putendl_fd("Mini.D.Shell : Error Malloc\n", 2);
+			ft_putendl_fd("Mini.D.Shell : Error ft_malloc\n", 2);
 			break;
 		}
 		tmp = ft_strjoin_free(tmp, "\n");
 		if (!tmp)
 		{
-			ft_putendl_fd("Mini.D.Shell : Error Malloc\n", 2);
+			ft_putendl_fd("Mini.D.Shell : Error ft_malloc\n", 2);
 			break;
 		}
 	}

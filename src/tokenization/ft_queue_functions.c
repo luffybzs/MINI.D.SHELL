@@ -4,7 +4,7 @@ t_command_line	*ft_init_queue(void)
 {
 	t_command_line	*list;
 
-	list = malloc(sizeof(t_command_line));
+	list = ft_malloc(sizeof(t_command_line));
 	if (!list)
 		return (NULL);
 	list->first = NULL;
@@ -50,7 +50,7 @@ void	ft_add_token(char *content, t_command_line *command)
 	t_token	*current;
 	t_token	*new;
 
-	new = malloc(sizeof(t_token));
+	new = ft_malloc(sizeof(t_token));
 	if (!new)
 		return ;
 	current = command->first;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 19:31:33 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/28 17:21:16 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:17:21 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void ft_add_tab_cmd(t_exec_line *line, char **tab)
 	t_exec *current;
 	t_exec *new;
 
-	new = malloc(sizeof(t_exec));
+	new = ft_malloc(sizeof(t_exec));
 	if (!new)
 		return ;
 	current = line->first;

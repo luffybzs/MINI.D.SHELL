@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:58:44 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/11/28 14:10:59 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:17:21 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_supp_quote(char *command, int i, int *j, char c)
 	if (len == -1)
 		return (NULL);
 	*j = len + (command[i + len] != '\0');
-	word = malloc(sizeof(char) * (len + 1));
+	word = ft_malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
 	while (len)
@@ -87,7 +87,7 @@ char	*ft_supp_quote2(char *command, char c, int i)
 	len = ft_len_word(command,i,c);
 	if (len == -1)
 		return (NULL);
-	word = malloc(sizeof(char) * (len + 1));
+	word = ft_malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
 	while (len)

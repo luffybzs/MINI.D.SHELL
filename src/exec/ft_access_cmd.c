@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 00:52:31 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 01:50:46 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char *ft_good_path(t_shell *shell, t_exec *current)
 			return (NULL);
 		if (access(res, F_OK | X_OK) == 0)
 			return (res);
-		free(res);
+		ft_free(res);
 		i++;	
 	}
 	//printf("%s not good\n", current->cmd[0]);
@@ -44,7 +44,7 @@ void ft_open_infile(char *file,t_shell *shell)
 	if (fd == -1)
 	{
 		perror(file);
-		// fermer le promt et passe a la prochaine cmd -- faudrait une fonction quitte et free tout sauf l'env
+		// fermer le promt et passe a la prochaine cmd -- faudrait une fonction quitte et ft_free tout sauf l'env
 		exit(EXIT_FAILURE);
 	}
 	dup2(fd, STDIN_FILENO);
@@ -143,7 +143,8 @@ int ft_fork(t_shell *shell,t_exec *current)
 				if (ft_open_file(shell,current->redir) == EXIT_FAILURE)
 					exit(EXIT_FAILURE);
 			}
-			if (!current->cmd)
+			
+			if (!current->cmd || !current->cmd[0])
 				exit(EXIT_SUCCESS);
 			goodpath = ft_good_path(shell, current);
 			if (!goodpath)

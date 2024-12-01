@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 00:42:24 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/30 02:27:10 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 01:17:21 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char **ft_lst_strdup(t_shell *shell)
 	
 	i = 0;
 	len = ft_len_env(shell);
-	env_cpy = malloc(sizeof(char *) * (len + 1));
+	env_cpy = ft_malloc(sizeof(char *) * (len + 1));
 	if (!env_cpy)
 		return (NULL);
 	current = shell->head;

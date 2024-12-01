@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:09:23 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/25 11:10:23 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:36:47 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ static t_env	*update_or_create_env(t_env *head, char *key, char *value)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			free(current->value);
+			ft_free(current->value);
 			current->value = ft_strdup(value);
 			return (head);
 		}
 		current = current->next;
 	}
-	current = malloc(sizeof(t_env));
+	current = ft_malloc(sizeof(t_env));
 	if (!current)
 		return (NULL);
 	current->key = ft_strdup(key);
@@ -62,16 +62,16 @@ static int	update_pwd_env(t_shell *shell, char *old_pwd)
 	shell->head = update_or_create_env(shell->head, "PWD", current_pwd);
 	if (!shell->head)
 	{
-		free(current_pwd);
+		ft_free(current_pwd);
 		return (1);
 	}
 	shell->head = update_or_create_env(shell->head, "OLDPWD", old_pwd);
 	if (!shell->head)
 	{
-		free(current_pwd);
+		ft_free(current_pwd);
 		return (1);
 	}
-	free(current_pwd);
+	ft_free(current_pwd);
 	return (0);
 }
 
@@ -116,7 +116,7 @@ int	ft_cd(t_shell *shell)
 		{
 			ft_putstr_fd(shell->shell_name, 2);
 			ft_putendl_fd(": cd: HOME not set", 2);
-			free(old_pwd);
+			ft_free(old_pwd);
 			shell->exit_status = 1;
 			return (1);
 		}
@@ -126,16 +126,16 @@ int	ft_cd(t_shell *shell)
 	if (chdir(path) != 0)
 	{
 		handle_cd_error(path, shell);
-		free(old_pwd);
+		ft_free(old_pwd);
 		return (1);
 	}
 	if (update_pwd_env(shell, old_pwd))
 	{
-		free(old_pwd);
+		ft_free(old_pwd);
 		shell->exit_status = 1;
 		return (1);
 	}
-	free(old_pwd);
+	ft_free(old_pwd);
 	shell->exit_status = 0;
 	return (0);
 }

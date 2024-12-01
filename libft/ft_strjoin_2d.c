@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin_2d.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:42:46 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/28 16:21:50 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:36:47 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**ft_strjoin_2d(char **tab, char *str)
 	len = 0;
 	while (tab[len])
 		len++;
-	res = malloc(sizeof(char *) * (len + 2));
+	res = ft_malloc(sizeof(char *) * (len + 2));
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -33,8 +33,8 @@ char	**ft_strjoin_2d(char **tab, char *str)
 		if (!res[i])
 		{
 			while (--i >= 0)
-				free(res[i]);
-			free(res);
+				ft_free(res[i]);
+			ft_free(res);
 			return (NULL);
 		}
 		i++;
@@ -43,8 +43,8 @@ char	**ft_strjoin_2d(char **tab, char *str)
 	if (!res[len])
 	{
 		while (--i >= 0)
-			free(res[i]);
-		free(res);
+			ft_free(res[i]);
+		ft_free(res);
 		return (NULL);
 	}
 	res[len + 1] = NULL;
@@ -60,8 +60,8 @@ char	**ft_strjoin_2d(char **tab, char *str)
 	i = 0;
 	while (tab[i])
 	{
-		free(tab[i]);
+		ft_free(tab[i]);
 		i++;
 	}
-	free(tab);
+	ft_free(tab);
 }

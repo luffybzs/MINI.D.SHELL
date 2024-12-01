@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:49:34 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/27 14:34:38 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:18:36 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,29 @@ int	fill_env_list(t_shell *shell)
 	}
 	return (0);
 }
+char	*ft_substr_env(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char	*str;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s + start))
+		len = ft_strlen(s + start);
+	str = ft_calloc(len + 1, sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		str[i] = s[start + i];
+		i++;
+	}
+	return (str);
+}
 
 t_env	*create_env_node(char *env_str)
 {
@@ -64,8 +87,8 @@ t_env	*create_env_node(char *env_str)
 	sep_index = ft_findchar(env_str, '=');
 	if (sep_index == -1)
 		return (free(new), NULL);
-	new->key = ft_substr(env_str, 0, sep_index);
-	new->value = ft_substr(env_str, sep_index + 1, ft_strlen(env_str)
+	new->key = ft_substr_env(env_str, 0, sep_index);
+	new->value = ft_substr_env(env_str, sep_index + 1, ft_strlen(env_str)
 			- sep_index);
 	if (!new->key || !new->value)
 	{
