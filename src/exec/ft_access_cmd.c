@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 01:50:46 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 14:07:30 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ char *ft_good_path(t_shell *shell, t_exec *current)
 	char *res;
 	
 	i = 0;
+	if (!current->cmd || !shell->path)
+		return (NULL);
+	printf("current->cmd[0] == [%s]\n", current->cmd[0]);
 	if (access(current->cmd[0], F_OK | X_OK) == 0)
 		return (current->cmd[0]);	
 	while (shell->path[i])

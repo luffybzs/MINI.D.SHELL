@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:53:09 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 01:15:07 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 14:13:22 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s)
 	char	*dest;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (s[i])
 		i++;
 	dest = ft_malloc(sizeof(char) * (i + 1));

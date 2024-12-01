@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 18:34:25 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 01:27:32 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 16:12:44 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_garbage	*create_node(t_gc *collector, void *ptr)
 	if (!new_node)
 		return (NULL);
 	new_node->ptr = ptr;
+	new_node->lock = false;
 	new_node->prev = NULL;
 	if (!collector->head)
 		collector->head = new_node;
@@ -54,24 +55,57 @@ void	free_all(t_gc *garbage)
 	t_garbage	*current;
 	t_garbage	*next;
 
-	if (garbage)
+	if (!garbage)
+		return ;
+	if (!garbage->head)
 	{
-		if (!garbage->head)
-		{
-			free(garbage);
-			return ;
-		}
-		current = garbage->head;
-		while (current)
-		{
-			next = current->next;
-			free(current->ptr);
-			free(current);
-			current = next;
-		}
+		free(garbage);
+		return ;
+	}
+	current = garbage->head;
+	while (current)
+	{
+		next = current->next;
+		free(current->ptr);
+		free(current);
+		current = next;
 	}
 	free(garbage);
 }
+
+void	free_one(t_garbage *node)
+{
+	free(node->ptr);
+	free(node);
+}
+
+void free_unlock(t_gc *garbage)
+{
+    t_garbage *prev;
+    t_garbage *current;
+    t_garbage *next;
+
+    if (!garbage)
+        return;
+    current = garbage->head;
+    while (current)
+    {
+        prev = current->prev;
+        next = current->next;
+        if (current->lock == false)
+        {
+            if (prev)
+                prev->next = next;
+            if (next)
+                next->prev = prev;
+            if (current == garbage->head)
+                garbage->head = next;
+            free_one(current);
+        }
+        current = next;
+    }
+}
+
 
 void	destroy(t_gc *garbage, void *elem)
 {

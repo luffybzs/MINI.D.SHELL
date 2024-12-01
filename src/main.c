@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 01:43:37 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 15:36:18 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 	{
 		prompt = readline("Mini.D.Shell -> ");
 		if (!prompt)
-			return 0;
+			return (EXIT_SUCCESS);
 		if (ft_parsing_prompt(prompt, shell) == EXIT_FAILURE)
 			continue ;
-		ft_free(destroy);
+		ft_free(PROMPT);
 		// printf("%s\n", prompt);
 	}
 	return (EXIT_FAILURE);
@@ -39,19 +39,17 @@ void ft_fill_data(t_shell *shell, char **av)
 int	main(int ac, char **av, char **env)
 {
 	char	*prompt;
-	t_shell	*shell;
+	t_shell	shell;
 
 	(void)ac;
 	prompt = NULL;
-	memset(shell, 0, 0);
-	shell = env_init(env);
-	if (!shell)
-		return (printf("Failed to initialize shell environement\n"), 1);
-	if (fill_env_list(shell) != 0)
+	memset(&shell, 0, sizeof(t_shell));
+	shell.env = env;
+	if (fill_env_list(&shell) != 0)
 		return (printf("Failed to initialize the linked environement list\n"),
 				1); // needed to be freed later + retour d erreur
-	ft_fill_data(shell,av);
-	if (ft_loop_shell(prompt, shell) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	return (0);
+	ft_fill_data(&shell,av);
+	if (ft_loop_shell(prompt, &shell) == EXIT_FAILURE)
+		return (ft_free(DESTROY), EXIT_FAILURE);
+	return (ft_free(DESTROY), 0);
 }

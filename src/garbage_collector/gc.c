@@ -6,54 +6,99 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:33:33 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 01:28:57 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 15:29:49 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/gc.h"
 
+#define GET 1
+#define SET 0
+
+t_gc *_garbage(t_gc *garbage, int flag)
+{
+	static t_gc *save = NULL;
+	
+	if (flag == SET)
+		save = garbage;
+	return save;
+}
+
 void	*ft_malloc(long int size)
 {
-	static t_gc	*garbage;
+	t_gc	*garbage;
 	void		*ptr;
 
+	garbage = _garbage(NULL, GET);
 	if (!garbage && size != -1)
-		garbage = gc_init();
+		garbage = _garbage(gc_init(), SET);
 	if (size == -1)
 	{
-		garbage = NULL;
+		garbage = _garbage(NULL, SET);
 		return (NULL);
 	}
 	ptr = malloc(size);
 	if (!ptr)
 		return (NULL);
 	create_node(garbage, ptr);
-	if (!garbage->count_alloc)
-		ft_free(garbage);
 	garbage->count_alloc++;
 	return (ptr);
 }
 
 void	ft_free(void *ptr)
 {
-	static int	i = -1;
-	static t_gc	*garbage;
+	t_gc	*garbage;
 
+	garbage = _garbage(NULL, GET);
 	if (ptr == DESTROY)
 	{
-		i = -1;
 		free_all(garbage);
-		garbage = ft_malloc(-1);
+		_garbage(NULL, SET);
+		return ;
+	}
+	if (ptr == PROMPT)
+	{
+		free_unlock(garbage);
 		return ;
 	}
 	if (!ptr)
 		return ;
-	if (i == -1)
-	{
-		garbage = ptr;
-		i++;
-		return ;
-	}
 	destroy(garbage, ptr);
 	garbage->count_free++;
+}
+
+void ft_lock(void *ptr)
+{
+	t_gc *garbage;
+	t_garbage *current;
+
+	garbage = _garbage(NULL, GET);
+	current = garbage->head;
+	while (current)
+	{
+		if (current->ptr == ptr)
+		{
+			current->lock = true;
+			return;
+		}
+		current = current->next;
+	}
+}
+
+void ft_unlock(void *ptr)
+{
+	t_gc *garbage;
+	t_garbage *current;
+
+	garbage = _garbage(NULL, GET);
+	current = garbage->head;
+	while (current)
+	{
+		if (current->ptr == ptr)
+		{
+			current->lock = false;
+			return;
+		}
+		current = current->next;
+	}
 }

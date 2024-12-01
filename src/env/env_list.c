@@ -6,26 +6,12 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:49:34 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 01:18:36 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 16:14:45 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/gc.h"
 #include "../../include/minishell.h"
-
-t_shell	*env_init(char **env)
-{
-	t_shell	*shell;
-
-	if (!env)
-		return (NULL);
-	shell = malloc(sizeof(t_shell));
-	if (!shell)
-		return (NULL);
-	shell->env = env;
-	shell->head = NULL;
-	return (shell);
-}
 
 int	fill_env_list(t_shell *shell)
 {
@@ -52,49 +38,29 @@ int	fill_env_list(t_shell *shell)
 	}
 	return (0);
 }
-char	*ft_substr_env(char const *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	char	*str;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	if (start > ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > ft_strlen(s + start))
-		len = ft_strlen(s + start);
-	str = ft_calloc(len + 1, sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		str[i] = s[start + i];
-		i++;
-	}
-	return (str);
-}
 
 t_env	*create_env_node(char *env_str)
 {
 	t_env	*new;
 	int		sep_index;
 
-	new = malloc(sizeof(t_env));
+	new = ft_malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
 	sep_index = ft_findchar(env_str, '=');
 	if (sep_index == -1)
 		return (free(new), NULL);
-	new->key = ft_substr_env(env_str, 0, sep_index);
-	new->value = ft_substr_env(env_str, sep_index + 1, ft_strlen(env_str)
+	new->key = ft_substr(env_str, 0, sep_index);
+	new->value = ft_substr(env_str, sep_index + 1, ft_strlen(env_str)
 			- sep_index);
 	if (!new->key || !new->value)
 	{
 		free_env_node(new);
 		return (NULL);
 	}
+	ft_lock(new);
+	ft_lock(new->key);
+	ft_lock(new->value);
 	new->next = NULL;
 	return (new);
 }

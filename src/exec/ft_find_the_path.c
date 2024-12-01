@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 00:42:24 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 01:17:21 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 14:16:12 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ char *ft_cpy_env(char *key, char *value)
 	res = ft_strdup(key);
 	if (!res)
 		return (NULL);
-	res = ft_strjoin(res, "=");
+	res = ft_strjoin_free(res, "=");
 	if (!res)
 		return (NULL);
-	res = ft_strjoin(res, value);
+	res = ft_strjoin_free(res, value);
 	if (!res)
 		return (NULL);
 	return (res);
@@ -51,6 +51,8 @@ char **ft_lst_strdup(t_shell *shell)
 	
 	i = 0;
 	len = ft_len_env(shell);
+	if (len == 0)
+		return (NULL);
 	env_cpy = ft_malloc(sizeof(char *) * (len + 1));
 	if (!env_cpy)
 		return (NULL);

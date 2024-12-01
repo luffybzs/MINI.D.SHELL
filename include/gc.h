@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:17:16 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/11/16 17:00:50 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/01 15:31:01 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 # include <string.h>
 
 # define DESTROY ((void *)-1)
+# define PROMPT ((void *)-2)
 
 typedef struct s_garbage 
 {
 	void				*ptr;
+	bool				lock;
 	struct s_garbage	*next;
 	struct s_garbage	*prev;
 }			t_garbage;
@@ -44,6 +46,7 @@ t_garbage	*create_node(t_gc *collector, void *ptr);
 void		free_all(t_gc *garbage);
 void		destroy(t_gc *garbage, void *elem);
 int			in_garbage(t_gc *garbage, void *elem);
-
-
+void		free_unlock(t_gc *garbage);
+void		ft_lock(void *ptr);
+void		ft_unlock(void *ptr);
 #endif
