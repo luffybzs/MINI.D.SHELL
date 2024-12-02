@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gen.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:30:54 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/02 17:29:37 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 19:55:32 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	execute_builtin(t_token *cmd, t_shell *shell)
 		return (ft_export(shell));
 	else if (ft_strcmp(cmd->content, "unset") == 0)
 		return (ft_unset(shell));
+	else if (ft_strcmp(cmd->content, "exit") == 0)
+		return (ft_exit(shell));
 	// implementer les autres builtins
 	return (0);
 }

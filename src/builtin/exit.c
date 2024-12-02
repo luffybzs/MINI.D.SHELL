@@ -5,79 +5,81 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 18:51:54 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/02 19:38:06 by wdaoudi-         ###   ########.fr       */
+/*   Created: 2024/12/02 19:48:09 by wdaoudi-          #+#    #+#             */
+/*   Updated: 2024/12/02 20:02:01 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
-static long	ft_atoi_spe(char *str)
+static long ft_atoi_spe(char *str)
 {
-	size_t		i;
-	long int	res;
-	int			sign;
+    size_t      i;
+    long int    res;
+    int         sign;
 
-	i = 0;
-	res = 0;
-	sign = 1;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign *= -1;
-		if (str[i + 1] == '\0')
-			return (2147483648);
-		i++;
-	}
-	while (str[i] && str[i] >= '0' && str[i] <= '9')
-	{
-		res *= 10;
-		res += str[i] - 48;
-		i++;
-		if (res * sign > 2147483647 || res * sign < -2147483648)
-			return (2147483648);
-	}
-	return (res * sign);
-}
-static int is_valid_exit_arg(char *cmd)
-{
-	unsigned char value;
-	
-	value = ft_atoi_spe(cmd);
-	printf("valeur de l exit = %d\n", value);
-	return (value);
+    i = 0;
+    res = 0;
+    sign = 1;
+    if (str[i] == '+' || str[i] == '-')
+    {
+        if (str[i] == '-')
+            sign *= -1;
+        if (str[i + 1] == '\0')
+            return (2147483648);
+        i++;
+    }
+    while (str[i] && str[i] >= '0' && str[i] <= '9')
+    {
+        res *= 10;
+        res += str[i] - 48;
+        i++;
+        if (res * sign > 2147483647 || res * sign < -2147483648)
+            return (2147483648);
+    }
+    return (res * sign);
 }
 
-
-int	ft_exit(t_shell *shell)
+int ft_exit(t_shell *shell)
 {
-	t_exec	*current;
-	int		i;
+    t_exec  *current;
+    char    *arg;
+    int     i;
+    long    value;
 
-	i = 0;
-	current = shell->exec_line->first;
-	if (!current->cmd[1])
-	{
-		return (0);
-		// retour de exit sans argument numerique
-	}
-	while (current->cmd[i])
-		i++;
-	if(i > 2)
-		return (printf("exit: too many arguments\n"), shell->exit_status);
-	i = 0;
-	if (is_valid_exit_arg(current->cmd[1]) == 0)
-		return(printf("\n"), shell->exit_status);
-	
-	
-	// if(ft_isalnum_spe(current->cmd[1]) == 1)
+    current = shell->first_exec;
+    if (!current->cmd[1])
+    {
+        ft_putstr_fd("exit\n", 1);
+        exit(shell->exit_status);
+    }
+    arg = current->cmd[1];
+    if (current->cmd[2])
+    {
+        ft_putstr_fd("exit: too many arguments\n", 2);
+        shell->exit_status = 1;
+        return (1);
+    }
+    i = 0;
+    if (arg[i] == '-' || arg[i] == '+')
+        i++;
+    while (arg[i])
+    {
+        if (!ft_isdigit(arg[i]))
+        {
+            ft_putstr_fd("exit: numeric argument required\n", 2);
+            exit(2);
+        }
+        i++;
+    }
+    value = ft_atoi_spe(arg);
+    ft_putstr_fd("exit\n", 1);
+    exit((unsigned char)value);
 }
 
+/* 
+attention double free a l input de deux arguments a gerer avec 
+le garbage */
 /*
 "exit: [arg]: numeric argument required" :
 si l'argument n'est pas numérique
@@ -103,6 +105,6 @@ si l'argument n'est pas numérique
 // 	unsigned char	test;
 // 	test = ft_atoi_spe(av[1]);
 // 	printf("valeur de test = %d", test);
-// 	return 0;
-	 
+// 	return (0);
+
 // }
