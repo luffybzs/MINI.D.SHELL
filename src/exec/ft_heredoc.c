@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/02 16:03:46 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 18:27:24 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_loop_heredoc(t_redir *current)
 			break ;
 		// gere les $user
 		tmp = ft_strjoin_free(tmp, here);
+		ft_free(here);
 		if (!tmp)
 		{
 			ft_putendl_fd("Mini.D.Shell : Error ft_malloc\n", 2);

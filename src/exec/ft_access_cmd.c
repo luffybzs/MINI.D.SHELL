@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/02 17:30:51 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 18:23:04 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,15 +130,11 @@ void	ft_chill_exec(t_exec *current, t_shell *shell, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
+	if (shell->previous_pipe_fd != -1)
+		(dup2(shell->previous_pipe_fd, STDIN_FILENO), close(shell->previous_pipe_fd));
 	if (current->redir)
 		if (ft_open_file(shell, current->redir) == EXIT_FAILURE)
 			(ft_free(DESTROY), exit(EXIT_FAILURE));
-	if (!current->next)
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-	}
 	if (!current->cmd || !current->cmd[0])
 		(ft_free(DESTROY), exit(EXIT_SUCCESS));
 	goodpath = ft_good_path(shell, current);
@@ -158,13 +154,14 @@ int	ft_fork(t_shell *shell, t_exec *current)
 				return (perror("pipe"),EXIT_FAILURE);
 		current->pidt = fork();
 		if (current->pidt == -1)
-			return ((close(fd[0]), close(fd[1])), EXIT_FAILURE);
+			return (close(fd[0]), close(fd[1]), EXIT_FAILURE);
 		if (current->pidt == 0)
 			ft_chill_exec(current, shell, fd);
 		if (current->next)
-			(close(fd[1]));
-		if (!current->next)
-			close(fd[0]);
+			close(fd[1]);
+		if (shell->previous_pipe_fd != -1)
+			close(shell->previous_pipe_fd);
+		shell->previous_pipe_fd = fd[0];
 		current = current->next;
 	}
 	return (EXIT_SUCCESS);
@@ -176,6 +173,7 @@ int	ft_exec_loop(t_shell *shell)
 	int status;
 	current = shell->first_exec;
 
+	shell->previous_pipe_fd = -1;
 	if (ft_fork(shell, current) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	while (current)
