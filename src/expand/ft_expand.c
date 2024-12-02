@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 20:31:33 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/01 21:43:41 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // penser a initialiser dans la struccture shell le pid, le nom,
 // et le code d exit
 
-int	\ft_expand(t_command_line *line, t_shell *shell)
+int	ft_expand(t_command_line *line, t_shell *shell)
 {
 	t_token *current;
 	char *expanded;
@@ -52,8 +52,7 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)// s occupe de l 
 	{
 		if (handle_quotes(input[i], &state) == 1)
 			i++;
-		else if (input[i] == '$' && state.in_quote != 2 && current->type != 19
-			&& current->type != 20)
+		else if (input[i] == '$' && state.in_quote != 2 && current->type != 19)
 			handle_expansion(input, &i, &state, shell);
 		else
 			append_char(&state.result, input[i++]);
