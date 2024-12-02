@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 20:27:01 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 14:44:43 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 		add_history(prompt);
 		ft_parsing_prompt(prompt, shell);
 		ft_free(PROMPT);
-		// printf("%s\n", prompt);
 	}
 	ft_free(PROMPT);
 	return (EXIT_FAILURE);

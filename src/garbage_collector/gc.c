@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:33:33 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 15:29:49 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 16:02:29 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 #define GET 1
 #define SET 0
 
-t_gc *_garbage(t_gc *garbage, int flag)
+t_gc	*_garbage(t_gc *garbage, int flag)
 {
-	static t_gc *save = NULL;
-	
+	static t_gc	*save = NULL;
+
 	if (flag == SET)
 		save = garbage;
-	return save;
+	return (save);
 }
 
 void	*ft_malloc(long int size)
 {
 	t_gc	*garbage;
-	void		*ptr;
+	void	*ptr;
 
 	garbage = _garbage(NULL, GET);
 	if (!garbage && size != -1)
@@ -67,10 +67,10 @@ void	ft_free(void *ptr)
 	garbage->count_free++;
 }
 
-void ft_lock(void *ptr)
+void	ft_lock(void *ptr)
 {
-	t_gc *garbage;
-	t_garbage *current;
+	t_gc		*garbage;
+	t_garbage	*current;
 
 	garbage = _garbage(NULL, GET);
 	current = garbage->head;
@@ -79,16 +79,16 @@ void ft_lock(void *ptr)
 		if (current->ptr == ptr)
 		{
 			current->lock = true;
-			return;
+			return ;
 		}
 		current = current->next;
 	}
 }
 
-void ft_unlock(void *ptr)
+void	ft_unlock(void *ptr)
 {
-	t_gc *garbage;
-	t_garbage *current;
+	t_gc		*garbage;
+	t_garbage	*current;
 
 	garbage = _garbage(NULL, GET);
 	current = garbage->head;
@@ -97,7 +97,7 @@ void ft_unlock(void *ptr)
 		if (current->ptr == ptr)
 		{
 			current->lock = false;
-			return;
+			return ;
 		}
 		current = current->next;
 	}

@@ -6,17 +6,17 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 00:42:24 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 14:16:12 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 16:03:40 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int ft_len_env(t_shell *shell)
+int	ft_len_env(t_shell *shell)
 {
-	t_env *current;
-	int i;
-	
+	t_env	*current;
+	int		i;
+
 	i = 0;
 	current = shell->head;
 	while (current)
@@ -26,10 +26,10 @@ int ft_len_env(t_shell *shell)
 	}
 	return (i);
 }
-char *ft_cpy_env(char *key, char *value)
+char	*ft_cpy_env(char *key, char *value)
 {
-	char *res;
-	
+	char	*res;
+
 	res = ft_strdup(key);
 	if (!res)
 		return (NULL);
@@ -42,13 +42,13 @@ char *ft_cpy_env(char *key, char *value)
 	return (res);
 }
 
-char **ft_lst_strdup(t_shell *shell)
+char	**ft_lst_strdup(t_shell *shell)
 {
-	t_env *current;
-	char **env_cpy;
-	int len;
-	int i;
-	
+	t_env	*current;
+	char	**env_cpy;
+	int		len;
+	int		i;
+
 	i = 0;
 	len = ft_len_env(shell);
 	if (len == 0)
@@ -94,37 +94,37 @@ char	**ft_way_path(t_shell *shell)
 	return (NULL);
 }
 
-char **ft_search_path(t_shell *shell)
+char	**ft_search_path(t_shell *shell)
 {
-	char **tab;
-	
+	char	**tab;
+
 	tab = ft_way_path(shell);
 	if (!tab)
 		return (NULL);
-	return (tab); 
+	return (tab);
 }
 
-int ft_get_env(t_shell *shell)
+int	ft_get_env(t_shell *shell)
 {
-	char **tab;
-	char **path;
-	 
+	char	**tab;
+	char	**path;
+
 	tab = ft_lst_strdup(shell);
 	if (!tab)
 		return (EXIT_FAILURE);
 	shell->env_upt = tab;
-	path = ft_search_path(shell); 
+	path = ft_search_path(shell);
 	if (!path)
 		return (EXIT_FAILURE);
 	shell->path = path;
 	return (EXIT_SUCCESS);
 }
 
-int ft_start_exec(t_shell *shell)
+int	ft_start_exec(t_shell *shell)
 {
 	if (ft_get_env(shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (ft_exec_loop(shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

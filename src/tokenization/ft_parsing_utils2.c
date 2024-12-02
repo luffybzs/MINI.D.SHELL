@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:49:24 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/28 16:45:21 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:46:53 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_isredirect(int token)
 	return (EXIT_FAILURE);
 }
 
-int ft_is_file(int token)
+int	ft_is_file(int token)
 {
 	if (token == RR_RED)
 		return (APPEND);

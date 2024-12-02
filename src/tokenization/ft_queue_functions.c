@@ -70,6 +70,7 @@ void	ft_add_token(char *content, t_command_line *command)
 		current->next = new;
 	}
 }
+
 t_token	*ft_lstlast_mini(t_command_line *lst)
 {
 	t_token *tmp;

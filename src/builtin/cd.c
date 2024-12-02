@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:09:23 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 01:36:47 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 17:29:08 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*get_env_for_cd(t_env *head, char *key) // cherche la clee
 {
-	t_env	*current;
+	t_env *current;
 
 	if (!head || !key)
 		return (NULL);
@@ -29,9 +29,10 @@ static char	*get_env_for_cd(t_env *head, char *key) // cherche la clee
 }
 
 static t_env	*update_or_create_env(t_env *head, char *key, char *value)
-{ // remplace l ancienne valeur si existante sinon la cree
+{
 	t_env	*current;
 
+ // remplace l ancienne valeur si existante sinon la cree
 	current = head;
 	while (current)
 	{
@@ -53,9 +54,10 @@ static t_env	*update_or_create_env(t_env *head, char *key, char *value)
 }
 
 static int	update_pwd_env(t_shell *shell, char *old_pwd)
-{//mise a jour des variables en tete de liste env
+{
 	char	*current_pwd;
 
+ // mise a jour des variables en tete de liste env
 	current_pwd = getcwd(NULL, 0);
 	if (!current_pwd)
 		return (1);
@@ -76,7 +78,8 @@ static int	update_pwd_env(t_shell *shell, char *old_pwd)
 }
 
 static void	handle_cd_error(char *path, t_shell *shell)
-{//finir d associer les differnete erreurs
+{
+ // finir d associer les differnete erreurs
 	ft_putstr_fd(shell->shell_name, 2);
 	ft_putstr_fd(": cd: ", 2);
 	if (access(path, F_OK) == -1)

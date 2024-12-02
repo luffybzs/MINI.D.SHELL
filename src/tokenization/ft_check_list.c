@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 02:28:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/21 12:25:35 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 14:46:31 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,9 @@ int	ft_check_pipe(t_command_line *line)
 
 	current = line->first;
 	last = ft_lstlast_mini(line);
-	
 	if (current->type == PIPE || last->type == PIPE)
 	{
-		ft_error_pide("|");	
+		ft_error_pide("|");
 		return (EXIT_FAILURE);
 	}
 	while (current->next)
@@ -56,11 +55,12 @@ int	ft_check_pipe(t_command_line *line)
 int	ft_check_redir(t_command_line *line)
 {
 	t_token	*current;
-	t_token *tmp;
+	t_token	*tmp;
+
 	current = line->first;
 	tmp = ft_lstlast_mini(line);
-	if(!ft_isredirect(tmp->type))
-		return (ft_error_end_redir(), EXIT_FAILURE); 
+	if (!ft_isredirect(tmp->type))
+		return (ft_error_end_redir(), EXIT_FAILURE);
 	while (current->next)
 	{
 		if (!ft_isredirect(current->type)
@@ -73,9 +73,9 @@ int	ft_check_redir(t_command_line *line)
 	}
 	return (EXIT_SUCCESS);
 }
-int ft_check_pide_and_redir(t_command_line *line)
+int	ft_check_pide_and_redir(t_command_line *line)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = line->first;
 	while (current->next)

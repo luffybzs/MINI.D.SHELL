@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 20:27:55 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 14:47:36 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,11 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 	if (ft_expand(line, shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	shell->command = line;
-	// ft_display(line);
 	if (ft_struc_for_exec(shell) == EXIT_FAILURE)
 		return (free_line(line), EXIT_FAILURE);
-	//ft_print_exec(shell);
 	if (ft_check_heredoc(shell) == EXIT_FAILURE)
-		return(free_line(line), EXIT_FAILURE);
-	 if (ft_start_exec(shell) == EXIT_FAILURE)
+		return (free_line(line), EXIT_FAILURE);
+	if (ft_start_exec(shell) == EXIT_FAILURE)
 		return (free_line(line), EXIT_FAILURE);
 	if (ft_execute_command(shell) == EXIT_FAILURE)
 		return (free_line(line), EXIT_FAILURE);
