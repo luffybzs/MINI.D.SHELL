@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 01:13:10 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 18:01:24 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_shell
 	t_env			*head;
 	t_command_line	*command;
 	t_exec			*first_exec;
+	int				previous_pipe_fd;
 	// gerer les cas speciaux de l expand
 	char *shell_name; // $0
 	pid_t shell_pid;  //$$

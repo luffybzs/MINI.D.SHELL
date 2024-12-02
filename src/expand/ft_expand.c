@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 21:43:41 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/02 19:38:53 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 // et le code d exit
 
 int	ft_expand(t_command_line *line, t_shell *shell)
+int	ft_expand(t_command_line *line, t_shell *shell)
 {
-	t_token *current;
-	char *expanded;
+	t_token	*current;
+	char	*expanded;
 
 	current = line->first;
 	while (current)
 	{
-	
 		expanded = expand_var(current->content, shell, current);
 		if (expanded)
 		{
@@ -35,7 +35,8 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 	return (EXIT_SUCCESS);
 }
 
-char	*expand_var(char *input, t_shell *shell, t_token *current)// s occupe de l expand
+char	*expand_var(char *input, t_shell *shell, t_token *current)
+// s occupe de l expand
 {
 	t_expand_state state;
 	int i;
@@ -88,9 +89,11 @@ int	handle_quotes(char c, t_expand_state *state) // gerer l etat des quotes
 	return (0);
 }
 
-void	handle_expansion(char *input, int *i, t_expand_state *state,
+void	handle_expansion(char *input,
+						int *i,
+						t_expand_state *state,
 						t_shell *shell) // determine le nom, l extrait,
-							//obtient la valeur et l ajoute au resultat
+										// obtient la valeur et l ajoute au resultat
 {
 	char *var_name;
 	char *var_value;
@@ -167,14 +170,13 @@ void	append_string(char **dst, const char *src)
 char	*get_env_value(const char *name, t_shell *shell)
 {
 	char	*full_var;
-	t_env *env;
-	
+	t_env	*env;
+
 	env = shell->head;
 	while (env)
 	{
 		full_var = env->key;
-		if (ft_strcmp(full_var,name) == 0
-			&& env->value[0] != 0)
+		if (ft_strcmp(full_var, name) == 0 && env->value[0] != 0)
 		{
 			return (ft_strdup(env->value));
 		}
@@ -182,7 +184,6 @@ char	*get_env_value(const char *name, t_shell *shell)
 	}
 	return (ft_strdup(""));
 }
-
 
 int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 {

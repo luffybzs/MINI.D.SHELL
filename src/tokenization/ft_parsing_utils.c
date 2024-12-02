@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:58:44 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/12/01 01:17:21 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 14:46:48 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ft_skip_spaces(char *str, int *i)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
-
 
 int	ft_len_word(char *command, int i, char c)
 {
@@ -84,7 +83,7 @@ char	*ft_supp_quote2(char *command, char c, int i)
 	int		tmp;
 
 	tmp = 0;
-	len = ft_len_word(command,i,c);
+	len = ft_len_word(command, i, c);
 	if (len == -1)
 		return (NULL);
 	word = ft_malloc(sizeof(char) * (len + 1));

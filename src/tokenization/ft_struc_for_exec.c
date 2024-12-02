@@ -6,12 +6,11 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 14:09:03 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 14:48:04 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
 
 int	ft_check_file(t_shell *shell)
 {
@@ -26,8 +25,6 @@ int	ft_check_file(t_shell *shell)
 	}
 	return (EXIT_FAILURE);
 }
-
-
 
 void	ft_cpy_cmd(t_token *current, t_exec *exec_current)
 {
@@ -80,6 +77,53 @@ int	ft_struc_for_exec(t_shell *shell)
 	return (EXIT_SUCCESS);
 }
 
+void	fill_redir(t_redir *file, t_token *current)
+{
+	file->file = current->next->content;
+	file->type = ft_is_file(current->type);
+	file->heredoc = NULL;
+	file->next = NULL;
+}
+t_token	*ft_add_redir_exec(t_token *current, t_redir *file, t_exec *new_cmd)
+{
+	t_redir	*buff;
+
+	while (current && current->type != PIPE)
+	{
+		if (ft_is_file(current->type) != -1)
+		{
+			file = ft_malloc(sizeof(t_redir));
+			if (!file)
+				return (NULL);
+			fill_redir(file, current);
+			if (new_cmd->redir == NULL)
+				new_cmd->redir = file;
+			else
+			{
+				buff = new_cmd->redir;
+				while (buff->next)
+					buff = buff->next;
+				buff->next = file;
+			}
+		}
+		current = current->next;
+	}
+	return (current);
+}
+void	ft_lstadd_back_exec(t_exec **current, t_exec *newcmd)
+{
+	t_exec *ite;
+
+	ite = *current;
+	if (!*current)
+	{
+		*current = newcmd;
+		return ;
+	}
+	while (ite->next)
+		ite = ite->next;
+	ite->next = newcmd;
+}
 void	ft_print_exec(t_shell *shell)
 {
 	int		i;
@@ -111,51 +155,4 @@ void	ft_print_exec(t_shell *shell)
 		i = 0;
 		current = current->next;
 	}
-}
-void fill_redir(t_redir *file,t_token *current)
-{
-	file->file = current->next->content;
-	file->type = ft_is_file(current->type);
-	file->heredoc = NULL;
-	file->next = NULL;
-}
-t_token	*ft_add_redir_exec(t_token *current, t_redir *file, t_exec *new_cmd)
-{
-	t_redir	*buff;
-
-	while (current && current->type != PIPE)
-	{
-		if (ft_is_file(current->type) != -1)
-		{
-			file = ft_malloc(sizeof(t_redir));
-			if (!file)
-				return (NULL);
-			fill_redir(file,current);
-			if (new_cmd->redir == NULL)
-				new_cmd->redir = file;
-			else
-			{
-				buff = new_cmd->redir;
-				while (buff->next)
-					buff = buff->next;
-				buff->next = file;
-			}
-		}
-		current = current->next;
-	}
-	return (current);
-}
-void	ft_lstadd_back_exec(t_exec **current, t_exec *newcmd)
-{
-	t_exec *ite;
-
-	ite = *current;
-	if (!*current)
-	{
-		*current = newcmd;
-		return ;
-	}
-	while (ite->next)
-		ite = ite->next;
-	ite->next = newcmd;
 }

@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:07:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 01:17:21 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 14:46:43 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ t_exec_line	*ft_init_queue_exec(void)
 	list->first = NULL;
 	return (list);
 }
-int ft_nb_cmd(t_token *current)
+int	ft_nb_cmd(t_token *current)
 {
-	int nb;
+	int	nb;
+
 	nb = 0;
 	while (current)
 	{
 		if (current->type == WORD || current->type == SFX)
 			nb++;
 		if (current->type == PIPE)
-			break;
+			break ;
 		current = current->next;
 	}
 	return (nb);

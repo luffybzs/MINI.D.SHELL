@@ -6,16 +6,16 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:51:54 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 21:44:30 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/02 19:38:06 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
-# include <stddef.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 static long	ft_atoi_spe(char *str)
 {

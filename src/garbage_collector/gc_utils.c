@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 18:34:25 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/01 16:12:44 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 16:02:23 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,33 +79,32 @@ void	free_one(t_garbage *node)
 	free(node);
 }
 
-void free_unlock(t_gc *garbage)
+void	free_unlock(t_gc *garbage)
 {
-    t_garbage *prev;
-    t_garbage *current;
-    t_garbage *next;
+	t_garbage	*prev;
+	t_garbage	*current;
+	t_garbage	*next;
 
-    if (!garbage)
-        return;
-    current = garbage->head;
-    while (current)
-    {
-        prev = current->prev;
-        next = current->next;
-        if (current->lock == false)
-        {
-            if (prev)
-                prev->next = next;
-            if (next)
-                next->prev = prev;
-            if (current == garbage->head)
-                garbage->head = next;
-            free_one(current);
-        }
-        current = next;
-    }
+	if (!garbage)
+		return ;
+	current = garbage->head;
+	while (current)
+	{
+		prev = current->prev;
+		next = current->next;
+		if (current->lock == false)
+		{
+			if (prev)
+				prev->next = next;
+			if (next)
+				next->prev = prev;
+			if (current == garbage->head)
+				garbage->head = next;
+			free_one(current);
+		}
+		current = next;
+	}
 }
-
 
 void	destroy(t_gc *garbage, void *elem)
 {
