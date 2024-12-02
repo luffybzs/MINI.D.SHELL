@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/01 19:29:02 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/02 02:12:07 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void ft_open_infile(char *file,t_shell *shell)
 	if (fd == -1)
 	{
 		perror(file);
-		// fermer le promt et passe a la prochaine cmd -- faudrait une fonction quitte et ft_free tout sauf l'env
+		ft_free(DESTROY);
 		exit(EXIT_FAILURE);
 	}
 	dup2(fd, STDIN_FILENO);
@@ -62,7 +62,7 @@ void ft_open_outfile(char *file, t_shell *shell)
 	if (fd == -1)
 	{
 		perror(file);
-		// same pour la ferme le promt
+		ft_free(DESTROY);
 		exit(EXIT_FAILURE);
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -76,7 +76,7 @@ void ft_open_outfile_append(char *file, t_shell *shell)
 	if (fd == -1)
 	{
 		perror(file);
-		// err 
+		ft_free(DESTROY); 
 		exit(EXIT_FAILURE);
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -90,6 +90,7 @@ void ft_open_heredoc(t_redir *current, t_shell *shell)
 	if (pipe(fd) == -1)
 	{
 		ft_putstr_fd("Mini.D.Shell : Error pipe\n", 2);
+		ft_free(DESTROY);
 		exit(-1);
 	}
 	ft_putstr_fd(current->heredoc, fd[1]);
@@ -115,57 +116,45 @@ int ft_open_file(t_shell *shell,t_redir *current)
 	return (EXIT_SUCCESS);
 }
 
+
+
+void	ft_chill_exec(t_exec *current, t_shell *shell, int *fd) 
+{
+	char *goodpath;
+	
+	if (current->next)
+	{
+		close(fd[0]);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+	}
+	if (current->redir)
+		if (ft_open_file(shell,current->redir) == EXIT_FAILURE)
+			(ft_free(DESTROY),exit(EXIT_FAILURE));
+	if (!current->cmd || !current->cmd[0])
+		(ft_free(DESTROY), exit(EXIT_SUCCESS));
+	goodpath = ft_good_path(shell, current);
+	if (!goodpath)
+		(ft_free(DESTROY), exit(EXIT_FAILURE));
+	execve(goodpath,current->cmd,shell->env_upt);
+}
+
 int ft_fork(t_shell *shell,t_exec *current)
 {
 	int fd[2];
 
-	char *goodpath;
 	while (current)
 	{
 		if (current->next != NULL)
-		{
 			if(pipe(fd) == -1)
 				return (EXIT_FAILURE);
-		}
 		current->pidt = fork();
 		if (current->pidt == -1)
-		{
-			close(fd[0]);
-			close(fd[1]);
-			return (EXIT_FAILURE);
-		}
+			return ((close(fd[0]), close(fd[1])),EXIT_FAILURE);
 		if (current->pidt == 0)
-		{
-			if (current->next)
-			{
-				close(fd[0]);
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-			}
-			if (current->redir)
-			{
-				if (ft_open_file(shell,current->redir) == EXIT_FAILURE)
-				{
-					ft_free(DESTROY);
-					exit(EXIT_FAILURE);
-				}
-			}
-			
-			if (!current->cmd || !current->cmd[0])
-			{
-				ft_free(DESTROY);
-				exit(EXIT_SUCCESS);
-			}
-			goodpath = ft_good_path(shell, current);
-			if (!goodpath)
-			{
-				ft_free(DESTROY);
-				exit(EXIT_FAILURE);
-			}
-			execve(goodpath,current->cmd,shell->env_upt);
-		}
+			ft_chill_exec(current, shell, fd);
 		if (current->next)
-			(close(fd[1]),  close(fd[0])); 
+			(close(fd[1])); 
 		current = current->next;
 	}
 	return(EXIT_SUCCESS);
