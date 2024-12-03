@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/02 18:01:24 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/03 15:42:04 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@
 # define OUTFILE 22
 # define INFILE 23
 # define APPEND 24
+
+#define INTERACTIVE_MODE 100
+#define NON_INTERACTIVE_MODE 101
+
+extern volatile sig_atomic_t g_signal_status;
 
 typedef struct s_redir
 {

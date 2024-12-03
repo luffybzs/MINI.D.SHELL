@@ -6,7 +6,7 @@ SRCS = $(addprefix src/, main.c tokenization/ft_start_parsing.c tokenization/ft_
 tokenization/ft_add_cmd.c tokenization/ft_check_list.c tokenization/ft_parsing_utils2.c tokenization/ft_error_parsing.c \
 builtin/gen.c builtin/echo.c builtin/env.c builtin/pwd.c env/env_list.c expand/ft_expand.c tokenization/ft_struc_for_exec.c tokenization/ft_start_cmd.c \
 builtin/cd.c builtin/export.c builtin/unset.c exec/ft_access_cmd.c exec/ft_find_the_path.c tokenization/ft_fonction_parsing.c exec/ft_heredoc.c garbage_collector/gc_utils.c garbage_collector/gc.c \
-builtin/exit.c )
+builtin/exit.c  signal/signal.c)
 
 INCLUDES = ./includes
 
