@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/02 18:23:04 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/03 01:06:59 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ char	*ft_good_path(t_shell *shell, t_exec *current)
 		ft_free(res);
 		i++;
 	}
-	ft_putstr_fd("Mini.D.Shell: ", 2);
-	ft_putstr_fd(current->cmd[0], 2);
-	ft_putendl_fd(": command not found", 2);
+	perror(current->cmd[0]);
 	return (NULL);
 }
 void	ft_open_infile(char *file, t_shell *shell)
@@ -141,6 +139,7 @@ void	ft_chill_exec(t_exec *current, t_shell *shell, int *fd)
 	if (!goodpath)
 		(ft_free(DESTROY), exit(EXIT_FAILURE));
 	execve(goodpath, current->cmd, shell->env_upt);
+	(perror("execve failed"), ft_free(DESTROY), exit(EXIT_FAILURE));
 }
 
 int	ft_fork(t_shell *shell, t_exec *current)
