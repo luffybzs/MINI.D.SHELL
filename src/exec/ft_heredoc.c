@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/04 18:39:53 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/04 21:37:49 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	ft_loop_heredoc(t_redir *current, t_shell *shell)
 		here = readline(">");
 		if (g_signal_status == SIGINT)
 		{
-			ft_free(tmp); // attention au double free potentiel
-			ft_free(here);
+			// ft_free(tmp); // attention au double free potentiel
+			// ft_free(here);
 			current->heredoc = NULL;
 			g_signal_status = 1;
 			setup_execution_signals();
