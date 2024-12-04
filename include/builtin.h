@@ -6,25 +6,25 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:55:51 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/04 16:49:55 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/04 21:22:22 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
-# define BUILTIN_H
-
+#define BUILTIN_H
 
 # include "minishell.h"
 
 // general function
 
-int		ft_execute_command(t_shell *shell);
+int	ft_execute_command(t_exec *current,
+						t_shell *shell);
 int		is_builtin(char *cmd);
-int		execute_builtin(t_token *cmd, t_shell *shell);
+void		execute_builtin(t_exec *cmd, t_shell *shell);
 
 // builtin
 
-int		ft_echo(t_token *cmd, t_shell *shell);
+int		ft_echo(t_exec *cmd, t_shell *shell);
 void	handle_double_quote(t_shell *shell, int is_n, char *current, int i);
 int		ft_env(t_shell *shell);
 int		ft_pwd(t_shell *shell);
@@ -57,6 +57,5 @@ int		ft_exit(t_shell *shell);
 // int ft_setup_signal_handler(t_shell_mode mode);
 t_shell	*get_shell_instance(void);
 void	set_shell_instance(t_shell *shell);
-
 
 #endif

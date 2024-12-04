@@ -12,6 +12,7 @@
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
+static int	ft_is_only_n(char **tab);
 
 int	ft_echo(t_exec *current, t_shell *shell)
 {
@@ -20,16 +21,16 @@ int	ft_echo(t_exec *current, t_shell *shell)
 
 	i = 1;
 	newline = true;
-	if (current->cmd[i] == "-n") // TODO: change whis later
+	if (ft_strncmp(current->cmd[i],"-n",2) == 0) // TODO: change whis later
 	{
 		i = ft_is_only_n(current->cmd);
 		newline = false;
 		if (!current->cmd[2])
 			return (shell->exit_status = 1, 1);
-		i++;
+		// peut etre rajoute
 	}
 	// open tout les fils et dup2 utilse t_redir ft_open
-	while (tab[i])
+	while (current->cmd[i])
 	{
 		ft_putstr_fd(current->cmd[i], 1); // remplacer par le futur fd
 		if (current->cmd[i + 1])
@@ -41,7 +42,7 @@ int	ft_echo(t_exec *current, t_shell *shell)
 	return (shell->exit_status = 0, 0);
 }
 
-int	ft_is_only_n(char **tab)
+static int	ft_is_only_n(char **tab)
 {
 	int	i;
 	int	j;

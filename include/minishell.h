@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/04 17:54:48 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/04 21:25:35 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,15 +219,15 @@ char	*get_env_value(const char *name,
 // test
 
 void							print_list(t_shell *list);
+int	ft_execute_command(t_exec *current,
+						t_shell *shell);
 
 /* signaux */
-void    setup_interactive_signals(void);
-void    setup_execution_signals(void);
-void    setup_child_signals(void);
-void    handle_interactive_signal(int signum);
-void    handle_execution_signal(int signum);
-void	setup_heredoc_signals(void);
-
-
+void							setup_interactive_signals(void);
+void							setup_execution_signals(void);
+void							setup_child_signals(void);
+void							handle_interactive_signal(int signum);
+void							handle_execution_signal(int signum);
+void							setup_heredoc_signals(void);
 
 #endif
