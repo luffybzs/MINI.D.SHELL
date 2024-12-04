@@ -7,6 +7,8 @@
 		"gc.h": "c",
 		"builtin.h": "c",
 		"type_traits": "c",
-		"string.h": "c"
+		"string.h": "c",
+		"readline.h": "c",
+		"term.h": "c"
 	}
 }

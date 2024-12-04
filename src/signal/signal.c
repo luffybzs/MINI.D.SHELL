@@ -6,28 +6,18 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:41:50 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/03 17:25:51 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:00:48 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
+#include <signal.h>
+#include <sys/signal.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <term.h>
+#include <ncurses.h>
 
-// int ft_handle_signal(t_shell *shell)
-// {
-
-
-//     return (0);
-// }
-
-// void handle_sigint(t_shell *shell)
-// {
-    
-// }
-
-// void handle_sigquit(t_shell *shell)
-// {
-    
-// }
 
 /*
 Mode Interactif (comme un concert public) :

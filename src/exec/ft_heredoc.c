@@ -3,20 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/02 18:27:24 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/04 17:12:17 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_loop_heredoc(t_redir *current)
+void	ft_loop_heredoc(t_redir *current, t_shell *shell)
 {
 	char	*here;
 	char	*tmp;
 
+	(void)shell;
+	/* ajout signaux*/
+	// shell->sig_handler.mode = HEREDOC;
+	// if (ft_setup_signal_handler(HEREDOC) == EXIT_FAILURE)
+	// 	return;
+	setup_interactive_signals();
+	/* fin*/
 	tmp = ft_strdup("");
 	while (1)
 	{
@@ -41,6 +48,9 @@ void	ft_loop_heredoc(t_redir *current)
 		}
 	}
 	current->heredoc = tmp;
+
+	/*signaux fin*/
+	setup_execution_signals();
 }
 
 int	ft_check_heredoc(t_shell *shell)
@@ -57,7 +67,7 @@ int	ft_check_heredoc(t_shell *shell)
 			while (current_redir)
 			{
 				if (current_redir->type == END_OF_FILE)
-					ft_loop_heredoc(current_redir);
+					ft_loop_heredoc(current_redir, shell);
 				current_redir = current_redir->next;
 			}
 		}

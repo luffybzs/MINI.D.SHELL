@@ -6,12 +6,13 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:55:51 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/02 19:46:48 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:49:55 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
+
 
 # include "minishell.h"
 
@@ -33,7 +34,8 @@ int		ft_cd(t_shell *shell);
 
 int		ft_export(t_shell *shell);
 int		is_name_ok(char *str, t_shell *shell);
-int		is_already_in_list(char *looking_for, t_shell *shell);
+int	is_already_in_list(char *looking_for,
+						t_shell *shell);
 char	*get_value(char *str);
 void	add_new_env(char *str, t_shell *shell);
 int		ft_export_without_arg(t_shell *shell);
@@ -49,5 +51,12 @@ void	looking_and_sup(char *str, t_shell *shell);
 /* exit */
 
 int		ft_exit(t_shell *shell);
+
+/* signal */
+
+// int ft_setup_signal_handler(t_shell_mode mode);
+t_shell	*get_shell_instance(void);
+void	set_shell_instance(t_shell *shell);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/03 16:02:53 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:10:55 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,14 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 {
 	while (1)
 	{
-		if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
-		{
-			g_signal_status = INTERACTIVE_MODE;
-			prompt = readline("Mini.D.Shell -> ");
-		}
-		else
-		{
-			g_signal_status = NON_INTERACTIVE_MODE;
-			prompt = readline("Mini.D.Shell -> ");
-		}
+		setup_interactive_signals();
+		prompt = readline("Mini.D.Shell -> ");
 		if (!prompt)
 			break ;
-		if (g_signal_status == INTERACTIVE_MODE)
-			add_history(prompt);
+		add_history(prompt);
+		/*signaux*/
+		setup_execution_signals();
+		
 		ft_parsing_prompt(prompt, shell);
 		ft_free(PROMPT);
 	}
@@ -54,6 +48,10 @@ int	main(int ac, char **av, char **env)
 	t_shell	shell;
 
 	(void)ac;
+	
+	/* signaux*/
+	setup_interactive_signals();
+	
 	prompt = NULL;
 	memset(&shell, 0, sizeof(t_shell));
 	shell.env = env;
@@ -65,3 +63,11 @@ int	main(int ac, char **av, char **env)
 		return (ft_free(DESTROY), EXIT_FAILURE);
 	return (ft_free(DESTROY), 0);
 }
+
+// int main(void)
+// {
+// 	struct sigaction sa;
+// 	(void)sa;
+// 	printf("size of sigaction : %lu\n", sizeof(struct sigaction));
+// 	return (0);
+// }

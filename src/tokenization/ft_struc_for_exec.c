@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_struc_for_exec.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/02 14:48:04 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/04 16:43:44 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_check_file(t_shell *shell)
 	current = shell->command->first;
 	while (current)
 	{
-		if (current->type == FILE || current->type == END_OF_FILE)
+		if (current->type == FILE_TOKEN || current->type == END_OF_FILE)
 			return (EXIT_SUCCESS);
 		current = current->next;
 	}

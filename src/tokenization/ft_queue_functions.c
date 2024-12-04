@@ -42,7 +42,7 @@ int	ft_compute_token(t_token *before, char *new)
 		return (SFX);
 	if (is_redirect(before->content) == LL_RED && !is_redirect(new))
 		return (END_OF_FILE);
-	return (FILE);
+	return (FILE_TOKEN);
 }
 
 void	ft_add_token(char *content, t_command_line *command)

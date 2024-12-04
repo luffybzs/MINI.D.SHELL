@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/03 01:06:59 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/04 17:14:00 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,9 @@ void	ft_chill_exec(t_exec *current, t_shell *shell, int *fd)
 {
 	char	*goodpath;
 
+/*signaux*/
+	setup_child_signals();
+	
 	if (current->next)
 	{
 		close(fd[0]);
@@ -129,7 +132,8 @@ void	ft_chill_exec(t_exec *current, t_shell *shell, int *fd)
 		close(fd[1]);
 	}
 	if (shell->previous_pipe_fd != -1)
-		(dup2(shell->previous_pipe_fd, STDIN_FILENO), close(shell->previous_pipe_fd));
+		(dup2(shell->previous_pipe_fd, STDIN_FILENO),
+			close(shell->previous_pipe_fd));
 	if (current->redir)
 		if (ft_open_file(shell, current->redir) == EXIT_FAILURE)
 			(ft_free(DESTROY), exit(EXIT_FAILURE));
@@ -150,7 +154,7 @@ int	ft_fork(t_shell *shell, t_exec *current)
 	{
 		if (current->next != NULL)
 			if (pipe(fd) == -1)
-				return (perror("pipe"),EXIT_FAILURE);
+				return (perror("pipe"), EXIT_FAILURE);
 		current->pidt = fork();
 		if (current->pidt == -1)
 			return (close(fd[0]), close(fd[1]), EXIT_FAILURE);
@@ -173,12 +177,14 @@ int	ft_exec_loop(t_shell *shell)
 	current = shell->first_exec;
 
 	shell->previous_pipe_fd = -1;
+
 	if (ft_fork(shell, current) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	while (current)
 	{
-		waitpid(current->pidt, &status, 0);
+        waitpid(current->pidt, &status, 0);
 		current = current->next;
 	}
+	
 	return (EXIT_SUCCESS);
 }
