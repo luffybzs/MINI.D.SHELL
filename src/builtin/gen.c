@@ -6,19 +6,19 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:30:54 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/02 19:55:32 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/04 20:05:49 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
-int	ft_execute_command(t_shell *shell)
+int	ft_execute_command(t_exec *current, t_shell *shell)
 {
 	t_token	*current;
 
 	current = shell->command->first;
-	if (is_builtin(current->content))
-		return (execute_builtin(current, shell));
+	if (is_builtin(current->cmd[0]))
+		return (execute_builtin(current, shell),1);
 	return (0); // envoyer vers gestion hors builtin
 }
 int	is_builtin(char *cmd)
@@ -33,21 +33,21 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-int	execute_builtin(t_token *cmd, t_shell *shell)
+int	execute_builtin(t_exec *current, t_shell *shell)
 {
-	if (ft_strcmp(cmd->content, "echo") == 0)
-		return (ft_echo(cmd, shell));
-	else if (ft_strcmp(cmd->content, "cd") == 0)
+	if (ft_strcmp(current->cmd[0], "echo") == 0)
+		return (ft_echo(current,shell));
+	else if (ft_strcmp(current->cmd[0], "cd") == 0)
 		return (ft_cd(shell));
-	else if (ft_strcmp(cmd->content, "env") == 0)
+	else if (ft_strcmp(current->cmd[0], "env") == 0)
 		return (ft_env(shell));
-	else if (ft_strcmp(cmd->content, "pwd") == 0)
+	else if (ft_strcmp(current->cmd[0], "pwd") == 0)
 		return (ft_pwd(shell));
-	else if (ft_strcmp(cmd->content, "export") == 0)
+	else if (ft_strcmp(current->cmd[0], "export") == 0)
 		return (ft_export(shell));
-	else if (ft_strcmp(cmd->content, "unset") == 0)
+	else if (ft_strcmp(current->cmd[0], "unset") == 0)
 		return (ft_unset(shell));
-	else if (ft_strcmp(cmd->content, "exit") == 0)
+	else if (ft_strcmp(current->cmd[0], "exit") == 0)
 		return (ft_exit(shell));
 	// implementer les autres builtins
 	return (0);

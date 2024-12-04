@@ -3,40 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>                +#+  +:+      
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:02:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/02 17:29:25 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/04 20:14:35 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
-int	ft_echo(t_token *cmd, t_shell *shell)
+int	ft_echo(t_exec *current, t_shell *shell)
 {
-	t_token	*current;
-	int		is_n;
+	bool	newline;
+	int		i;
 
-	(void)shell;
-	is_n = 0;
-	current = cmd->next;
-	if (current && ft_strcmp(current->content, "-n") == 0)
+	i = 1;
+	newline = true;
+	if (current->cmd[i] == "-n") // TODO: change whis later
 	{
-		is_n = 1;
-		if (!current->next)
-			return (1); // gerer le bon code de retour
-		current = current->next;
-		while (ft_strcmp(current->content, "-n") == 0)
-			current = current->next;
+		i = ft_is_only_n(current->cmd);
+		newline = false;
+		if (!current->cmd[2])
+			return (shell->exit_status = 1, 1);
+		i++;
 	}
-	while (current)
+	// open tout les fils et dup2 utilse t_redir ft_open
+	while (tab[i])
 	{
-		ft_putstr_fd(current->content, 1); // remplacer par le futur fd
-		if (current->next)
+		ft_putstr_fd(current->cmd[i], 1); // remplacer par le futur fd
+		if (current->cmd[i + 1])
 			ft_putchar_fd(' ', 1);
-		current = current->next;
+		i++;
 	}
-	if (!is_n)
+	if (newline == true)
 		ft_putchar_fd('\n', 1);
-	return (0);
+	return (shell->exit_status = 0, 0);
 }
+
+int	ft_is_only_n(char **tab)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (tab[i])
+	{
+		if (tab[i][0] != '-' || tab[i][1] == '\0')
+			return (i);
+		j = 1;
+		while (tab[i][j])
+		{
+			if (tab[i][j] != 'n')
+				return (i);
+			j++;
+		}
+		i++;
+	}
+	return (i);
+}
+

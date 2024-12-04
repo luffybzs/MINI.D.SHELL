@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/04 17:14:00 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/04 20:04:06 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ void	ft_chill_exec(t_exec *current, t_shell *shell, int *fd)
 			(ft_free(DESTROY), exit(EXIT_FAILURE));
 	if (!current->cmd || !current->cmd[0])
 		(ft_free(DESTROY), exit(EXIT_SUCCESS));
+	if (ft_execute_command(current, shell) != 0)
+		exit(shell->exit_status);
 	goodpath = ft_good_path(shell, current);
 	if (!goodpath)
 		(ft_free(DESTROY), exit(EXIT_FAILURE));
@@ -152,6 +154,8 @@ int	ft_fork(t_shell *shell, t_exec *current)
 
 	while (current)
 	{
+		if(current->next == NULL && ft_execute_command(current, shell) != 0)
+			return (ft_free(PROMPT), 1);
 		if (current->next != NULL)
 			if (pipe(fd) == -1)
 				return (perror("pipe"), EXIT_FAILURE);
