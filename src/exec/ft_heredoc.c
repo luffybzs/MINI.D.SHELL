@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/04 17:12:17 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:39:53 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,33 @@ void	ft_loop_heredoc(t_redir *current, t_shell *shell)
 
 	(void)shell;
 	/* ajout signaux*/
-	// shell->sig_handler.mode = HEREDOC;
-	// if (ft_setup_signal_handler(HEREDOC) == EXIT_FAILURE)
-	// 	return;
-	setup_interactive_signals();
+	setup_heredoc_signals();
 	/* fin*/
 	tmp = ft_strdup("");
+	if (!tmp)
+		return ;
 	while (1)
 	{
 		here = readline(">");
+		if (g_signal_status == SIGINT)
+		{
+			ft_free(tmp); // attention au double free potentiel
+			ft_free(here);
+			current->heredoc = NULL;
+			g_signal_status = 1;
+			setup_execution_signals();
+			return ;
+		}
 		if (!here)
+		{
+			ft_free(tmp);
 			break ;
+		}
 		if (ft_strcmp(here, current->file) == 0)
+		{
+			ft_free(here);
 			break ;
+		}
 		// gere les $user
 		tmp = ft_strjoin_free(tmp, here);
 		ft_free(here);
@@ -48,7 +62,6 @@ void	ft_loop_heredoc(t_redir *current, t_shell *shell)
 		}
 	}
 	current->heredoc = tmp;
-
 	/*signaux fin*/
 	setup_execution_signals();
 }

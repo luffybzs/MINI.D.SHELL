@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/04 17:07:27 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:54:48 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,7 @@ void    setup_execution_signals(void);
 void    setup_child_signals(void);
 void    handle_interactive_signal(int signum);
 void    handle_execution_signal(int signum);
+void	setup_heredoc_signals(void);
 
 
 
