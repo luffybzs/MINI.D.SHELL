@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/04 20:04:06 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/04 21:33:03 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int	ft_fork(t_shell *shell, t_exec *current)
 	while (current)
 	{
 		if(current->next == NULL && ft_execute_command(current, shell) != 0)
-			return (ft_free(PROMPT), 1);
+			return (/*ft_free(PROMPT),*/ 1);
 		if (current->next != NULL)
 			if (pipe(fd) == -1)
 				return (perror("pipe"), EXIT_FAILURE);
