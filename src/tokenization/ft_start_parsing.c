@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/04 19:33:15 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/05 04:51:07 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void	free_line(t_command_line *line)
 	{
 		tmp = current;
 		current = current->next;
-		free(tmp->content);
-		free(tmp);
+		ft_free(tmp->content);
+		ft_free(tmp);
 	}
-	free(line);
+	ft_free(line);
 }
 
 int	ft_parsing_prompt(char *prompt, t_shell *shell)

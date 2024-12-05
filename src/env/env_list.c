@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:49:34 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/02 17:27:49 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/05 04:49:49 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_env	*create_env_node(char *env_str)
 		return (NULL);
 	sep_index = ft_findchar(env_str, '=');
 	if (sep_index == -1)
-		return (free(new), NULL);
+		return (ft_free(new), NULL);
 	new->key = ft_substr(env_str, 0, sep_index);
 	new->value = ft_substr(env_str, sep_index + 1, ft_strlen(env_str)
 			- sep_index);
@@ -87,10 +87,10 @@ void	free_env_node(t_env *node)
 	if (!node)
 		return ;
 	if (node->key)
-		free(node->key);
+		ft_free(node->key);
 	if (node->value)
-		free(node->value);
-	free(node);
+		ft_free(node->value);
+	ft_free(node);
 }
 
 int	ft_findchar(const char *str, int c)
