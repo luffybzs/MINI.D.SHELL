@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:12:38 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/05 04:01:04 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/05 04:41:26 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	execute_builtin(t_exec *current, t_shell *shell)
 	else if (ft_strcmp(current->cmd[0], "pwd") == 0)
 		ft_pwd(shell);
 	else if (ft_strcmp(current->cmd[0], "export") == 0)
-		ft_export(shell);
+		ft_export(current,shell);
 	else if (ft_strcmp(current->cmd[0], "unset") == 0)
-		ft_unset(shell);
+		ft_unset(current,shell);
 	else if (ft_strcmp(current->cmd[0], "exit") == 0)
 		ft_exit(current,shell);
 	// implementer les autres builtins

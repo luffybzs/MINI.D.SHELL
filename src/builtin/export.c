@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:02:29 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/05 04:24:51 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/05 04:37:11 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,13 @@ int	ft_export(t_exec *current, t_shell *shell)
 
 	i = 1;
 	status = 0;
-	current = shell->first_exec;
+	// current = shell->first_exec;
 	if (!current->cmd[1])
-		return (ft_export_without_arg(shell));
+	{
+		ft_export_without_arg(shell);
+		shell->exit_status = 0;
+		return (0);
+	}
 	while (current->cmd[i])
 	{
 		if (is_name_ok(current->cmd[i], shell))
@@ -40,25 +44,63 @@ int	ft_export(t_exec *current, t_shell *shell)
 		}
 		i++;
 	}
+	shell->exit_status = status;
 	return (status);
 }
+
+// int	is_name_ok(char *str, t_shell *shell)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (!str || !*str)
+// 		return (printf("%s: export '%s': not a valid identifier\n",
+// 				shell->shell_name, str), 1); // gerer l erreur
+// 	if ((str[0] != '_' && !ft_isalpha(str[i])))
+// 		return (printf("%s: export '%s': not a valid identifier\n",
+// 				shell->shell_name, str), 1); // gerer l erreur
+// 	while (str[i] && str[i] != '=')
+// 	{
+// 		if ((str[i] != '_' && !ft_isalnum(str[i]) && str[i] != '='))
+// 			return (printf("%s: export '%s': not a valid identifier\n",
+// 					shell->shell_name, str), 1); // gerer l erreur
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 int	is_name_ok(char *str, t_shell *shell)
 {
 	int	i;
 
 	i = 0;
-	if (!str || !*str)
-		return (printf("%s: export '%s': not a valid identifier\n",
-				shell->shell_name, str), 1); // gerer l erreur
-	if ((str[0] != '_' && !ft_isalpha(str[i])))
-		return (printf("%s: export '%s': not a valid identifier\n",
-				shell->shell_name, str), 1); // gerer l erreur
+	if (!str || str[0] == '\0')
+	{
+		ft_putstr_fd(shell->shell_name, 2);
+		ft_putstr_fd(": export: `", 2);
+		if (str)
+			ft_putstr_fd(str, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (1);
+	}
+	if (str[0] != '_' && !ft_isalpha(str[0]))
+	{
+		ft_putstr_fd(shell->shell_name, 2);
+		ft_putstr_fd(": export: `", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (1);
+	}
 	while (str[i] && str[i] != '=')
 	{
-		if ((str[i] != '_' && !ft_isalnum(str[i]) && str[i] != '='))
-			return (printf("%s: export '%s': not a valid identifier\n",
-					shell->shell_name, str), 1); // gerer l erreur
+		if (str[i] != '_' && !ft_isalnum(str[i]))
+		{
+			ft_putstr_fd(shell->shell_name, 2);
+			ft_putstr_fd(": export: `", 2);
+			ft_putstr_fd(str, 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			return (1);
+		}
 		i++;
 	}
 	return (0);

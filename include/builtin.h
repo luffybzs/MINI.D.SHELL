@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:55:51 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/05 04:03:57 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/05 04:45:07 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		ft_cd(t_exec *current,t_shell *shell);
 
 /* export */
 
-int		ft_export(t_shell *shell);
+int		ft_export(t_exec *current, t_shell *shell);
 int		is_name_ok(char *str, t_shell *shell);
 int	is_already_in_list(char *looking_for,
 						t_shell *shell);
@@ -44,7 +44,7 @@ void	*ft_free_env_node(t_env *node);
 
 /* unset */
 
-int		ft_unset(t_shell *shell);
+int		ft_unset(t_exec *current, t_shell *shell);
 int		is_name_ok_unset(char *str, t_shell *shell);
 void	looking_and_sup(char *str, t_shell *shell);
 
