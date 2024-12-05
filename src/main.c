@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/04 17:10:55 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/05 03:27:04 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,20 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 {
 	while (1)
 	{
-		setup_interactive_signals();
+		ft_signal();
 		prompt = readline("Mini.D.Shell -> ");
+		if (g_signal_status != 100)
+		{
+			g_signal_status = 100;
+			continue ;
+		}
 		if (!prompt)
 			break ;
-		add_history(prompt);
-		/*signaux*/
-		setup_execution_signals();
-		
-		ft_parsing_prompt(prompt, shell);
-		ft_free(PROMPT);
+		if (*prompt)
+			add_history(prompt);
+		if (ft_parsing_prompt(prompt, shell) == EXIT_FAILURE)
+			shell->exit_status = 2;
 	}
-	ft_free(PROMPT);
 	return (EXIT_FAILURE);
 }
 void	ft_fill_data(t_shell *shell, char **av)
@@ -40,6 +42,7 @@ void	ft_fill_data(t_shell *shell, char **av)
 	shell->shell_pid = getpid();
 	shell->shell_name = ft_strdup(av[0]);
 	shell->exit_status = 0;
+	shell->previous_pipe_fd = -1;
 }
 
 int	main(int ac, char **av, char **env)
@@ -48,10 +51,8 @@ int	main(int ac, char **av, char **env)
 	t_shell	shell;
 
 	(void)ac;
-	
 	/* signaux*/
-	setup_interactive_signals();
-	
+	// setup_interactive_signals();
 	prompt = NULL;
 	memset(&shell, 0, sizeof(t_shell));
 	shell.env = env;

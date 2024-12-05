@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:55:51 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/04 21:22:22 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/05 04:03:57 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void		execute_builtin(t_exec *cmd, t_shell *shell);
 
 int		ft_echo(t_exec *cmd, t_shell *shell);
 void	handle_double_quote(t_shell *shell, int is_n, char *current, int i);
-int		ft_env(t_shell *shell);
+int		ft_env(t_exec *actual,t_shell *shell);
 int		ft_pwd(t_shell *shell);
-int		ft_cd(t_shell *shell);
+int		ft_cd(t_exec *current,t_shell *shell);
 
 /* export */
 
@@ -50,7 +50,7 @@ void	looking_and_sup(char *str, t_shell *shell);
 
 /* exit */
 
-int		ft_exit(t_shell *shell);
+int		ft_exit(t_exec *current,t_shell *shell);
 
 /* signal */
 

@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/04 21:25:35 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/05 04:22:30 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ int								ft_nb_cmd(t_token *current);
 
 t_shell							*env_init(char **env);
 int								fill_env_list(t_shell *shell);
-t_env							*create_env_node(char *env_str);
+ t_env							*create_env_node(char *env_str);
 void							free_env_list(t_shell *shell);
 void							free_env_node(t_env *node);
 int								ft_findchar(const char *str, int c);
@@ -223,11 +223,10 @@ int	ft_execute_command(t_exec *current,
 						t_shell *shell);
 
 /* signaux */
-void							setup_interactive_signals(void);
-void							setup_execution_signals(void);
-void							setup_child_signals(void);
-void							handle_interactive_signal(int signum);
-void							handle_execution_signal(int signum);
-void							setup_heredoc_signals(void);
+
+void							set_signal_child(void);
+int								sig_event(void);
+void							signal_handler(int sig);
+void							ft_signal(void);
 
 #endif

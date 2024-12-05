@@ -6,75 +6,79 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 19:48:09 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/02 20:02:01 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/05 04:14:04 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
+#include <limits.h>
 
-static long ft_atoi_spe(char *str)
+static long	ft_atoi_spe(char *str)
 {
-    size_t      i;
-    long int    res;
-    int         sign;
+	size_t		i;
+	long int	res;
+	int			sign;
 
-    i = 0;
-    res = 0;
-    sign = 1;
-    if (str[i] == '+' || str[i] == '-')
-    {
-        if (str[i] == '-')
-            sign *= -1;
-        if (str[i + 1] == '\0')
-            return (2147483648);
-        i++;
-    }
-    while (str[i] && str[i] >= '0' && str[i] <= '9')
-    {
-        res *= 10;
-        res += str[i] - 48;
-        i++;
-        if (res * sign > 2147483647 || res * sign < -2147483648)
-            return (2147483648);
-    }
-    return (res * sign);
+	i = 0;
+	res = 0;
+	sign = 1;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (2147483648);
+		if (res > LONG_MAX / 10 ||
+			(res == LONG_MAX / 10 && (str[i] - '0') > LONG_MAX % 10))
+			return (2147483648);
+		res = res * 10 + (str[i] - '0');
+		i++;
+	}
+	return (res * sign);
 }
 
-int ft_exit(t_shell *shell)
+int	ft_exit(t_exec *current, t_shell *shell)
 {
-    t_exec  *current;
-    char    *arg;
-    int     i;
-    long    value;
+	char	*arg;
+	int		i;
+	long	value;
 
-    current = shell->first_exec;
-    if (!current->cmd[1])
-    {
-        ft_putstr_fd("exit\n", 1);
-        exit(shell->exit_status);
-    }
-    arg = current->cmd[1];
-    if (current->cmd[2])
-    {
-        ft_putstr_fd("exit: too many arguments\n", 2);
-        shell->exit_status = 1;
-        return (1);
-    }
-    i = 0;
-    if (arg[i] == '-' || arg[i] == '+')
-        i++;
-    while (arg[i])
-    {
-        if (!ft_isdigit(arg[i]))
-        {
-            ft_putstr_fd("exit: numeric argument required\n", 2);
-            exit(2);
-        }
-        i++;
-    }
-    value = ft_atoi_spe(arg);
-    ft_putstr_fd("exit\n", 1);
-    exit((unsigned char)value);
+	if (!current->cmd[1])
+	{
+		ft_putstr_fd("exit\n", 1);
+		exit(shell->exit_status);
+	}
+	arg = current->cmd[1];
+	if (current->cmd[2])
+	{
+		ft_putstr_fd("exit: too many arguments\n", 2);
+		shell->exit_status = 1;
+		return (1);
+	}
+	i = 0;
+	if (arg[i] == '-' || arg[i] == '+')
+		i++;
+	while (arg[i])
+	{
+		if (!ft_isdigit(arg[i]))
+		{
+			ft_putstr_fd("exit: numeric argument required\n", 2);
+			exit(2);
+		}
+		i++;
+	}
+	value = ft_atoi_spe(arg);
+	if (value == 2147483648)
+	{
+		ft_putstr_fd("exit: numeric argument required\n", 2);
+		exit(2);
+	}
+	ft_putstr_fd("exit\n", 1);
+	exit((unsigned char)value);
 }
 
 /* 

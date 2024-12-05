@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/04 21:33:03 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/05 03:03:15 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,10 @@ void	ft_chill_exec(t_exec *current, t_shell *shell, int *fd)
 {
 	char	*goodpath;
 
-/*signaux*/
-	setup_child_signals();
-	
+	/*signaux*/
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 	if (current->next)
 	{
 		close(fd[0]);
@@ -154,7 +155,7 @@ int	ft_fork(t_shell *shell, t_exec *current)
 
 	while (current)
 	{
-		if(current->next == NULL && ft_execute_command(current, shell) != 0)
+		if (current->next == NULL && ft_execute_command(current, shell) != 0)
 			return (/*ft_free(PROMPT),*/ 1);
 		if (current->next != NULL)
 			if (pipe(fd) == -1)
@@ -186,9 +187,9 @@ int	ft_exec_loop(t_shell *shell)
 		return (EXIT_FAILURE);
 	while (current)
 	{
-        waitpid(current->pidt, &status, 0);
+		waitpid(current->pidt, &status, 0);
 		current = current->next;
 	}
-	
+
 	return (EXIT_SUCCESS);
 }

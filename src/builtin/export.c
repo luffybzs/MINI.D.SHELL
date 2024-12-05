@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:02:29 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/02 17:29:35 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/05 04:24:51 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
-int	ft_export(t_shell *shell)
+int	ft_export(t_exec *current, t_shell *shell)
 {
-	t_exec	*current;
 	t_env	*existing;
 	int		i;
 	int		status;
@@ -185,6 +184,7 @@ void	*ft_free_env_node(t_env *node)
 	ft_free(node);
 	return (NULL);
 }
+
 /*
 
 

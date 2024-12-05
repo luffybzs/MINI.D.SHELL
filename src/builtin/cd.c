@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:09:23 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/02 17:29:08 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/05 03:48:39 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_env	*update_or_create_env(t_env *head, char *key, char *value)
 {
 	t_env	*current;
 
- // remplace l ancienne valeur si existante sinon la cree
+	// remplace l ancienne valeur si existante sinon la cree
 	current = head;
 	while (current)
 	{
@@ -57,7 +57,7 @@ static int	update_pwd_env(t_shell *shell, char *old_pwd)
 {
 	char	*current_pwd;
 
- // mise a jour des variables en tete de liste env
+	// mise a jour des variables en tete de liste env
 	current_pwd = getcwd(NULL, 0);
 	if (!current_pwd)
 		return (1);
@@ -79,7 +79,7 @@ static int	update_pwd_env(t_shell *shell, char *old_pwd)
 
 static void	handle_cd_error(char *path, t_shell *shell)
 {
- // finir d associer les differnete erreurs
+	// finir d associer les differnete erreurs
 	ft_putstr_fd(shell->shell_name, 2);
 	ft_putstr_fd(": cd: ", 2);
 	if (access(path, F_OK) == -1)
@@ -100,19 +100,23 @@ static void	handle_cd_error(char *path, t_shell *shell)
 	shell->exit_status = 1;
 }
 
-int	ft_cd(t_shell *shell)
+int	ft_cd(t_exec *current, t_shell *shell)
 {
 	char	*path;
 	char	*old_pwd;
-	t_token	*current;
 
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
+		return (shell->exit_status = 1,1);
+	if (current->cmd[1] && current->cmd[2])
+	{
+		ft_putstr_fd(shell->shell_name, 2);
+		ft_putstr_fd(": cd: too many arguments\n", 2);
+		ft_free(old_pwd);
+		shell->exit_status = 1;
 		return (1);
-	current = shell->command->first;
-	while (current && current->type == WORD)
-		current = current->next;
-	if (!current)
+	}
+	if (!current->cmd[1])
 	{
 		path = get_env_for_cd(shell->head, "HOME");
 		if (!path)
@@ -125,7 +129,7 @@ int	ft_cd(t_shell *shell)
 		}
 	}
 	else
-		path = current->content;
+		path = current->cmd[1];
 	if (chdir(path) != 0)
 	{
 		handle_cd_error(path, shell);
