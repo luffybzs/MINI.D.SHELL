@@ -1,0 +1,7 @@
+$USER
+"$USER"
+'$USER'
+"'$USER'"
+'"$USER"'
+aaaaaaa$USER
+$USERRRRRR

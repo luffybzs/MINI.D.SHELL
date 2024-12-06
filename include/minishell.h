@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/06 15:29:54 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/06 21:07:22 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,14 +137,16 @@ typedef struct s_expand_state
 }								t_expand_state;
 
 //-------------------------------------//
-int		ft_len_env(t_shell *shell);
-char	**ft_lst_strdup(t_shell *shell);
-int		ft_open_file(t_shell *shell, t_redir *current);
-void	ft_open_heredoc(t_redir *current, t_shell *shell);
-void	ft_open_outfile_append(char *file, t_shell *shell);
-void	ft_open_outfile(char *file, t_shell *shell);
-void	ft_open_infile(char *file, t_shell *shell);
-int		ft_check_heredoc(t_shell *shell);
+int								ft_len_env(t_shell *shell);
+char							**ft_lst_strdup(t_shell *shell);
+int								ft_open_file(t_shell *shell, t_redir *current);
+void	ft_open_heredoc(t_redir *current,
+						t_shell *shell);
+void	ft_open_outfile_append(char *file,
+							t_shell *shell);
+void							ft_open_outfile(char *file, t_shell *shell);
+void							ft_open_infile(char *file, t_shell *shell);
+int								ft_check_heredoc(t_shell *shell);
 t_token	*ft_add_redir_exec(t_token *current,
 							t_redir *file,
 							t_exec *new_cmd);
@@ -191,7 +193,7 @@ int								ft_nb_cmd(t_token *current);
 
 t_shell							*env_init(char **env);
 int								fill_env_list(t_shell *shell);
- t_env							*create_env_node(char *env_str);
+t_env							*create_env_node(char *env_str);
 void							free_env_list(t_shell *shell);
 void							free_env_node(t_env *node);
 int								ft_findchar(const char *str, int c);
@@ -220,6 +222,14 @@ void							append_char(char **str, char c);
 void							append_string(char **dst, const char *src);
 char	*get_env_value(const char *name,
 					t_shell *shell);
+
+/* expand hd*/
+
+char	*handle_expand_here_doc(char *str,
+								t_shell *shell);
+char	*handle_expand_here_doc(char *str,
+								t_shell *shell);
+void							append_char_spe(char *str, char c);
 
 // test
 
