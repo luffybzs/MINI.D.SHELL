@@ -6,101 +6,53 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/06 21:28:21 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/06 21:37:31 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// void	ft_loop_heredoc(t_redir *current, t_shell *shell)
-// {
-// 	char	*here;
-// 	char	*tmp;
+static void	handle_signal_status(t_redir *current)
+{
+	current->heredoc = NULL;
+	g_signal_status = 100;
+}
 
-// 	(void)shell;
-// 	/* ajout signaux*/
-// 	// setup_heredoc_signals();
-// 	/* fin*/
-// 	tmp = ft_strdup("");
-// 	if (!tmp)
-// 		return ;
-// 	while (1)
-// 	{
-// 		here = readline(">");
-// 		if (!here)
-// 		{
-// 			ft_free(tmp);
-// 			break ;
-// 		}
-// 		if (g_signal_status != 100)
-// 		{
-// 			ft_free(tmp);
-// 			if (here)
-// 				ft_free(here);
-// 			current->heredoc = NULL;
-// 			g_signal_status = 100;
-// 			return ;
-// 		}
-// 		if (ft_strcmp(here, current->file) == 0)
-// 		{
-// 			ft_free(here);
-// 			break ;
-// 		}
-// 		if (ft_strchr(here, '$'))
-// 		{
-// 			here = handle_expand_here_doc(here, shell);
-// 		}
-// 		// gere les expand
-// 		tmp = ft_strjoin_free(tmp, here);
-// 		// tmp = ft_strjoin(tmp, here);
-// 		if (!tmp)
-// 		{
-// 			ft_putendl_fd("Mini.D.Shell : Error ft_malloc\n", 2);
-// 			break ;
-// 		}
-// 		ft_free(here);
-// 		tmp = ft_strjoin_free(tmp, "\n");
-// 		// tmp = ft_strjoin(tmp,"\n");
-// 		if (!tmp)
-// 		{
-// 			ft_putendl_fd("Mini.D.Shell : Error ft_malloc\n", 2);
-// 			break ;
-// 		}
-// 	}
-// 	current->heredoc = tmp;
-// }
+static int	check_delimiter(char *here, char *file)
+{
+	if (ft_strcmp(here, file) == 0)
+	{
+		ft_free(here);
+		return (1);
+	}
+	return (0);
+}
 
-// int	ft_check_heredoc(t_shell *shell)
-// {
-// 	t_exec	*current;
-// 	t_redir	*current_redir;
+static int	append_line(char **tmp, char *here, t_shell *shell)
+{
+	if (ft_strchr(here, '$'))
+		here = handle_expand_here_doc(here, shell);
+	*tmp = ft_strjoin_free(*tmp, here);
+	ft_free(here);
+	if (!*tmp)
+	{
+		ft_putendl_fd("Mini.D.Shell : Error ft_malloc\n", 2);
+		return (0);
+	}
+	*tmp = ft_strjoin_free(*tmp, "\n");
+	if (!*tmp)
+	{
+		ft_putendl_fd("Mini.D.Shell : Error ft_malloc\n", 2);
+		return (0);
+	}
+	return (1);
+}
 
-// 	current = shell->first_exec;
-// 	while (current)
-// 	{
-// 		if (current->redir)
-// 		{
-// 			current_redir = current->redir;
-// 			while (current_redir)
-// 			{
-// 				if (current_redir->type == END_OF_FILE)
-// 					ft_loop_heredoc(current_redir, shell);
-// 				current_redir = current_redir->next;
-// 			}
-// 		}
-// 		current = current->next;
-// 	}
-// 	return (EXIT_SUCCESS);
-// }
 void	ft_loop_heredoc(t_redir *current, t_shell *shell)
 {
 	char	*here;
 	char	*tmp;
 
-	(void)shell;
-	/* ajout signaux*/
-	// setup_heredoc_signals();
-	/* fin*/
 	tmp = ft_strdup("");
 	if (!tmp)
 		return ;
@@ -108,39 +60,16 @@ void	ft_loop_heredoc(t_redir *current, t_shell *shell)
 	{
 		here = readline(">");
 		if (g_signal_status != 100)
-		{
-			// ft_free(tmp); // attention au double free potentiel
-			// ft_free(here);
-			current->heredoc = NULL;
-			g_signal_status = 100;
-			return ;
-		}
+			return (handle_signal_status(current));
 		if (!here)
 		{
 			ft_free(tmp);
 			break ;
 		}
-		if (ft_strcmp(here, current->file) == 0)
-		{
-			ft_free(here);
+		if (check_delimiter(here, current->file))
 			break ;
-		}
-		// gere les $user
-		if (ft_strchr(here, '$'))
-			here = handle_expand_here_doc(here, shell);
-		tmp = ft_strjoin_free(tmp, here);
-		ft_free(here);
-		if (!tmp)
-		{
-			ft_putendl_fd("Mini.D.Shell : Error ft_malloc\n", 2);
+		if (!append_line(&tmp, here, shell))
 			break ;
-		}
-		tmp = ft_strjoin_free(tmp, "\n");
-		if (!tmp)
-		{
-			ft_putendl_fd("Mini.D.Shell : Error ft_malloc\n", 2);
-			break ;
-		}
 	}
 	current->heredoc = tmp;
 }
@@ -198,28 +127,26 @@ void	append_string_spe(char *dst, char *src)
 	dst = new;
 }
 
+static char	*get_special_value(char c, t_shell *shell)
+{
+	if (c == '?')
+		return (ft_itoa(shell->exit_status));
+	else if (c == '$')
+		return (ft_itoa(shell->shell_pid));
+	else if (c == '0')
+		return (ft_strdup(shell->shell_name));
+	return (NULL);
+}
+
 static void	handle_special_vars(char *str, int *i, t_shell *shell, char **exp)
 {
 	char	*tmp;
 	char	*new_exp;
 
-	if (str[*i] == '?')
-	{
-		tmp = ft_itoa(shell->exit_status);
-		(*i)++;
-	}
-	else if (str[*i] == '$')
-	{
-		tmp = ft_itoa(shell->shell_pid);
-		(*i)++;
-	}
-	else if (str[*i] == '0')
-	{
-		tmp = ft_strdup(shell->shell_name);
-		(*i)++;
-	}
-	else
+	tmp = get_special_value(str[*i], shell);
+	if (!tmp)
 		return ;
+	(*i)++;
 	new_exp = ft_strjoin(*exp, tmp);
 	ft_free(tmp);
 	if (new_exp)
@@ -229,7 +156,7 @@ static void	handle_special_vars(char *str, int *i, t_shell *shell, char **exp)
 	}
 }
 
-static void	handle_simple_dollar(int *i, char **expanded)
+static void	handle_simple_dollar(char **expanded)
 {
 	char	*new_expanded;
 
@@ -250,7 +177,7 @@ static void	handle_var_expansion(char *str, int *i, t_shell *shell, char **exp)
 
 	len = get_var_name_length(str + *i);
 	if (len == 0)
-		return (handle_simple_dollar(i, exp));
+		return (handle_simple_dollar(exp));
 	var_name = ft_substr(str, *i, len);
 	if (!var_name)
 		return ;
@@ -273,7 +200,7 @@ static void	handle_exp_hd(char *str, int *i, t_shell *shell, char **expanded)
 {
 	(*i)++;
 	if (!str[*i])
-		return (handle_simple_dollar(i, expanded));
+		return (handle_simple_dollar(expanded));
 	if (str[*i] == '?' || str[*i] == '$' || str[*i] == '0')
 		handle_special_vars(str, i, shell, expanded);
 	else

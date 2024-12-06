@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/05 03:27:04 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/06 22:19:06 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int	main(int ac, char **av, char **env)
 	prompt = NULL;
 	memset(&shell, 0, sizeof(t_shell));
 	shell.env = env;
+	ft_fill_data(&shell, av);
 	if (fill_env_list(&shell) != 0)
 		return (printf("Failed to initialize the linked environement list\n"),
 				1); // needed to be freed later + retour d erreur
-	ft_fill_data(&shell, av);
 	if (ft_loop_shell(prompt, &shell) == EXIT_FAILURE)
 		return (ft_free(DESTROY), EXIT_FAILURE);
 	return (ft_free(DESTROY), 0);

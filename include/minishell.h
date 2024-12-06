@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/06 21:07:22 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/06 22:02:24 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,9 @@ void							free_env_list(t_shell *shell);
 void							free_env_node(t_env *node);
 int								ft_findchar(const char *str, int c);
 char							*ft_supp_quote2(char *command, char c, int i);
-
+void							update_underscore_var(t_shell *shell,
+									char *last_arg);
+									
 // expand
 
 int								ft_expand(t_command_line *line, t_shell *shell);

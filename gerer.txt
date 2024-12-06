@@ -2,19 +2,13 @@ exit : gerer les exit si c est un enfant ou un parent si c est un enfant (pid), 
 verifier si il est bon
 
 echo : verifier la place restante sur chaque fichier avant de print
+ecriture gerer verification des espaces sur les echo 
 
 signal: gerer les leaks de controle c en here doc 
 
-env : si env -i gerer l env avec getenv;
-
-expand : gerer les expand dans les here doc 
-
-ecriture gerer verification des espaces sur les echo 
 
 here_doc: mettre a la norme, gerer les expand et gerer le cas 
 bash-5.1$ cat << eof
 >ctrl + D
 bash: warning: here-document 
 at line 7 delimited by end-of-file (wanted `eof')
-
-env: verifier que l env existe
