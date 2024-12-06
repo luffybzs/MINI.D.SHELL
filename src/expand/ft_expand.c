@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/02 19:43:18 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:15:02 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,7 @@ int	handle_quotes(char c, t_expand_state *state) // gerer l etat des quotes
 	return (0);
 }
 
-void	handle_expansion(char *input,
-						int *i,
-						t_expand_state *state,
-						t_shell *shell) // determine le nom, l extrait,
-										// obtient la valeur et l ajoute au resultat
+void	handle_expansion(char *input,int *i,t_expand_state *state,t_shell *shell)
 {
 	char *var_name;
 	char *var_value;
@@ -118,9 +114,7 @@ void	handle_expansion(char *input,
 	var_value = get_env_value(var_name, shell);
 	if (var_value)
 		append_string(&state->result, var_value);
-	ft_free(var_name);
-	ft_free(var_value);
-	*i += len;
+	(ft_free(var_name),ft_free(var_value),*i += len);
 }
 
 int	get_var_name_length(const char *str)

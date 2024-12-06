@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_struc_for_exec.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/04 16:43:44 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:17:01 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	ft_lstadd_back_exec(t_exec **current, t_exec *newcmd)
 		ite = ite->next;
 	ite->next = newcmd;
 }
-void	ft_print_exec(t_shell *shell)
+/*void	ft_print_exec(t_shell *shell)
 {
 	int		i;
 	t_exec	*current;
@@ -156,3 +156,4 @@ void	ft_print_exec(t_shell *shell)
 		current = current->next;
 	}
 }
+*/
