@@ -6,14 +6,14 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:49:34 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/06 23:16:44 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/06 23:20:02 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/gc.h"
 #include "../../include/minishell.h"
 
-static char	*get_incremented_shlvl(const char *current_shlvl);
+static char	*get_incremented_shlvl(char *current_shlvl);
 static void	initialize_minimal_env(t_shell *shell);
 
 int	fill_env_list(t_shell *shell)
@@ -173,7 +173,7 @@ static int	add_env_node(t_shell *shell, const char *key, const char *value)
 	return (0);
 }
 
-static char	*get_incremented_shlvl(const char *current_shlvl)
+static char	*get_incremented_shlvl(char *current_shlvl)
 {
 	int		level;
 	char	*new_shlvl;
@@ -185,8 +185,6 @@ static char	*get_incremented_shlvl(const char *current_shlvl)
 		level = ft_atoi(current_shlvl);
 		if (level < 0)
 			level = 0;
-		else if (level >= 999)
-			level = 1;
 		else
 			level++;
 	}
