@@ -1,0 +1,10 @@
+exit : gerer les exit si c est un enfant ou un parent si c est un enfant (pid), exit mais pas print
+verifier si il est bon
+
+echo : verifier la place restante sur chaque fichier avant de print
+
+signal: gerer les leaks de controle c en here doc 
+
+env : si env -i gerer l env avec getenv;
+
+expand : gerer les expand dans les here doc 
