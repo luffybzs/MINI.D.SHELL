@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 19:48:09 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/05 04:14:04 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:37:58 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,38 @@ static long	ft_atoi_spe(char *str)
 	return (res * sign);
 }
 
+static int	check_numeric_arg(char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (arg[i] == '-' || arg[i] == '+')
+		i++;
+	while (arg[i])
+	{
+		if (!ft_isdigit(arg[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static void	handle_exit_error(int error_type)
+{
+	if (error_type == 1)
+		ft_putstr_fd("exit: too many arguments\n", 2);
+	else if (error_type == 2)
+		ft_putstr_fd("exit: numeric argument required\n", 2);
+}
+
+static void	exit_with_value(long value)
+{
+	ft_putstr_fd("exit\n", 1);
+	exit((unsigned char)value);
+}
+
 int	ft_exit(t_exec *current, t_shell *shell)
 {
-	char	*arg;
-	int		i;
 	long	value;
 
 	if (!current->cmd[1])
@@ -52,34 +80,27 @@ int	ft_exit(t_exec *current, t_shell *shell)
 		ft_putstr_fd("exit\n", 1);
 		exit(shell->exit_status);
 	}
-	arg = current->cmd[1];
 	if (current->cmd[2])
 	{
-		ft_putstr_fd("exit: too many arguments\n", 2);
+		handle_exit_error(1);
 		shell->exit_status = 1;
 		return (1);
 	}
-	i = 0;
-	if (arg[i] == '-' || arg[i] == '+')
-		i++;
-	while (arg[i])
+	if (!check_numeric_arg(current->cmd[1]))
 	{
-		if (!ft_isdigit(arg[i]))
-		{
-			ft_putstr_fd("exit: numeric argument required\n", 2);
-			exit(2);
-		}
-		i++;
-	}
-	value = ft_atoi_spe(arg);
-	if (value == 2147483648)
-	{
-		ft_putstr_fd("exit: numeric argument required\n", 2);
+		handle_exit_error(2);
 		exit(2);
 	}
-	ft_putstr_fd("exit\n", 1);
-	exit((unsigned char)value);
+	value = ft_atoi_spe(current->cmd[1]);
+	if (value == 2147483648)
+	{
+		handle_exit_error(2);
+		exit(2);
+	}
+	exit_with_value(value);
+	return (0);
 }
+
 
 /* 
 attention double free a l input de deux arguments a gerer avec 
