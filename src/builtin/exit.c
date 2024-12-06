@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 19:48:09 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/06 14:37:58 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:45:12 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,21 @@ static long	ft_atoi_spe(char *str)
 	}
 	return (res * sign);
 }
+void ft_end_exit(t_shell *shell, int status, t_exec *current)
+{
+	(void) shell;
+	if (current->pidt != 0)
+	{
+		ft_free(DESTROY);
+		exit(status);
+	}
+	else 
+	{
+		ft_free(PROMPT);
+		exit(status);
+	}
+}
+
 
 static int	check_numeric_arg(char *arg)
 {
@@ -68,6 +83,7 @@ static void	handle_exit_error(int error_type)
 static void	exit_with_value(long value)
 {
 	ft_putstr_fd("exit\n", 1);
+	ft_free(DESTROY);
 	exit((unsigned char)value);
 }
 
@@ -75,7 +91,7 @@ int	ft_exit(t_exec *current, t_shell *shell)
 {
 	long	value;
 
-	if (!current->cmd[1])
+	if (!current->cmd[1] ) // TODO VERIF CHILD OR NOT
 	{
 		ft_putstr_fd("exit\n", 1);
 		exit(shell->exit_status);
@@ -89,6 +105,7 @@ int	ft_exit(t_exec *current, t_shell *shell)
 	if (!check_numeric_arg(current->cmd[1]))
 	{
 		handle_exit_error(2);
+		ft_free(DESTROY);
 		exit(2);
 	}
 	value = ft_atoi_spe(current->cmd[1]);
@@ -100,6 +117,7 @@ int	ft_exit(t_exec *current, t_shell *shell)
 	exit_with_value(value);
 	return (0);
 }
+
 
 
 /* 

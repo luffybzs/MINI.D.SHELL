@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gen.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:12:38 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/05 04:41:26 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:28:28 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_execute_command(t_exec *current, t_shell *shell)
 {
+	if (!current->cmd)
+		return (0);
 	if (is_builtin(current->cmd[0]))
 	{
 		execute_builtin(current, shell);
@@ -35,6 +37,12 @@ int	is_builtin(char *cmd)
 
 void	execute_builtin(t_exec *current, t_shell *shell)
 {
+	int save[2];
+	
+	save[0] = dup(STDIN_FILENO);
+	save[1] = dup(STDOUT_FILENO);
+	if (current->redir)
+		ft_open_file(shell, current->redir);
 	if (ft_strcmp(current->cmd[0], "echo") == 0)
 		ft_echo(current, shell);
 	else if (ft_strcmp(current->cmd[0], "cd") == 0)
@@ -47,8 +55,9 @@ void	execute_builtin(t_exec *current, t_shell *shell)
 		ft_export(current,shell);
 	else if (ft_strcmp(current->cmd[0], "unset") == 0)
 		ft_unset(current,shell);
-	else if (ft_strcmp(current->cmd[0], "exit") == 0)
+	(dup2(save[0], STDIN_FILENO), dup2(save[1], STDOUT_FILENO));
+	(close(save[0]), close(save[1]));
+	if (ft_strcmp(current->cmd[0], "exit") == 0)
 		ft_exit(current,shell);
-	// implementer les autres builtins
 	return ;
 }

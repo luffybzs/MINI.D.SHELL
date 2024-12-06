@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/05 04:22:30 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:29:54 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,14 @@ typedef struct s_expand_state
 }								t_expand_state;
 
 //-------------------------------------//
-
-int								ft_check_heredoc(t_shell *shell);
+int		ft_len_env(t_shell *shell);
+char	**ft_lst_strdup(t_shell *shell);
+int		ft_open_file(t_shell *shell, t_redir *current);
+void	ft_open_heredoc(t_redir *current, t_shell *shell);
+void	ft_open_outfile_append(char *file, t_shell *shell);
+void	ft_open_outfile(char *file, t_shell *shell);
+void	ft_open_infile(char *file, t_shell *shell);
+int		ft_check_heredoc(t_shell *shell);
 t_token	*ft_add_redir_exec(t_token *current,
 							t_redir *file,
 							t_exec *new_cmd);
@@ -166,7 +172,6 @@ void	ft_add_redirect(char *command,
 int								ft_skip_spaces(char *str, int *i);
 void							ft_next_char(char *str, char c, int *i, int *j);
 int								ft_len_word(char *command, int i, char c);
-// char				*ft_supp_quote(char *command, int i, int *j, char c);
 int								ft_check_list(t_command_line *line);
 t_token							*ft_lstlast_mini(t_command_line *lst);
 int								ft_check_all_list(t_command_line *line);
