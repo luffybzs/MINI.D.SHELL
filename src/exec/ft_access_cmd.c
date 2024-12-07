@@ -6,11 +6,24 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/06 17:17:20 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/07 03:00:03 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void ft_error_access(t_shell *shell, t_exec *current)
+{
+	char *tmp;
+	(void) shell;
+	tmp = ft_strjoin("Mini.D.Shell: ", current->cmd[0]);
+	if (!tmp)
+		return ;
+	tmp = ft_strjoin(tmp, " : Command Not Found\n");
+	if (!tmp)
+		return ;
+	write(2, tmp, ft_strlen(tmp));	
+}
 
 char	*ft_good_path(t_shell *shell, t_exec *current)
 {
@@ -35,7 +48,7 @@ char	*ft_good_path(t_shell *shell, t_exec *current)
 		ft_free(res);
 		i++;
 	}
-	perror(current->cmd[0]);
+	ft_error_access(shell, current);
 	return (NULL);
 }
 
