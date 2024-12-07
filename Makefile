@@ -14,7 +14,7 @@ LIB_DIR = ./libft
 LIBFT = $(LIB_DIR)/libft.a
 OBJS = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -g3 -lncurses -ltinfo
+CFLAGS = -Wall -Wextra -Werror -g3 
 
 NAME = minishell
 
