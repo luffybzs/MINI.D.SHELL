@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:49:34 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/06 23:20:02 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/07 20:34:29 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../include/minishell.h"
 
 static char	*get_incremented_shlvl(char *current_shlvl);
-static void	initialize_minimal_env(t_shell *shell);
+//static void	initialize_minimal_env(t_shell *shell);
 
 int	fill_env_list(t_shell *shell)
 {
@@ -25,10 +25,7 @@ int	fill_env_list(t_shell *shell)
 
 	i = 0;
 	if (!shell->env || !shell->env[0])
-	{
-		initialize_minimal_env(shell);
 		return (0);
-	}
 	while (shell->env[i])
 	{
 		if (ft_strncmp(shell->env[i], "SHLVL=", 6) == 0)
@@ -141,7 +138,7 @@ int	ft_findchar(const char *str, int c)
 	}
 	return (-1);
 }
-
+/*
 static int	add_env_node(t_shell *shell, const char *key, const char *value)
 {
 	t_env	*node;
@@ -172,7 +169,7 @@ static int	add_env_node(t_shell *shell, const char *key, const char *value)
 	}
 	return (0);
 }
-
+*/
 static char	*get_incremented_shlvl(char *current_shlvl)
 {
 	int		level;
@@ -191,7 +188,7 @@ static char	*get_incremented_shlvl(char *current_shlvl)
 	new_shlvl = ft_itoa(level);
 	return (new_shlvl);
 }
-
+/*
 static void	initialize_minimal_env(t_shell *shell)
 {
 	char	*cwd;
@@ -212,3 +209,4 @@ static void	initialize_minimal_env(t_shell *shell)
 	if (add_env_node(shell, "_", "/usr/bin/env") != 0)
 		return ;
 }
+*/

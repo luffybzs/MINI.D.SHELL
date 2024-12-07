@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 02:28:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/02 14:46:31 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/07 20:39:52 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	ft_check_pipe(t_command_line *line)
 	}
 	return (EXIT_SUCCESS);
 }
+
 int	ft_check_redir(t_command_line *line)
 {
 	t_token	*current;
@@ -73,6 +74,7 @@ int	ft_check_redir(t_command_line *line)
 	}
 	return (EXIT_SUCCESS);
 }
+
 int	ft_check_pide_and_redir(t_command_line *line)
 {
 	t_token	*current;

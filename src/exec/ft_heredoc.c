@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/06 21:37:31 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/07 20:37:56 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	check_delimiter(char *here, char *file)
 	return (0);
 }
 
-static int	append_line(char **tmp, char *here, t_shell *shell)
+int	append_line(char **tmp, char *here, t_shell *shell)
 {
 	if (ft_strchr(here, '$'))
 		here = handle_expand_here_doc(here, shell);
@@ -127,7 +127,7 @@ void	append_string_spe(char *dst, char *src)
 	dst = new;
 }
 
-static char	*get_special_value(char c, t_shell *shell)
+char	*get_special_value(char c, t_shell *shell)
 {
 	if (c == '?')
 		return (ft_itoa(shell->exit_status));

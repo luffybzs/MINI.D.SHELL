@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_find_the_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 00:42:24 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/07 09:38:24 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/07 20:36:18 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,6 @@ char	**ft_search_path(t_shell *shell)
 	return (tab);
 }
 
-// int	ft_get_env(t_shell *shell)
-// {
-// 	char	**tab;
-// 	char	**path;
-
-// 	tab = ft_lst_strdup(shell);
-// 	if (!tab)
-// 		return (EXIT_FAILURE);
-// 	shell->env_upt = tab;
-// 	path = ft_search_path(shell);
-// 	if (!path)
-// 		return (EXIT_FAILURE); // modifier et retirer le path de l environnement minimum pour le mettre ici 
-// 	shell->path = path;
-// 	return (EXIT_SUCCESS);
-// }
-
 int	ft_get_env(t_shell *shell)
 {
 	char	**tab;
@@ -75,15 +59,14 @@ int	ft_get_env(t_shell *shell)
 	shell->env_upt = tab;
 	path = ft_search_path(shell);
 	if (!path)
-		return (EXIT_FAILURE); // modifier et retirer le path de l environnement minimum pour le mettre ici 
+		return (EXIT_FAILURE);
 	shell->path = path;
 	return (EXIT_SUCCESS);
 }
 
 int	ft_start_exec(t_shell *shell)
 {
-	if (ft_get_env(shell) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	ft_get_env(shell);
 	if (ft_exec_loop(shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

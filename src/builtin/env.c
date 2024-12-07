@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:48:21 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/06 14:37:07 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/07 20:34:58 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,8 @@
 static int	ft_handle_env_errors(t_exec *actual, t_shell *shell)
 {
 	if (!actual || !actual->cmd || !shell || !shell->head)
-	{
-		ft_putstr_fd("env: cannot run command\n", 2);
-		shell->exit_status = 127;
 		return (EXIT_FAILURE);
-	}
+
 	if (actual->cmd[1] && actual->cmd[1][0] == '-')
 	{
 		ft_putstr_fd("env: illegal option\n", 2);

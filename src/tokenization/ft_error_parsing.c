@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:44:10 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/02 14:46:38 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/07 20:40:01 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_error_pide(char *content)
 	ft_putstr_fd(content, 2);
 	ft_putstr_fd(" »\n", 2);
 }
+
 void	ft_error_double_redir(char *content)
 {
 	ft_putstr_fd("MINI.D.SHELL: syntax error near unexpected token « ", 2);

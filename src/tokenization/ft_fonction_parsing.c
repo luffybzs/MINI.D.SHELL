@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:07:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/02 14:46:43 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/07 20:40:06 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_exec_line	*ft_init_queue_exec(void)
 	list->first = NULL;
 	return (list);
 }
+
 int	ft_nb_cmd(t_token *current)
 {
 	int	nb;
@@ -37,6 +38,7 @@ int	ft_nb_cmd(t_token *current)
 	}
 	return (nb);
 }
+
 int	ft_check_open_quote(char *prompt)
 {
 	int		i;
