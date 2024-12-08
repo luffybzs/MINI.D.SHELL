@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 17:17:57 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 17:51:05 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
 	ft_add_flag(current);
 	goodpath = ft_good_path(shell, current);
 	if (!goodpath)
-		(ft_free(DESTROY), exit(EXIT_FAILURE));
+		(ft_free(DESTROY), exit(127));
 	execve(goodpath, current->cmd, shell->env_upt);
 	(perror("execve failed"), ft_free(DESTROY), exit(EXIT_FAILURE));
 }

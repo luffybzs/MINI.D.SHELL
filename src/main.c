@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 15:57:01 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 17:44:52 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,6 @@
 #include <unistd.h>
 
 volatile sig_atomic_t	g_signal_status = 100;
-
-char *ft_print_color(int i)
-{
-	static char str[100000];
-	int r;
-	int g;
-	int b;
-
-	r = 255 - i;
-	g = 0 + i;
-	b = 0;
-	
-	ft_s_printf(str, "\033[38;2;%d;%d;%dm%s\033[0m", r, g, b, "Mini.D.Shell -> ");
-	return (str);
-}
 
 int	ft_loop_shell(char *prompt, t_shell *shell)
 {
@@ -58,13 +43,7 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 	}
 	return (EXIT_FAILURE);
 }
-void	ft_fill_data(t_shell *shell, char **av)
-{
-	shell->shell_pid = getpid();
-	shell->shell_name = ft_strdup(av[0]);
-	shell->exit_status = 0;
-	shell->previous_pipe_fd = -1;
-}
+
 
 int	main(int ac, char **av, char **env)
 {

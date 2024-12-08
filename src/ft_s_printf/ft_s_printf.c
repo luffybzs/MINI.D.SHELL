@@ -6,11 +6,12 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:00:39 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 06:40:46 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 17:46:06 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_s_printf.h"
+#include "../../include/minishell.h"
 
 void	ft_check_character(va_list *av, char c, t_data *data, int j)
 {
@@ -66,6 +67,6 @@ int	ft_s_printf(char *dst,const char *str, ...)
 	}
 	(void)dst;
 	data.tmp[data.j] = '\0';
-	memcpy(dst, data.tmp, 10000);
+	ft_memcpy(dst, data.tmp, 10000);
 	return (va_end(list),data.j);
 }

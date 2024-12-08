@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:07:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/07 20:40:06 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 17:44:01 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,25 @@ int	ft_check_open_quote(char *prompt)
 		i++;
 	}
 	return (EXIT_SUCCESS);
+}
+char *ft_print_color(int i)
+{
+	static char str[100000];
+	int r;
+	int g;
+	int b;
+
+	r = 255 - i;
+	g = 0 + i;
+	b = 0;
+	
+	ft_s_printf(str, "\033[38;2;%d;%d;%dm%s\033[0m", r, g, b, "Mini.D.Shell -> ");
+	return (str);
+}
+void	ft_fill_data(t_shell *shell, char **av)
+{
+	shell->shell_pid = getpid();
+	shell->shell_name = ft_strdup(av[0]);
+	shell->exit_status = 0;
+	shell->previous_pipe_fd = -1;
 }

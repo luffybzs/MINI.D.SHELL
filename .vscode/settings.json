@@ -9,6 +9,7 @@
 		"type_traits": "c",
 		"string.h": "c",
 		"readline.h": "c",
-		"term.h": "c"
+		"term.h": "c",
+		"ft_s_printf.h": "c"
 	}
 }
