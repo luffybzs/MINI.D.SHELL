@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/06 22:19:06 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/08 06:12:56 by ayarab           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
+/*   Updated: 2024/12/08 06:11:09 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +24,33 @@
 
 volatile sig_atomic_t	g_signal_status = 100;
 
+char *ft_print_color(int i)
+{
+	static char str[10000];
+	int r;
+	int b;
+	int g;
+	
+	// if (i > 255)
+	// 	return ("Mini.D.Shell -> ");
+	r = 255 - i;
+	b = 0;
+	g = 0 + i;
+	sprintf(str,"\033[38;2;%d;%d;%dm%s\033[0m", r, g, b, "Mini.D.Shell -> ");
+	return (str);
+}
+
+
 int	ft_loop_shell(char *prompt, t_shell *shell)
 {
+	int i;
+	i = 0;
 	while (1)
 	{
+		if (i > 255)
+			i = 0;
 		ft_signal();
-		prompt = readline("Mini.D.Shell -> ");
+		prompt = readline(ft_print_color(i));		
 		if (g_signal_status != 100)
 		{
 			g_signal_status = 100;
@@ -34,6 +62,7 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 			add_history(prompt);
 		if (ft_parsing_prompt(prompt, shell) == EXIT_FAILURE)
 			shell->exit_status = 2;
+		i += 10;
 	}
 	return (EXIT_FAILURE);
 }
@@ -60,8 +89,12 @@ int	main(int ac, char **av, char **env)
 	if (fill_env_list(&shell) != 0)
 		return (printf("Failed to initialize the linked environement list\n"),
 				1); // needed to be freed later + retour d erreur
-	if (ft_loop_shell(prompt, &shell) == EXIT_FAILURE)
-		return (ft_free(DESTROY), EXIT_FAILURE);
+	// if (ft_loop_shell(prompt, &shell) == EXIT_FAILURE)
+	// 	return (ft_free(DESTROY), EXIT_FAILURE);
+	(void)prompt;
+	char str[1000];
+	ft_s_printf("%d\n", 100);
+	
 	return (ft_free(DESTROY), 0);
 }
 
