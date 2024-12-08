@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 17:42:42 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 20:51:17 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	free_line(t_command_line *line)
 	ft_free(line);
 }
 
-int	ft_parsing_prompt(char *prompt, t_shell *shell)
+int	ft_parsing_prompt_and_exec(char *prompt, t_shell *shell)
 {
 	t_command_line	*line;
 
@@ -85,7 +85,7 @@ int	ft_parsing_prompt(char *prompt, t_shell *shell)
 	if (line->first == NULL)
 		return (ft_free(line), EXIT_FAILURE);
 	if (ft_check_all_list(line) == EXIT_FAILURE)
-		return (free_line(line),shell->exit_status = 2,EXIT_FAILURE);
+		return (free_line(line),EXIT_FAILURE);
 	if (ft_expand(line, shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	shell->command = line;

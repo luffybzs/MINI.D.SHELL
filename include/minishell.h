@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/08 17:44:17 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 20:53:37 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,9 +161,7 @@ void	ft_lstadd_back_exec(t_exec **current,
 							t_exec *newcmd);
 void							ft_print_exec(t_shell *shell);
 char							*ft_good_path(t_shell *shell, t_exec *current);
-int								ft_test(t_shell *shell);
 int								ft_get_env(t_shell *shell);
-int								ft_parsing_prompt(char *prompt, t_shell *shell);
 int								ft_check_open_quote(char *prompt);
 int								ft_exec_loop(t_shell *shell);
 t_command_line					*ft_init_queue(void);
@@ -171,7 +169,7 @@ int								is_redirect(char *content);
 void	ft_add_token(char *content,
 					t_command_line *command);
 int								ft_compute_token(t_token *before, char *new);
-int								ft_parsing_prompt(char *prompt, t_shell *shell);
+int								ft_parsing_prompt_and_exec(char *prompt, t_shell *shell);
 void							ft_add_cmd(char *command, t_command_line *line,
 									int *i);
 void	ft_add_redirect(char *command,
@@ -192,7 +190,6 @@ int								ft_is_file(int token);
 int								ft_check_pide_and_redir(t_command_line *line);
 void							ft_error_end_redir(void);
 int								ft_struc_for_exec(t_shell *shell);
-int								ft_start_cmd(t_token *current);
 t_exec_line						*ft_init_queue_exec(void);
 int								ft_nb_cmd(t_token *current);
 // environnement management

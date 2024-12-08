@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 17:44:52 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 20:50:51 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 			break ;
 		if (*prompt)
 			add_history(prompt);
-		if (ft_parsing_prompt(prompt, shell) == EXIT_FAILURE)
+		if (ft_parsing_prompt_and_exec(prompt, shell) == EXIT_FAILURE)
 			shell->exit_status = 2;
 		i += 10;
 	}
