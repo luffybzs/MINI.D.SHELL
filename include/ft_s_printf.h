@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 11:53:27 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 05:44:34 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 06:43:44 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ typedef struct s_data
 	int i;
 	int j;
 } t_data;
-
-
-
 
 
 int		ft_s_printf(char *dst,const char *str, ...);

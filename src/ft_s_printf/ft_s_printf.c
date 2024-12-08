@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_s_printf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:00:39 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 06:32:43 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/12/08 06:40:46 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	ft_s_printf(char *dst,const char *str, ...)
 	}
 	(void)dst;
 	data.tmp[data.j] = '\0';
-	// printf("%s\n", data.tmp);
 	memcpy(dst, data.tmp, 10000);
 	return (va_end(list),data.j);
 }
