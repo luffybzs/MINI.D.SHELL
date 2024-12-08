@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_s_printf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:00:39 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 06:09:42 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 06:32:43 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void fill_data(t_data *data)
 	data->j = 0;
 }
 
+#include <stdio.h>
 
 int	ft_s_printf(char *dst,const char *str, ...)
 {
 	va_list	list;
 	t_data data;
 	va_start(list, str);
-	
 
 	if (!str)
 		return (-1);
@@ -59,12 +59,14 @@ int	ft_s_printf(char *dst,const char *str, ...)
 		}
 		else 
 		{
-			dst[data.j] = str[data.i];
+			data.tmp[data.j] = str[data.i];
 			data.j++;
 			data.i++;
 		}	
 	}
-	dst = data.tmp;
-	dst[data.j] = '\0';
+	(void)dst;
+	data.tmp[data.j] = '\0';
+	// printf("%s\n", data.tmp);
+	memcpy(dst, data.tmp, 10000);
 	return (va_end(list),data.j);
 }

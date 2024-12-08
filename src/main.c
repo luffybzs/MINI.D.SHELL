@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 06:12:56 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 06:35:25 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,8 @@ int	main(int ac, char **av, char **env)
 	if (fill_env_list(&shell) != 0)
 		return (printf("Failed to initialize the linked environement list\n"),
 				1); // needed to be freed later + retour d erreur
-	// if (ft_loop_shell(prompt, &shell) == EXIT_FAILURE)
-	// 	return (ft_free(DESTROY), EXIT_FAILURE);
-	(void)prompt;
-	char str[1000];
-	ft_s_printf("%d\n", 100);
-	
+	if (ft_loop_shell(prompt, &shell) == EXIT_FAILURE)
+		return (ft_free(DESTROY), EXIT_FAILURE);
 	return (ft_free(DESTROY), 0);
 }
 
