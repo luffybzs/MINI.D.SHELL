@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/07 20:35:42 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 17:17:57 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,18 @@ char	*ft_good_path(t_shell *shell, t_exec *current)
 	ft_error_access(shell, current);
 	return (NULL);
 }
+int ft_add_flag(t_exec *current)
+{
+	if (ft_cmp_flag(current->cmd[0]) == EXIT_SUCCESS)
+		{
+			current->cmd = ft_putflag(current->cmd);
+			if (!current->cmd)
+				return (EXIT_FAILURE);
+			return (EXIT_SUCCESS);
+		}
+	 return (EXIT_SUCCESS);
+}
+
 
 void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
 {
@@ -60,11 +72,7 @@ void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
 
 	(signal(SIGINT, SIG_IGN), signal(SIGQUIT, SIG_IGN), signal(SIGTSTP, SIG_IGN));
 	if (current->next)
-	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-	}
+		(close(fd[0]),dup2(fd[1], STDOUT_FILENO),close(fd[1]));
 	if (shell->previous_pipe_fd != -1)
 		(dup2(shell->previous_pipe_fd, STDIN_FILENO),
 			close(shell->previous_pipe_fd));
@@ -75,6 +83,7 @@ void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
 		(ft_free(DESTROY), exit(EXIT_SUCCESS));
 	if (ft_execute_command(current, shell) != 0)
 		(ft_free(DESTROY), exit(EXIT_FAILURE));
+	ft_add_flag(current);
 	goodpath = ft_good_path(shell, current);
 	if (!goodpath)
 		(ft_free(DESTROY), exit(EXIT_FAILURE));

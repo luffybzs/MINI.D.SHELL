@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 15:12:19 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/07 20:36:24 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 17:18:12 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,43 @@ int	ft_len_env(t_shell *shell)
 		current = current->next;
 	}
 	return (i);
+}
+
+char **ft_putflag(char **cmd)
+{
+	char **res;
+	int i;
+	
+	if (!cmd)
+		return (NULL);
+	i = ft_strlen_2d(cmd);
+	res = ft_malloc(sizeof(char *) * (i + 2));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (cmd[i])
+	{
+		res[i] = ft_strdup(cmd[i]);
+		if (!res[i])
+			return (NULL);
+		i++;
+	}
+	res[i] = ft_strdup("--color");
+	if (!res[i])
+		return (NULL);
+	res[i + 1] = NULL;
+	return (res);
+}
+
+int ft_cmp_flag(char *cmd)
+{
+	if (ft_strcmp(cmd, "ls") == 0)
+		return (EXIT_SUCCESS);
+	else if (ft_strcmp(cmd, "grep") == 0)
+		return (EXIT_SUCCESS);
+	else if (ft_strcmp(cmd, "diff") == 0)
+		return (EXIT_SUCCESS);
+	else if (ft_strcmp(cmd, "dir") == 0 || ft_strcmp(cmd, "vdir") == 0)
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

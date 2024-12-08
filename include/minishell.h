@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/08 04:10:34 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/08 17:15:48 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,9 @@ typedef struct s_expand_state
 }								t_expand_state;
 
 //-------------------------------------//
+int ft_add_flag(t_exec *current);
+char **ft_putflag(char **cmd);
+int ft_cmp_flag(char *cmd);
 int								ft_len_env(t_shell *shell);
 char							**ft_lst_strdup(t_shell *shell);
 int								ft_open_file(t_shell *shell, t_redir *current);
