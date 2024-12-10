@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 21:09:34 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/10 01:04:46 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,24 +115,25 @@ int	ft_fork(t_shell *shell, t_exec *current)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_exec_loop(t_shell *shell)
+int ft_exec_loop(t_shell *shell)
 {
-	t_exec *current;
-	int status;
-
-	current = shell->first_exec;
-	shell->previous_pipe_fd = -1;
+    t_exec *current;
+    int status;
+   
+    current = shell->first_exec;
+    shell->previous_pipe_fd = -1;
 	if (current->next == NULL && ft_execute_command(current, shell) != 0)
-		return (EXIT_SUCCESS);
-	if (ft_fork(shell, current) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	while (current)
-	{
-		waitpid(current->pidt, &status, 0);
-		current = current->next;
-	}
-	//(unsigned char)
-	//printf("%d\n", status);
-	//shell->exit_status = status; // status en brut 
-	return (EXIT_SUCCESS);
+	 		return (EXIT_SUCCESS);
+    if (ft_fork(shell, current) == EXIT_FAILURE)
+        return (EXIT_FAILURE);
+    while (current)
+    {
+        if (waitpid(current->pidt, &status, 0) > 0)
+        {
+            if (WIFEXITED(status))
+                shell->exit_status = WEXITSTATUS(status);
+        }
+        current = current->next;
+    }
+    return (EXIT_SUCCESS);
 }

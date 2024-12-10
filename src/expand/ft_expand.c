@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/06 18:28:15 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/09 23:35:48 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 }
 
 char	*expand_var(char *input, t_shell *shell, t_token *current)
-// s occupe de l expand
 {
 	t_expand_state state;
 	int i;
@@ -67,7 +66,7 @@ state in quote :
 2 : single quote
 */
 
-int	handle_quotes(char c, t_expand_state *state) // gerer l etat des quotes
+int	handle_quotes(char c, t_expand_state *state) 
 {
 	if (c == '"' && state->in_quote != 2)
 	{
@@ -184,7 +183,7 @@ int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 
 	if (c == '?')
 	{
-		tmp = ft_itoa(state->exit_status);
+		tmp = ft_itoa(shell->exit_status);
 		append_string(&state->result, tmp);
 		ft_free(tmp);
 		(*i)++;

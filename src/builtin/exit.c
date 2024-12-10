@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 19:48:09 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/06 16:45:12 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/09 23:44:20 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static long	ft_atoi_spe(char *str)
 	i = 0;
 	res = 0;
 	sign = 1;
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+		i++;
 	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
@@ -40,29 +42,32 @@ static long	ft_atoi_spe(char *str)
 	}
 	return (res * sign);
 }
-void ft_end_exit(t_shell *shell, int status, t_exec *current)
+void	ft_end_exit(t_shell *shell, int status, t_exec *current)
 {
-	(void) shell;
+	(void)shell;
 	if (current->pidt != 0)
 	{
 		ft_free(DESTROY);
 		exit(status);
 	}
-	else 
+	else
 	{
 		ft_free(PROMPT);
 		exit(status);
 	}
 }
 
-
 static int	check_numeric_arg(char *arg)
 {
 	int	i;
 
 	i = 0;
+	while (arg[i] && (arg[i] == ' ' || arg[i] == 't'))
+		i++;
 	if (arg[i] == '-' || arg[i] == '+')
 		i++;
+	if (!arg[i])
+		return (0);
 	while (arg[i])
 	{
 		if (!ft_isdigit(arg[i]))
@@ -72,53 +77,58 @@ static int	check_numeric_arg(char *arg)
 	return (1);
 }
 
-static void	handle_exit_error(int error_type)
-{
-	if (error_type == 1)
-		ft_putstr_fd("exit: too many arguments\n", 2);
-	else if (error_type == 2)
-		ft_putstr_fd("exit: numeric argument required\n", 2);
-}
-
-static void	exit_with_value(long value)
-{
-	ft_putstr_fd("exit\n", 1);
-	ft_free(DESTROY);
-	exit((unsigned char)value);
-}
-
 int	ft_exit(t_exec *current, t_shell *shell)
 {
+	int		is_parent;
 	long	value;
+	int		exit_val;
 
-	if (!current->cmd[1] ) // TODO VERIF CHILD OR NOT
+	is_parent = (current->pidt != 0);
+	if (!current->cmd[1])
 	{
-		ft_putstr_fd("exit\n", 1);
-		exit(shell->exit_status);
+		exit_val = shell->exit_status;
+		if (is_parent)
+			ft_putstr_fd("exit\n", 1);
+		if (!current->next)
+		{
+			ft_free(DESTROY);
+			exit(exit_val);
+		}
+		shell->exit_status = exit_val;
+		return (0);
 	}
 	if (current->cmd[2])
 	{
-		handle_exit_error(1);
+		ft_putstr_fd("exit: too many arguments\n", 2);
 		shell->exit_status = 1;
 		return (1);
 	}
-	if (!check_numeric_arg(current->cmd[1]))
-	{
-		handle_exit_error(2);
-		ft_free(DESTROY);
-		exit(2);
-	}
 	value = ft_atoi_spe(current->cmd[1]);
-	if (value == 2147483648)
+	if (!check_numeric_arg(current->cmd[1]) || value == 2147483648)
 	{
-		handle_exit_error(2);
-		exit(2);
+		ft_putstr_fd("exit: numeric argument required\n", 2);
+		exit_val = 2;
+		if (is_parent)
+			ft_putstr_fd("exit\n", 1);
+		if (!current->next)
+		{
+			ft_free(DESTROY);
+			exit(exit_val);
+		}
+		shell->exit_status = exit_val;
+		return (0);
 	}
-	exit_with_value(value);
+	exit_val = (unsigned char)value;
+	if (is_parent)
+		ft_putstr_fd("exit\n", 1);
+	if (!current->next)
+	{
+		ft_free(DESTROY);
+		exit(exit_val);
+	}
+	shell->exit_status = exit_val;
 	return (0);
 }
-
-
 
 /* 
 attention double free a l input de deux arguments a gerer avec 

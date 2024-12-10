@@ -6,13 +6,17 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:48:42 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/05 02:53:40 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/09 23:47:14 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 #include <ncurses.h>
 #include <term.h>
+
+
+// extern int rl_done;
+// extern int (*rl_event_hook)(void);
 
 void	set_signal_child(void)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:49:34 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/07 20:34:29 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/09 15:13:31 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,61 +16,78 @@
 static char	*get_incremented_shlvl(char *current_shlvl);
 //static void	initialize_minimal_env(t_shell *shell);
 
+static char	*get_shell_level(char **env)
+{
+	int		i;
+	char	*shlvl_value;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "SHLVL=", 6) == 0)
+		{
+			shlvl_value = get_incremented_shlvl(env[i] + 6);
+			return (shlvl_value);
+		}
+		i++;
+	}
+	return (ft_strdup("1"));
+}
+
+static t_env	*create_shlvl_node(char *shlvl_value)
+{
+	t_env	*new;
+
+	new = ft_malloc(sizeof(t_env));
+	if (!new)
+		return (NULL);
+	new->key = ft_strdup("SHLVL");
+	new->value = ft_strdup(shlvl_value);
+	new->next = NULL;
+	ft_lock(new);
+	ft_lock(new->key);
+	ft_lock(new->value);
+	return (new);
+}
+
+static void	add_to_env_list(t_env *new, t_shell *shell)
+{
+	t_env	*current;
+
+	if (!shell->head)
+		shell->head = new;
+	else
+	{
+		current = shell->head;
+		while (current->next)
+			current = current->next;
+		current->next = new;
+	}
+}
+
 int	fill_env_list(t_shell *shell)
 {
 	int		i;
 	t_env	*new;
-	t_env	*current;
 	char	*shlvl_value;
 
 	i = 0;
 	if (!shell->env || !shell->env[0])
 		return (0);
+	shlvl_value = get_shell_level(shell->env);
 	while (shell->env[i])
 	{
 		if (ft_strncmp(shell->env[i], "SHLVL=", 6) == 0)
-		{
-			shlvl_value = get_incremented_shlvl(shell->env[i] + 6);
-			break ;
-		}
-		i++;
-	}
-	if (!shell->env[i])
-		shlvl_value = ft_strdup("1");
-	i = 0;
-	while (shell->env[i])
-	{
-		if (ft_strncmp(shell->env[i], "SHLVL=", 6) == 0)
-		{
-			new = ft_malloc(sizeof(t_env));
-			if (!new)
-				return (-1);
-			new->key = ft_strdup("SHLVL");
-			new->value = ft_strdup(shlvl_value);
-			new->next = NULL;
-			ft_lock(new);
-			ft_lock(new->key);
-			ft_lock(new->value);
-		}
+			new = create_shlvl_node(shlvl_value);
 		else
 			new = create_env_node(shell->env[i]);
 		if (!new)
-			return (-1);
-		if (!shell->head)
-			shell->head = new;
-		else
-		{
-			current = shell->head;
-			while (current->next)
-				current = current->next;
-			current->next = new;
-		}
+			return (ft_free(shlvl_value), -1);
+		add_to_env_list(new, shell);
 		i++;
 	}
-	ft_free(shlvl_value);
-	return (0);
+	return (ft_free(shlvl_value), 0);
 }
-
 t_env	*create_env_node(char *env_str)
 {
 	t_env	*new;
