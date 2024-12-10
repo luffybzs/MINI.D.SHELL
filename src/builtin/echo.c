@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 03:10:44 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/06 17:24:55 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/10 03:20:22 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@ static int	is_valid_n_option(char *str)
 	}
 	return (1);
 }
+int	ft_print_echo(char *s, int fd)
+{
+
+	size_t check;
+	check = write(fd, s, ft_strlen(s)); 
+	if (check != ft_strlen(s))
+		return (ft_putstr_fd("ecrit le bon message plus tard \n", 2), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
 int	ft_echo(t_exec *current, t_shell *shell)
 {
@@ -42,7 +51,7 @@ int	ft_echo(t_exec *current, t_shell *shell)
 	}
 	while (current->cmd[i])
 	{
-		ft_putstr_fd(current->cmd[i], 1);
+		ft_print_echo(current->cmd[i], 1);
 		if (current->cmd[i + 1])
 			ft_putchar_fd(' ', 1);
 		i++;

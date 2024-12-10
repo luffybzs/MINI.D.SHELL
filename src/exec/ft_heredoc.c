@@ -6,17 +6,13 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/07 20:37:56 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/10 03:23:19 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	handle_signal_status(t_redir *current)
-{
-	current->heredoc = NULL;
-	g_signal_status = 100;
-}
+
 
 static int	check_delimiter(char *here, char *file)
 {
@@ -48,19 +44,20 @@ int	append_line(char **tmp, char *here, t_shell *shell)
 	return (1);
 }
 
-void	ft_loop_heredoc(t_redir *current, t_shell *shell)
+int	ft_loop_heredoc(t_redir *current, t_shell *shell)
 {
 	char	*here;
 	char	*tmp;
 
 	tmp = ft_strdup("");
 	if (!tmp)
-		return ;
+		return (EXIT_FAILURE);
 	while (1)
 	{
+		
 		here = readline(">");
 		if (g_signal_status != 100)
-			return (handle_signal_status(current));
+			return (EXIT_FAILURE);
 		if (!here)
 		{
 			ft_free(tmp);
@@ -72,6 +69,7 @@ void	ft_loop_heredoc(t_redir *current, t_shell *shell)
 			break ;
 	}
 	current->heredoc = tmp;
+	return (EXIT_SUCCESS);
 }
 
 int	ft_check_heredoc(t_shell *shell)
@@ -88,7 +86,8 @@ int	ft_check_heredoc(t_shell *shell)
 			while (current_redir)
 			{
 				if (current_redir->type == END_OF_FILE)
-					ft_loop_heredoc(current_redir, shell);
+					if (ft_loop_heredoc(current_redir, shell) == EXIT_FAILURE)
+						return (EXIT_FAILURE);
 				current_redir = current_redir->next;
 			}
 		}

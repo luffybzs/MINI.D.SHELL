@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 01:04:46 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/10 03:26:55 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
 {
 	char	*goodpath;
 
-	(signal(SIGINT, SIG_IGN), signal(SIGQUIT, SIG_IGN), signal(SIGTSTP, SIG_IGN));
 	if (current->next)
 		(close(fd[0]),dup2(fd[1], STDOUT_FILENO),close(fd[1]));
 	if (shell->previous_pipe_fd != -1)
@@ -104,7 +103,10 @@ int	ft_fork(t_shell *shell, t_exec *current)
 		if (current->pidt == -1)
 			return (close(fd[0]), close(fd[1]), EXIT_FAILURE);
 		if (current->pidt == 0)
+		{
+			set_signal_child();
 			ft_child_exec(current, shell, fd);
+		}
 		if (current->next)
 			close(fd[1]);
 		if (shell->previous_pipe_fd != -1)
@@ -114,19 +116,27 @@ int	ft_fork(t_shell *shell, t_exec *current)
 	}
 	return (EXIT_SUCCESS);
 }
+void	check_signal_exec()
+{
+	
+	return ;
+}
 
 int ft_exec_loop(t_shell *shell)
 {
     t_exec *current;
     int status;
    
+   	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
     current = shell->first_exec;
     shell->previous_pipe_fd = -1;
 	if (current->next == NULL && ft_execute_command(current, shell) != 0)
 	 		return (EXIT_SUCCESS);
     if (ft_fork(shell, current) == EXIT_FAILURE)
         return (EXIT_FAILURE);
-    while (current)
+    while (current) /// tu dois cook ici mon reuf
     {
         if (waitpid(current->pidt, &status, 0) > 0)
         {
@@ -135,5 +145,6 @@ int ft_exec_loop(t_shell *shell)
         }
         current = current->next;
     }
+	check_signal_exec();
     return (EXIT_SUCCESS);
 }

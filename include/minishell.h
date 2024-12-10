@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/08 20:53:37 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/10 01:57:39 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ typedef struct s_expand_state
 
 //-------------------------------------//
 char *ft_print_color(int i);
+void	set_signal_child(void);
 int ft_add_flag(t_exec *current);
 char **ft_putflag(char **cmd);
 int ft_cmp_flag(char *cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/09 23:54:59 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 03:22:01 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 			add_history(prompt);
 		if (ft_parsing_prompt_and_exec(prompt, shell) == EXIT_FAILURE)
 			shell->exit_status = 2;
-		i += 10;
+		i += 3;
 	}
 	return (EXIT_FAILURE);
 }

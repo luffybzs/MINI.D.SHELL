@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 15:03:08 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/07 20:36:30 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/10 01:41:59 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	ft_open_heredoc(t_redir *current, t_shell *shell)
 		ft_free(DESTROY);
 		exit(-1);
 	}
-	ft_putstr_fd(current->heredoc, fd[1]);
+	if (current->heredoc)
+			ft_putstr_fd(current->heredoc, fd[1]);	
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
