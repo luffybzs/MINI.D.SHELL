@@ -3,26 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 03:26:55 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/10 14:13:57 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void ft_error_access(t_shell *shell, t_exec *current)
+void	ft_error_access(t_shell *shell, t_exec *current)
 {
-	char *tmp;
-	(void) shell;
+	char	*tmp;
+
+	(void)shell;
 	tmp = ft_strjoin("Mini.D.Shell: ", current->cmd[0]);
 	if (!tmp)
 		return ;
 	tmp = ft_strjoin(tmp, " : Command Not Found\n");
 	if (!tmp)
 		return ;
-	write(2, tmp, ft_strlen(tmp));	
+	write(2, tmp, ft_strlen(tmp));
 }
 
 char	*ft_good_path(t_shell *shell, t_exec *current)
@@ -53,25 +54,24 @@ char	*ft_good_path(t_shell *shell, t_exec *current)
 	ft_error_access(shell, current);
 	return (NULL);
 }
-int ft_add_flag(t_exec *current)
+int	ft_add_flag(t_exec *current)
 {
 	if (ft_cmp_flag(current->cmd[0]) == EXIT_SUCCESS)
-		{
-			current->cmd = ft_putflag(current->cmd);
-			if (!current->cmd)
-				return (EXIT_FAILURE);
-			return (EXIT_SUCCESS);
-		}
-	 return (EXIT_SUCCESS);
+	{
+		current->cmd = ft_putflag(current->cmd);
+		if (!current->cmd)
+			return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
+	}
+	return (EXIT_SUCCESS);
 }
-
 
 void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
 {
 	char	*goodpath;
 
 	if (current->next)
-		(close(fd[0]),dup2(fd[1], STDOUT_FILENO),close(fd[1]));
+		(close(fd[0]), dup2(fd[1], STDOUT_FILENO), close(fd[1]));
 	if (shell->previous_pipe_fd != -1)
 		(dup2(shell->previous_pipe_fd, STDIN_FILENO),
 			close(shell->previous_pipe_fd));
@@ -90,35 +90,92 @@ void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
 	(perror("execve failed"), ft_free(DESTROY), exit(EXIT_FAILURE));
 }
 
+// int	ft_fork(t_shell *shell, t_exec *current)
+// {
+// 	int	fd[2];
+
+// 	while (current)
+// 	{
+// 		if (current->next != NULL)
+// 			if (pipe(fd) == -1)
+// 				return (perror("pipe"), EXIT_FAILURE);
+// 		current->pidt = fork();
+// 		if (current->pidt == -1)
+// 			return (close(fd[0]), close(fd[1]), EXIT_FAILURE);
+// 		if (current->pidt == 0)
+// 		{
+// 			set_signal_child();
+// 			ft_child_exec(current, shell, fd);
+// 		}
+// 		if (current->next)
+// 			close(fd[1]);
+// 		if (shell->previous_pipe_fd != -1)
+// 			close(shell->previous_pipe_fd);
+// 		shell->previous_pipe_fd = fd[0];
+// 		current = current->next;
+// 	}
+// 	return (EXIT_SUCCESS);
+// }
+
 int	ft_fork(t_shell *shell, t_exec *current)
 {
-	int	fd[2];
+	int		fd[2];
+	char	*goodpath;
 
 	while (current)
 	{
 		if (current->next != NULL)
+		{
 			if (pipe(fd) == -1)
 				return (perror("pipe"), EXIT_FAILURE);
+		}
 		current->pidt = fork();
 		if (current->pidt == -1)
-			return (close(fd[0]), close(fd[1]), EXIT_FAILURE);
+		{
+			if (current->next)
+				(close(fd[0]), close(fd[1]));
+			return (perror("fork"), EXIT_FAILURE);
+		}
 		if (current->pidt == 0)
 		{
 			set_signal_child();
-			ft_child_exec(current, shell, fd);
+			// Configuration des pipes pour l'enfant
+			if (current->next)
+				(close(fd[0]), dup2(fd[1], STDOUT_FILENO), close(fd[1]));
+			if (shell->previous_pipe_fd != -1)
+				(dup2(shell->previous_pipe_fd, STDIN_FILENO),
+					close(shell->previous_pipe_fd));
+			// Gestion des redirections
+			if (current->redir)
+				if (ft_open_file(shell, current->redir) == EXIT_FAILURE)
+					(ft_free(DESTROY), exit(EXIT_FAILURE));
+			// Exécution de la commande
+			if (!current->cmd || !current->cmd[0])
+				(ft_free(DESTROY), exit(EXIT_SUCCESS));
+			if (ft_execute_command(current, shell) != 0)
+				(ft_free(DESTROY), exit(g_signal_status));
+			ft_add_flag(current);
+			goodpath = ft_good_path(shell, current);
+			if (!goodpath)
+				(ft_free(DESTROY), exit(127));
+			execve(goodpath, current->cmd, shell->env_upt);
+			(perror("execve failed"), ft_free(DESTROY), exit(EXIT_FAILURE));
 		}
+		// Configuration des pipes pour le parent
 		if (current->next)
 			close(fd[1]);
 		if (shell->previous_pipe_fd != -1)
 			close(shell->previous_pipe_fd);
-		shell->previous_pipe_fd = fd[0];
+		if (current->next)
+			shell->previous_pipe_fd = fd[0];
+		else
+			shell->previous_pipe_fd = -1;
 		current = current->next;
 	}
 	return (EXIT_SUCCESS);
 }
-void	check_signal_exec()
+void	check_signal_exec(void)
 {
-	
 	return ;
 }
 
@@ -126,25 +183,28 @@ int ft_exec_loop(t_shell *shell)
 {
     t_exec *current;
     int status;
-   
+
    	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
     current = shell->first_exec;
     shell->previous_pipe_fd = -1;
 	if (current->next == NULL && ft_execute_command(current, shell) != 0)
-	 		return (EXIT_SUCCESS);
+				return (EXIT_SUCCESS);
     if (ft_fork(shell, current) == EXIT_FAILURE)
         return (EXIT_FAILURE);
+
     while (current) /// tu dois cook ici mon reuf
     {
         if (waitpid(current->pidt, &status, 0) > 0)
         {
             if (WIFEXITED(status))
-                shell->exit_status = WEXITSTATUS(status);
+                g_signal_status = WEXITSTATUS(status);
         }
         current = current->next;
     }
 	check_signal_exec();
     return (EXIT_SUCCESS);
 }
+
+

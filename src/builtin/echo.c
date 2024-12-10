@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 03:10:44 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 03:20:22 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/10 12:46:09 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ static int	is_valid_n_option(char *str)
 }
 int	ft_print_echo(char *s, int fd)
 {
+	size_t	check;
 
-	size_t check;
-	check = write(fd, s, ft_strlen(s)); 
+	check = write(fd, s, ft_strlen(s));
 	if (check != ft_strlen(s))
-		return (ft_putstr_fd("ecrit le bon message plus tard \n", 2), EXIT_FAILURE);
+		return (ft_putstr_fd("echo: write error: No space left on device\n", 2),
+				EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -42,6 +43,7 @@ int	ft_echo(t_exec *current, t_shell *shell)
 	int		i;
 	bool	newline;
 
+	(void)shell;
 	i = 1;
 	newline = true;
 	while (current->cmd[i] && is_valid_n_option(current->cmd[i]))
@@ -51,13 +53,15 @@ int	ft_echo(t_exec *current, t_shell *shell)
 	}
 	while (current->cmd[i])
 	{
-		ft_print_echo(current->cmd[i], 1);
+		if (ft_print_echo(current->cmd[i], 1) == EXIT_FAILURE)
+			return (g_signal_status = 1,1);
 		if (current->cmd[i + 1])
 			ft_putchar_fd(' ', 1);
 		i++;
 	}
 	if (newline)
 		ft_putchar_fd('\n', 1);
-	shell->exit_status = 0;
+	g_signal_status = 0;
+	// shell->exit_status = 0;
 	return (0);
 }

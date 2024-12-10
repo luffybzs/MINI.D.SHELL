@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 03:22:01 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/10 13:19:37 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-volatile sig_atomic_t	g_signal_status = 100;
+volatile sig_atomic_t	g_signal_status = 0;
 
 int	ft_loop_shell(char *prompt, t_shell *shell)
 {
@@ -28,9 +28,9 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 			i = 0;
 		ft_signal();
 		prompt = readline(ft_print_color(i));
-		if (g_signal_status != 100)
+		if (g_signal_status != 0)
 		{
-			g_signal_status = 100;
+			g_signal_status = 0;
 			continue ;
 		}
 		if (!prompt)
@@ -38,7 +38,8 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 		if (*prompt)
 			add_history(prompt);
 		if (ft_parsing_prompt_and_exec(prompt, shell) == EXIT_FAILURE)
-			shell->exit_status = 2;
+			g_signal_status = 2;
+		// shell->exit_status = 2;
 		i += 3;
 	}
 	return (EXIT_FAILURE);

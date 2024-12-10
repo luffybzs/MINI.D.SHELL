@@ -6,12 +6,12 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:55:51 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/05 04:45:07 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:57:39 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
-#define BUILTIN_H
+# define BUILTIN_H
 
 # include "minishell.h"
 
@@ -20,15 +20,17 @@
 int	ft_execute_command(t_exec *current,
 						t_shell *shell);
 int		is_builtin(char *cmd);
-void		execute_builtin(t_exec *cmd, t_shell *shell);
+void	execute_builtin(t_exec *cmd, t_shell *shell);
 
 // builtin
 
 int		ft_echo(t_exec *cmd, t_shell *shell);
 void	handle_double_quote(t_shell *shell, int is_n, char *current, int i);
-int		ft_env(t_exec *actual,t_shell *shell);
+int		ft_env(t_exec *actual, t_shell *shell);
+int		ft_print_env(char *s1, char *s2, char *s3, int fd);
 int		ft_pwd(t_shell *shell);
-int		ft_cd(t_exec *current,t_shell *shell);
+int		ft_print_pwd(char *s, int fd);
+int		ft_cd(t_exec *current, t_shell *shell);
 
 /* export */
 
@@ -50,7 +52,7 @@ void	looking_and_sup(char *str, t_shell *shell);
 
 /* exit */
 
-int		ft_exit(t_exec *current,t_shell *shell);
+int		ft_exit(t_exec *current, t_shell *shell);
 
 /* signal */
 

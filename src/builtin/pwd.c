@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:48:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/09 15:10:04 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:57:56 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,28 @@ int	ft_pwd(t_shell *shell)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
+		g_signal_status = 1;
 		shell->exit_status = 1;
 		perror("pwd");
 		return (1);
 	}
-	printf("%s\n", cwd);
+	if (ft_print_pwd(cwd, 1) == EXIT_FAILURE)
+		return (g_signal_status = 1,1);
 	ft_free(cwd);
+	g_signal_status = 0;
 	shell->exit_status = 0;
 	return (0);
+}
+
+int	ft_print_pwd(char *s, int fd)
+{
+	size_t	check;
+
+	check = 0;
+	check = write(fd, s, ft_strlen(s));
+	check += write(fd,"\n",1);
+	if (check != (ft_strlen(s)+1))
+		return (ft_putstr_fd("pwd: write error: No space left on device\n", 2),
+				EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

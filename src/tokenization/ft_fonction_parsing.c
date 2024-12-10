@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fonction_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:07:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 17:44:01 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/10 12:22:52 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void	ft_fill_data(t_shell *shell, char **av)
 	shell->shell_pid = getpid();
 	shell->shell_name = ft_strdup(av[0]);
 	shell->exit_status = 0;
+	g_signal_status = 0;
 	shell->previous_pipe_fd = -1;
 }

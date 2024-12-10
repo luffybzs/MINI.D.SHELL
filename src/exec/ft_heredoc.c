@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 03:23:19 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/10 12:22:19 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_loop_heredoc(t_redir *current, t_shell *shell)
 	{
 		
 		here = readline(">");
-		if (g_signal_status != 100)
+		if (g_signal_status != 0)
 			return (EXIT_FAILURE);
 		if (!here)
 		{
@@ -129,7 +129,7 @@ void	append_string_spe(char *dst, char *src)
 char	*get_special_value(char c, t_shell *shell)
 {
 	if (c == '?')
-		return (ft_itoa(shell->exit_status));
+		return (ft_itoa(g_signal_status));
 	else if (c == '$')
 		return (ft_itoa(shell->shell_pid));
 	else if (c == '0')
