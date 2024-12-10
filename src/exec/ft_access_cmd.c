@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 14:13:57 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:05:48 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,17 @@ void	check_signal_exec(void)
 	return ;
 }
 
+int	get_exit_status(int status)
+{
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	else if (WIFSTOPPED(status))
+		return (128 + WSTOPSIG(status));
+	return (1);
+}
+
 int ft_exec_loop(t_shell *shell)
 {
     t_exec *current;
@@ -190,17 +201,14 @@ int ft_exec_loop(t_shell *shell)
     current = shell->first_exec;
     shell->previous_pipe_fd = -1;
 	if (current->next == NULL && ft_execute_command(current, shell) != 0)
-				return (EXIT_SUCCESS);
+		return (EXIT_SUCCESS);
     if (ft_fork(shell, current) == EXIT_FAILURE)
         return (EXIT_FAILURE);
 
     while (current) /// tu dois cook ici mon reuf
     {
         if (waitpid(current->pidt, &status, 0) > 0)
-        {
-            if (WIFEXITED(status))
-                g_signal_status = WEXITSTATUS(status);
-        }
+			shell->exit_status = get_exit_status(status);
         current = current->next;
     }
 	check_signal_exec();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 13:19:37 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:42:43 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 	i = 0;
 	while (1)
 	{
+		g_signal_status = 0;
 		if (i > 255)
 			i = 0;
 		ft_signal();
 		prompt = readline(ft_print_color(i));
 		if (g_signal_status != 0)
 		{
+			shell->exit_status = g_signal_status;
 			g_signal_status = 0;
 			continue ;
 		}
@@ -37,9 +39,7 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 			break ;
 		if (*prompt)
 			add_history(prompt);
-		if (ft_parsing_prompt_and_exec(prompt, shell) == EXIT_FAILURE)
-			g_signal_status = 2;
-		// shell->exit_status = 2;
+		ft_parsing_prompt_and_exec(prompt, shell);
 		i += 3;
 	}
 	return (EXIT_FAILURE);
