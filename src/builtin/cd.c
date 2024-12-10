@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:09:23 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 12:16:41 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:49:23 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ static void	handle_cd_error(char *path, t_shell *shell)
 		ft_putstr_fd(path, 2);
 		ft_putendl_fd(": Not a directory", 2);
 	}
-	// shell->exit_status = 1;
-	g_signal_status = 1;
+	shell->exit_status = 1;
+	// g_signal_status = 1;
 }
 
 static int	handle_cd_no_args(t_shell *shell, char **path)
@@ -107,8 +107,8 @@ static int	handle_cd_no_args(t_shell *shell, char **path)
 	{
 		ft_putstr_fd(shell->shell_name, 2);
 		ft_putendl_fd(": cd: HOME not set", 2);
-		// shell->exit_status = 1;
-		g_signal_status = 1;
+		shell->exit_status = 1;
+		// g_signal_status = 1;
 		return (1);
 	}
 	return (0);
@@ -120,8 +120,8 @@ static int	handle_cd_args(t_exec *current, t_shell *shell)
 	{
 		ft_putstr_fd(shell->shell_name, 2);
 		ft_putstr_fd(": cd: too many arguments\n", 2);
-		g_signal_status = 1;
-		// shell->exit_status = 1;
+		// g_signal_status = 1;
+		shell->exit_status = 1;
 		return (1);
 	}
 	return (0);
@@ -136,11 +136,11 @@ static int	execute_cd(char *path, char *old_pwd, t_shell *shell)
 	}
 	if (update_pwd_env(shell, old_pwd))
 	{
-		g_signal_status = 1;
+		// g_signal_status = 1;
 		shell->exit_status = 1;
 		return (1);
 	}
-	g_signal_status = 0;
+	// g_signal_status = 0;
 	shell->exit_status = 0;
 	return (0);
 }
@@ -153,7 +153,7 @@ int	ft_cd(t_exec *current, t_shell *shell)
 
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
-		return (g_signal_status = 1, 1);
+		return (shell->exit_status = 1, 1);
 	if (handle_cd_args(current, shell))
 		return (ft_free(old_pwd), 1);
 	if (!current->cmd[1])

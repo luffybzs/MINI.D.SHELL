@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:02:29 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 12:20:19 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:02:02 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_export(t_exec *current, t_shell *shell)
     if (!current->cmd[1])
     {
         ft_export_without_arg(shell);
-        g_signal_status = 0;
+        // g_signal_status = 0;
         shell->exit_status = 0;
         return (0);
     }
@@ -49,7 +49,7 @@ int	ft_export(t_exec *current, t_shell *shell)
             status = 1;
         i++;
     }
-    g_signal_status = status;
+    // g_signal_status = status;
     shell->exit_status = status;
     return (status);
 }

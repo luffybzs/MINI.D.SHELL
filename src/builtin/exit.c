@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 19:48:09 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 14:14:15 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:01:32 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ft_exit(t_exec *current, t_shell *shell)
 	is_parent = (current->pidt != 0);
 	if (!current->cmd[1])
 	{
-		exit_val = g_signal_status;
+		exit_val = shell->exit_status;
 		if (is_parent)
 			ft_putstr_fd("exit\n", 1);
 		if (!current->next)
@@ -96,14 +96,14 @@ int	ft_exit(t_exec *current, t_shell *shell)
 			ft_free(DESTROY);
 			exit(exit_val);
 		}
-		g_signal_status = exit_val;
+		// g_signal_status = exit_val;
 		shell->exit_status = exit_val;
 		return (0);
 	}
 	if (current->cmd[2])
 	{
 		ft_putstr_fd("exit: too many arguments\n", 2);
-		g_signal_status = 1;
+		// g_signal_status = 1;
 		shell->exit_status = 1;
 		return (1);
 	}
@@ -121,7 +121,7 @@ int	ft_exit(t_exec *current, t_shell *shell)
 			ft_free(DESTROY);
 			exit(exit_val);
 		}
-		g_signal_status = exit_val;
+		// g_signal_status = exit_val;
 		shell->exit_status = exit_val;
 		return (0);
 	}
@@ -135,7 +135,7 @@ int	ft_exit(t_exec *current, t_shell *shell)
 		ft_free(DESTROY);
 		exit(exit_val);
 	}
-	g_signal_status = exit_val;
+	// g_signal_status = exit_val;
 	shell->exit_status = exit_val;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 16:05:48 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/12/10 17:03:48 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,21 +139,18 @@ int	ft_fork(t_shell *shell, t_exec *current)
 		if (current->pidt == 0)
 		{
 			set_signal_child();
-			// Configuration des pipes pour l'enfant
 			if (current->next)
 				(close(fd[0]), dup2(fd[1], STDOUT_FILENO), close(fd[1]));
 			if (shell->previous_pipe_fd != -1)
 				(dup2(shell->previous_pipe_fd, STDIN_FILENO),
 					close(shell->previous_pipe_fd));
-			// Gestion des redirections
 			if (current->redir)
 				if (ft_open_file(shell, current->redir) == EXIT_FAILURE)
 					(ft_free(DESTROY), exit(EXIT_FAILURE));
-			// Exécution de la commande
 			if (!current->cmd || !current->cmd[0])
 				(ft_free(DESTROY), exit(EXIT_SUCCESS));
 			if (ft_execute_command(current, shell) != 0)
-				(ft_free(DESTROY), exit(g_signal_status));
+				(ft_free(DESTROY), exit(shell->exit_status/*g_signal_status*/));
 			ft_add_flag(current);
 			goodpath = ft_good_path(shell, current);
 			if (!goodpath)
@@ -161,7 +158,6 @@ int	ft_fork(t_shell *shell, t_exec *current)
 			execve(goodpath, current->cmd, shell->env_upt);
 			(perror("execve failed"), ft_free(DESTROY), exit(EXIT_FAILURE));
 		}
-		// Configuration des pipes pour le parent
 		if (current->next)
 			close(fd[1]);
 		if (shell->previous_pipe_fd != -1)
@@ -205,7 +201,7 @@ int ft_exec_loop(t_shell *shell)
     if (ft_fork(shell, current) == EXIT_FAILURE)
         return (EXIT_FAILURE);
 
-    while (current) /// tu dois cook ici mon reuf
+    while (current)
     {
         if (waitpid(current->pidt, &status, 0) > 0)
 			shell->exit_status = get_exit_status(status);

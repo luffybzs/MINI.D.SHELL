@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:02:25 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 12:21:35 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:03:06 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ int	ft_unset(t_exec *current, t_shell *shell)
 	// t_exec	*current;
 	i = 1;
 	status = 0;
-	g_signal_status = 0;
-	// shell->exit_status = 0;
+	// g_signal_status = 0;
+	shell->exit_status = 0;
 	if (!shell || !shell->first_exec || !current->cmd)
-		return (g_signal_status = 1, 1);
+		return (shell->exit_status = 1, 1);
 	if (!current->cmd[1])
-		return (g_signal_status = 0, 0);
+		return (shell->exit_status = 0, 0);
 	while (current->cmd[i])
 	{
 		if (is_name_ok_unset(current->cmd[i], shell))
 		{
-			g_signal_status = 1;
+			// g_signal_status = 1;
 			shell->exit_status = 1;
 			status = 1;
 		}

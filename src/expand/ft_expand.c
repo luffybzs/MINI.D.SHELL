@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 13:25:07 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:05:02 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)
 	state.result = ft_strdup("");
 	if (!state.result)
 		return (NULL);
-	state.exit_status = g_signal_status;
+	state.exit_status = shell->exit_status/*g_signal_status*/;
 	// recuperer le code d erreur plus tard lors de l exec ?
 	i = 0;
 	while (input[i])
@@ -186,7 +186,7 @@ int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 		// tmp = ft_itoa(g_signal_status);
 		
 		tmp = ft_itoa(shell->exit_status);
-		printf("shell->exit_status = %s et g_signal = %s\n",tmp,ft_itoa(g_signal_status));
+		// printf("shell->exit_status = %s et g_signal = %s\n",tmp,ft_itoa(g_signal_status));
 		append_string(&state->result, tmp);
 		ft_free(tmp);
 		(*i)++;

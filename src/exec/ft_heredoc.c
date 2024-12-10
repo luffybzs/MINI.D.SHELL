@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 12:22:19 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:04:29 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	append_string_spe(char *dst, char *src)
 char	*get_special_value(char c, t_shell *shell)
 {
 	if (c == '?')
-		return (ft_itoa(g_signal_status));
+		return (ft_itoa(/*g_signal_status*/shell->exit_status));
 	else if (c == '$')
 		return (ft_itoa(shell->shell_pid));
 	else if (c == '0')

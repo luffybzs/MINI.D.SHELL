@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 03:10:44 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 12:46:09 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:49:59 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_echo(t_exec *current, t_shell *shell)
 	while (current->cmd[i])
 	{
 		if (ft_print_echo(current->cmd[i], 1) == EXIT_FAILURE)
-			return (g_signal_status = 1,1);
+			return (shell->exit_status = 1,1);
 		if (current->cmd[i + 1])
 			ft_putchar_fd(' ', 1);
 		i++;
@@ -62,6 +62,6 @@ int	ft_echo(t_exec *current, t_shell *shell)
 	if (newline)
 		ft_putchar_fd('\n', 1);
 	g_signal_status = 0;
-	// shell->exit_status = 0;
+	shell->exit_status = 0;
 	return (0);
 }

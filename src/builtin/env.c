@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:48:21 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 12:48:49 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:59:56 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ static int	ft_handle_env_errors(t_exec *actual, t_shell *shell)
 	if (actual->cmd[1] && actual->cmd[1][0] == '-')
 	{
 		ft_putstr_fd("env: illegal option\n", 2);
-		g_signal_status = 125;
-		// shell->exit_status = 125;
+		// g_signal_status = 125;
+		shell->exit_status = 125;
 		return (EXIT_FAILURE);
 	}
 	if (actual->cmd[1])
 	{
 		ft_putstr_fd("env: too many arguments\n", 2);
-		g_signal_status = 125;
-		// shell->exit_status = 125;
+		// g_signal_status = 125;
+		shell->exit_status = 125;
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -45,11 +45,11 @@ int	ft_env(t_exec *actual, t_shell *shell)
 		if (current->value[0] != 0)
 			if (ft_print_env(current->key, "=", current->value,
 					1) == EXIT_FAILURE)
-				return (g_signal_status = 1, 1);
+				return (shell->exit_status = 1, 1);
 		current = current->next;
 	}
-	g_signal_status = 0;
-	// shell->exit_status = 0;
+	// g_signal_status = 0;
+	shell->exit_status = 0;
 	return (EXIT_SUCCESS);
 }
 
