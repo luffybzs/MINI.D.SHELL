@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 17:03:48 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:39:12 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,33 +90,34 @@ void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
 	(perror("execve failed"), ft_free(DESTROY), exit(EXIT_FAILURE));
 }
 
-// int	ft_fork(t_shell *shell, t_exec *current)
-// {
-// 	int	fd[2];
+ int	ft_fork(t_shell *shell, t_exec *current)
+ {
+ 	int	fd[2];
 
-// 	while (current)
-// 	{
-// 		if (current->next != NULL)
-// 			if (pipe(fd) == -1)
-// 				return (perror("pipe"), EXIT_FAILURE);
-// 		current->pidt = fork();
-// 		if (current->pidt == -1)
-// 			return (close(fd[0]), close(fd[1]), EXIT_FAILURE);
-// 		if (current->pidt == 0)
-// 		{
-// 			set_signal_child();
-// 			ft_child_exec(current, shell, fd);
-// 		}
-// 		if (current->next)
-// 			close(fd[1]);
-// 		if (shell->previous_pipe_fd != -1)
-// 			close(shell->previous_pipe_fd);
-// 		shell->previous_pipe_fd = fd[0];
-// 		current = current->next;
-// 	}
-// 	return (EXIT_SUCCESS);
-// }
+ 	while (current)
+ 	{
+ 		if (current->next != NULL)
+ 			if (pipe(fd) == -1)
+ 				return (perror("pipe"), EXIT_FAILURE);
+ 		current->pidt = fork();
+ 		if (current->pidt == -1)
+ 			return (close(fd[0]), close(fd[1]), EXIT_FAILURE);
+ 		if (current->pidt == 0)
+ 		{
+ 			set_signal_child();
+ 			ft_child_exec(current, shell, fd);
+ 		}
+ 		if (current->next)
+ 			close(fd[1]);
+ 		if (shell->previous_pipe_fd != -1)
+ 			close(shell->previous_pipe_fd);
+ 		shell->previous_pipe_fd = fd[0];
+ 		current = current->next; 
+	}
+ 	return (EXIT_SUCCESS);
+}
 
+/*
 int	ft_fork(t_shell *shell, t_exec *current)
 {
 	int		fd[2];
@@ -150,7 +151,7 @@ int	ft_fork(t_shell *shell, t_exec *current)
 			if (!current->cmd || !current->cmd[0])
 				(ft_free(DESTROY), exit(EXIT_SUCCESS));
 			if (ft_execute_command(current, shell) != 0)
-				(ft_free(DESTROY), exit(shell->exit_status/*g_signal_status*/));
+				(ft_free(DESTROY), exit(shell->exit_status));
 			ft_add_flag(current);
 			goodpath = ft_good_path(shell, current);
 			if (!goodpath)
@@ -170,8 +171,13 @@ int	ft_fork(t_shell *shell, t_exec *current)
 	}
 	return (EXIT_SUCCESS);
 }
-void	check_signal_exec(void)
+*/
+void	ft_check_signal_fork(t_shell *shell)
 {
+	if (shell->exit_status == 128 + SIGINT)
+		printf("\n");
+	else if (shell->exit_status == 128 + SIGQUIT)
+		printf("Quit (core dumped)\n");
 	return ;
 }
 
@@ -200,14 +206,13 @@ int ft_exec_loop(t_shell *shell)
 		return (EXIT_SUCCESS);
     if (ft_fork(shell, current) == EXIT_FAILURE)
         return (EXIT_FAILURE);
-
     while (current)
     {
         if (waitpid(current->pidt, &status, 0) > 0)
 			shell->exit_status = get_exit_status(status);
         current = current->next;
     }
-	check_signal_exec();
+	ft_check_signal_fork(shell);
     return (EXIT_SUCCESS);
 }
 

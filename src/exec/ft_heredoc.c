@@ -3,19 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 17:04:29 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/11 18:28:29 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-
-
-static int	check_delimiter(char *here, char *file)
+static int	check_delimiter(char *here, char *file, int i)
 {
+	char res[100000];
+	
+	if (!here)
+	{
+		ft_s_printf(res, RED"Mini.D.Shell: warning: here-document at line %d delimited by end-of-file (wanted `%s')"WHITE, i, file);
+		ft_free(here);
+		ft_putendl_fd(res, 2);
+		return (1);
+	}
 	if (ft_strcmp(here, file) == 0)
 	{
 		ft_free(here);
@@ -23,10 +30,24 @@ static int	check_delimiter(char *here, char *file)
 	}
 	return (0);
 }
-
-int	append_line(char **tmp, char *here, t_shell *shell)
+int ft_is_quote(char *here)
 {
-	if (ft_strchr(here, '$'))
+	int i;
+
+	i = 0;
+	while (here[i])
+	{
+		if (here[i] == '"' || here[i] == '\'')
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
+
+int	append_line(char **tmp, char *here, t_shell *shell, char *file)
+{
+	if (ft_strchr(here, '$') && ft_is_quote(file) == -1)
 		here = handle_expand_here_doc(here, shell);
 	*tmp = ft_strjoin_free(*tmp, here);
 	ft_free(here);
@@ -48,14 +69,18 @@ int	ft_loop_heredoc(t_redir *current, t_shell *shell)
 {
 	char	*here;
 	char	*tmp;
+	int		i;
 
+	i = 0;
 	tmp = ft_strdup("");
 	if (!tmp)
 		return (EXIT_FAILURE);
 	while (1)
 	{
-		
 		here = readline(">");
+		if (check_delimiter(here, current->file, i) || !append_line(&tmp, here,
+				shell,current->file))
+			break ;
 		if (g_signal_status != 0)
 			return (EXIT_FAILURE);
 		if (!here)
@@ -63,10 +88,7 @@ int	ft_loop_heredoc(t_redir *current, t_shell *shell)
 			ft_free(tmp);
 			break ;
 		}
-		if (check_delimiter(here, current->file))
-			break ;
-		if (!append_line(&tmp, here, shell))
-			break ;
+		i++;
 	}
 	current->heredoc = tmp;
 	return (EXIT_SUCCESS);
@@ -129,7 +151,7 @@ void	append_string_spe(char *dst, char *src)
 char	*get_special_value(char c, t_shell *shell)
 {
 	if (c == '?')
-		return (ft_itoa(/*g_signal_status*/shell->exit_status));
+		return (ft_itoa(/*g_signal_status*/ shell->exit_status));
 	else if (c == '$')
 		return (ft_itoa(shell->shell_pid));
 	else if (c == '0')
