@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 16:42:43 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/12/11 20:11:10 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 	i = 0;
 	while (1)
 	{
+		shell->nb_line++;
 		g_signal_status = 0;
 		if (i > 255)
 			i = 0;
@@ -40,7 +41,7 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 		if (*prompt)
 			add_history(prompt);
 		ft_parsing_prompt_and_exec(prompt, shell);
-		i += 3;
+		i += 10;
 	}
 	return (EXIT_FAILURE);
 }
@@ -66,11 +67,3 @@ int	main(int ac, char **av, char **env)
 		return (ft_free(DESTROY), EXIT_FAILURE);
 	return (ft_free(DESTROY), 0);
 }
-
-// int main(void)
-// {
-// 	struct sigaction sa;
-// 	(void)sa;
-// 	printf("size of sigaction : %lu\n", sizeof(struct sigaction));
-// 	return (0);
-// }

@@ -6,19 +6,23 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/11 18:28:29 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:49:38 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	check_delimiter(char *here, char *file, int i)
+static int	check_delimiter(char *here, char *file, t_shell *shell)
 {
-	char res[100000];
+	char	res[100000];
+	char 	*st;
+	char 	*end;
 	
+	end = "delimited by end-of-file (wanted ";
+	st = "Mini.D.Shell: warning: here-document at line";
 	if (!here)
 	{
-		ft_s_printf(res, RED"Mini.D.Shell: warning: here-document at line %d delimited by end-of-file (wanted `%s')"WHITE, i, file);
+		ft_s_printf(res, RED "%s %d %s`%s')" WHITE,st, shell->nb_line,end ,file);
 		ft_free(here);
 		ft_putendl_fd(res, 2);
 		return (1);
@@ -30,24 +34,10 @@ static int	check_delimiter(char *here, char *file, int i)
 	}
 	return (0);
 }
-int ft_is_quote(char *here)
+
+int	append_line(char **tmp, char *here, t_shell *shell)
 {
-	int i;
-
-	i = 0;
-	while (here[i])
-	{
-		if (here[i] == '"' || here[i] == '\'')
-			return (-1);
-		i++;
-	}
-	return (0);
-}
-
-
-int	append_line(char **tmp, char *here, t_shell *shell, char *file)
-{
-	if (ft_strchr(here, '$') && ft_is_quote(file) == -1)
+	if (ft_strchr(here, '$'))
 		here = handle_expand_here_doc(here, shell);
 	*tmp = ft_strjoin_free(*tmp, here);
 	ft_free(here);
@@ -69,17 +59,15 @@ int	ft_loop_heredoc(t_redir *current, t_shell *shell)
 {
 	char	*here;
 	char	*tmp;
-	int		i;
 
-	i = 0;
 	tmp = ft_strdup("");
 	if (!tmp)
 		return (EXIT_FAILURE);
 	while (1)
 	{
 		here = readline(">");
-		if (check_delimiter(here, current->file, i) || !append_line(&tmp, here,
-				shell,current->file))
+		if (check_delimiter(here, current->file, shell) || !append_line(&tmp,
+				here, shell))
 			break ;
 		if (g_signal_status != 0)
 			return (EXIT_FAILURE);
@@ -88,7 +76,6 @@ int	ft_loop_heredoc(t_redir *current, t_shell *shell)
 			ft_free(tmp);
 			break ;
 		}
-		i++;
 	}
 	current->heredoc = tmp;
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 01:57:39 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/11 20:09:33 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,17 +115,18 @@ typedef struct s_signal_handler
 
 typedef struct s_shell
 {
-	char						**env;
-	char						**env_upt;
-	char						**path;
 	t_env						*head;
 	t_command_line				*command;
 	t_exec						*first_exec;
+	char						**env;
+	char						**env_upt;
+	char						**path;
+	char *shell_name; // $0
 	int							previous_pipe_fd;
 	// gerer les cas speciaux de l expand
-	char *shell_name; // $0
 	pid_t shell_pid;  //$$
 	int exit_status;  // $?
+	int nb_line;
 
 	t_signal_handler			sig_handler;
 }								t_shell;

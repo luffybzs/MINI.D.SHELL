@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fonction_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:07:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 12:22:52 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/11 20:09:25 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	ft_check_open_quote(char *prompt)
 	}
 	return (EXIT_SUCCESS);
 }
+
 char *ft_print_color(int i)
 {
 	static char str[100000];
