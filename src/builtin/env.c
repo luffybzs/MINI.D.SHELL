@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:48:21 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 02:14:18 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:50:08 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int	ft_print_env(char *s1, char *s2, char *s3, int fd)
 	check = write(fd, s1, ft_strlen(s1));
 	check += write(fd, s2, ft_strlen(s2));
 	check += write(fd, s3, ft_strlen(s3));
-	check += write(fd, "\n",1);
-	if (check != (ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3)+1))
+	check += write(fd, "\n", 1);
+	if (check != (ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1))
 		return (ft_putstr_fd("env: write error: No space left on device\n", 2),
-				EXIT_FAILURE);
+			EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

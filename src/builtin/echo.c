@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 03:10:44 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 13:50:34 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:50:26 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	is_valid_n_option(char *str)
 	}
 	return (1);
 }
+
 int	ft_print_echo(char *s, int fd)
 {
 	size_t	check;
@@ -34,7 +35,7 @@ int	ft_print_echo(char *s, int fd)
 	check = write(fd, s, ft_strlen(s));
 	if (check != ft_strlen(s))
 		return (ft_putstr_fd("echo: write error: No space left on device\n", 2),
-				EXIT_FAILURE);
+			EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -42,7 +43,7 @@ int	ft_echo(t_exec *current, t_shell *shell)
 {
 	int		i;
 	bool	newline;
-//gerer le cas ou l expand == b*54w/afq8974d
+
 	(void)shell;
 	i = 1;
 	newline = true;
@@ -54,7 +55,7 @@ int	ft_echo(t_exec *current, t_shell *shell)
 	while (current->cmd[i])
 	{
 		if (ft_print_echo(current->cmd[i], 1) == EXIT_FAILURE)
-			return (shell->exit_status = 1,1);
+			return (shell->exit_status = 1, 1);
 		if (current->cmd[i + 1])
 			ft_putchar_fd(' ', 1);
 		i++;

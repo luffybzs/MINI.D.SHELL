@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_s_printf_str.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 11:18:28 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 05:36:21 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 15:44:23 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ int	ft_putchar(const char c, t_data *data, int j)
 	data->tmp[j] = c;
 	return (1);
 }
-char *ft_strcat(char *dest, const char *src)
+
+char	*ft_strcat(char *dest, const char *src)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (dest[i] != '\0')

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen_2d.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:48:51 by ayarab            #+#    #+#             */
-/*   Updated: 2024/11/23 22:50:27 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 17:02:03 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_strlen_2d(char **tab)
+int	ft_strlen_2d(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab[i])

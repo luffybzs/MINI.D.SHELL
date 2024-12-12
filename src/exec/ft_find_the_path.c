@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_find_the_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 00:42:24 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 01:50:01 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 15:54:28 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ char	**ft_search_path(t_shell *shell)
 		return (NULL);
 	return (tab);
 }
-
 
 int	ft_get_env(t_shell *shell)
 {

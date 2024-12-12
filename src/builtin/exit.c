@@ -3,17 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 19:48:09 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 02:14:02 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:49:37 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 #include <limits.h>
 
-static long	ft_atoi_spe(char *str)
+int	handle_overflow(long res, char digit)
+{
+	if (res > LONG_MAX / 10 || (res == LONG_MAX / 10 && (digit - '0') > LONG_MAX
+			% 10))
+		return (1);
+	return (0);
+}
+
+long	ft_atoi_spe(char *str)
 {
 	size_t		i;
 	long int	res;
@@ -34,14 +42,18 @@ static long	ft_atoi_spe(char *str)
 	{
 		if (!ft_isdigit(str[i]))
 			return (2147483648);
-		if (res > LONG_MAX / 10 ||
-			(res == LONG_MAX / 10 && (str[i] - '0') > LONG_MAX % 10))
+		if (handle_overflow(res, str[i]))
 			return (2147483648);
 		res = res * 10 + (str[i] - '0');
 		i++;
 	}
 	return (res * sign);
 }
+
+// if (res > LONG_MAX / 10 || (res == LONG_MAX / 10 && (str[i]
+// 			- '0') > LONG_MAX % 10))
+// 	return (2147483648);
+
 void	ft_end_exit(t_shell *shell, int status, t_exec *current)
 {
 	(void)shell;
@@ -57,7 +69,7 @@ void	ft_end_exit(t_shell *shell, int status, t_exec *current)
 	}
 }
 
-static int	check_numeric_arg(char *arg)
+int	check_numeric_arg(char *arg)
 {
 	int	i;
 
@@ -77,68 +89,81 @@ static int	check_numeric_arg(char *arg)
 	return (1);
 }
 
-int	ft_exit(t_exec *current, t_shell *shell)
+void	ft_end_exit(t_shell *shell, int status, t_exec *current)
 {
-	int		is_parent;
-	long	value;
-	int		exit_val;
-
-	is_parent = (current->pidt != 0);
-	if (!current->cmd[1])
+	(void)shell;
+	if (current->pidt != 0)
 	{
-		exit_val = shell->exit_status;
-		if (is_parent)
-			ft_putstr_fd("exit\n", 1);
-		if (!current->next)
-		{
-			if (current->pidt == 0)
-				exit(exit_val);
-			ft_free(DESTROY);
-			exit(exit_val);
-		}
-		shell->exit_status = exit_val;
-		return (0);
-	}
-	if (current->cmd[2])
-	{
-		ft_putstr_fd("exit: too many arguments\n", 2);
-		shell->exit_status = 1;
-		return (1);
-	}
-	value = ft_atoi_spe(current->cmd[1]);
-	if (!check_numeric_arg(current->cmd[1]) || value == 2147483648)
-	{
-		ft_putstr_fd("exit: numeric argument required\n", 2);
-		exit_val = 2;
-		if (is_parent)
-			ft_putstr_fd("exit\n", 1);
-		if (!current->next)
-		{
-			if (current->pidt == 0)
-				exit(exit_val);
-			ft_free(DESTROY);
-			exit(exit_val);
-		}
-		shell->exit_status = exit_val;
-		return (0);
-	}
-	exit_val = (unsigned char)value;
-	if (is_parent)
-		ft_putstr_fd("exit\n", 1);
-	if (!current->next)
-	{
-		if (current->pidt == 0)
-			exit(exit_val);
 		ft_free(DESTROY);
-		exit(exit_val);
+		exit(status);
 	}
-	shell->exit_status = exit_val;
-	return (0);
+	else
+	{
+		ft_free(PROMPT);
+		exit(status);
+	}
 }
 
+// int	ft_exit(t_exec *current, t_shell *shell)
+// {
+// 	int		is_parent;
+// 	long	value;
+// 	int		exit_val;
 
-/* 
-attention double free a l input de deux arguments a gerer avec 
+// 	is_parent = (current->pidt != 0);
+// 	if (!current->cmd[1])
+// 	{
+// 		exit_val = shell->exit_status;
+// 		if (is_parent)
+// 			ft_putstr_fd("exit\n", 1);
+// 		if (!current->next)
+// 		{
+// 			if (current->pidt == 0)
+// 				exit(exit_val);
+// 			ft_free(DESTROY);
+// 			exit(exit_val);
+// 		}
+// 		shell->exit_status = exit_val;
+// 		return (0);
+// 	}
+// 	if (current->cmd[2])
+// 	{
+// 		ft_putstr_fd("exit: too many arguments\n", 2);
+// 		shell->exit_status = 1;
+// 		return (1);
+// 	}
+// 	value = ft_atoi_spe(current->cmd[1]);
+// 	if (!check_numeric_arg(current->cmd[1]) || value == 2147483648)
+// 	{
+// 		ft_putstr_fd("exit: numeric argument required\n", 2);
+// 		exit_val = 2;
+// 		if (is_parent)
+// 			ft_putstr_fd("exit\n", 1);
+// 		if (!current->next)
+// 		{
+// 			if (current->pidt == 0)
+// 				exit(exit_val);
+// 			ft_free(DESTROY);
+// 			exit(exit_val);
+// 		}
+// 		shell->exit_status = exit_val;
+// 		return (0);
+// 	}
+// 	exit_val = (unsigned char)value;
+// 	if (is_parent)
+// 		ft_putstr_fd("exit\n", 1);
+// 	if (!current->next)
+// 	{
+// 		if (current->pidt == 0)
+// 			exit(exit_val);
+// 		ft_free(DESTROY);
+// 		exit(exit_val);
+// 	}
+// 	shell->exit_status = exit_val;
+// 	return (0);
+// }
+/*
+attention double free a l input de deux arguments a gerer avec
 le garbage */
 /*
 "exit: [arg]: numeric argument required" :

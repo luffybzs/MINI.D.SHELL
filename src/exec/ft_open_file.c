@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 15:03:08 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 13:50:19 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:47:46 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void	ft_open_infile(char *file, t_shell *shell)
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 }
+
 void	ft_open_outfile(char *file, t_shell *shell)
 {
 	int	fd;
 
 	(void)shell;
-	if (ft_str)
 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
 	{
@@ -72,7 +72,7 @@ void	ft_open_heredoc(t_redir *current, t_shell *shell)
 		exit(-1);
 	}
 	if (current->heredoc)
-			ft_putstr_fd(current->heredoc, fd[1]);	
+		ft_putstr_fd(current->heredoc, fd[1]);
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);

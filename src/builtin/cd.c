@@ -6,13 +6,13 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:09:23 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 16:49:23 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:53:14 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
-static char	*get_env_for_cd(t_env *head, char *key)
+char	*get_env_for_cd(t_env *head, char *key)
 {
 	t_env	*current;
 
@@ -28,7 +28,7 @@ static char	*get_env_for_cd(t_env *head, char *key)
 	return (NULL);
 }
 
-static t_env	*update_or_create_env(t_env *head, char *key, char *value)
+t_env	*update_or_create_env(t_env *head, char *key, char *value)
 {
 	t_env	*current;
 
@@ -52,11 +52,10 @@ static t_env	*update_or_create_env(t_env *head, char *key, char *value)
 	return (current);
 }
 
-static int	update_pwd_env(t_shell *shell, char *old_pwd)
+int	update_pwd_env(t_shell *shell, char *old_pwd)
 {
 	char	*current_pwd;
 
-	// mise a jour des variables en tete de liste env
 	current_pwd = getcwd(NULL, 0);
 	if (!current_pwd)
 		return (1);
@@ -76,9 +75,8 @@ static int	update_pwd_env(t_shell *shell, char *old_pwd)
 	return (0);
 }
 
-static void	handle_cd_error(char *path, t_shell *shell)
+void	handle_cd_error(char *path, t_shell *shell)
 {
-	// finir d associer les differnete erreurs
 	ft_putstr_fd(shell->shell_name, 2);
 	ft_putstr_fd(": cd: ", 2);
 	if (access(path, F_OK) == -1)
@@ -97,10 +95,9 @@ static void	handle_cd_error(char *path, t_shell *shell)
 		ft_putendl_fd(": Not a directory", 2);
 	}
 	shell->exit_status = 1;
-	// g_signal_status = 1;
 }
 
-static int	handle_cd_no_args(t_shell *shell, char **path)
+int	handle_cd_no_args(t_shell *shell, char **path)
 {
 	*path = get_env_for_cd(shell->head, "HOME");
 	if (!*path)
@@ -108,64 +105,9 @@ static int	handle_cd_no_args(t_shell *shell, char **path)
 		ft_putstr_fd(shell->shell_name, 2);
 		ft_putendl_fd(": cd: HOME not set", 2);
 		shell->exit_status = 1;
-		// g_signal_status = 1;
 		return (1);
 	}
 	return (0);
-}
-
-static int	handle_cd_args(t_exec *current, t_shell *shell)
-{
-	if (current->cmd[1] && current->cmd[2])
-	{
-		ft_putstr_fd(shell->shell_name, 2);
-		ft_putstr_fd(": cd: too many arguments\n", 2);
-		// g_signal_status = 1;
-		shell->exit_status = 1;
-		return (1);
-	}
-	return (0);
-}
-
-static int	execute_cd(char *path, char *old_pwd, t_shell *shell)
-{
-	if (chdir(path) != 0)
-	{
-		handle_cd_error(path, shell);
-		return (1);
-	}
-	if (update_pwd_env(shell, old_pwd))
-	{
-		// g_signal_status = 1;
-		shell->exit_status = 1;
-		return (1);
-	}
-	// g_signal_status = 0;
-	shell->exit_status = 0;
-	return (0);
-}
-
-int	ft_cd(t_exec *current, t_shell *shell)
-{
-	char	*path;
-	char	*old_pwd;
-	int		ret;
-
-	old_pwd = getcwd(NULL, 0);
-	if (!old_pwd)
-		return (shell->exit_status = 1, 1);
-	if (handle_cd_args(current, shell))
-		return (ft_free(old_pwd), 1);
-	if (!current->cmd[1])
-	{
-		if (handle_cd_no_args(shell, &path))
-			return (ft_free(old_pwd), 1);
-	}
-	else
-		path = current->cmd[1];
-	ret = execute_cd(path, old_pwd, shell);
-	ft_free(old_pwd);
-	return (ret);
 }
 
 /*

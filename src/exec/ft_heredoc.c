@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 11:27:19 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:50:43 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 static int	check_delimiter(char *here, char *file, t_shell *shell)
 {
 	char	res[100000];
-	char 	*st;
-	char 	*end;
-	
+	char	*st;
+	char	*end;
+
 	end = "delimited by end-of-file (wanted ";
 	st = "Mini.D.Shell: warning: here-document at line";
 	if (!here)
 	{
-		ft_s_printf(res, RED "%s %d %s`%s')" WHITE,st, shell->nb_line,end ,file);
+		ft_s_printf(res, RED "%s %d %s`%s')" WHITE, st, shell->nb_line, end,
+			file);
 		ft_free(here);
 		ft_putendl_fd(res, 2);
 		return (1);
@@ -37,7 +38,7 @@ static int	check_delimiter(char *here, char *file, t_shell *shell)
 
 int	append_line(char **tmp, char *here, t_shell *shell, t_redir *current)
 {
-	(void) current;
+	(void)current;
 	if (ft_strchr(here, '$'))
 		here = handle_expand_here_doc(here, shell);
 	*tmp = ft_strjoin_free(*tmp, here);
@@ -68,7 +69,7 @@ int	ft_loop_heredoc(t_redir *current, t_shell *shell)
 	{
 		here = readline(">");
 		if (check_delimiter(here, current->file, shell) || !append_line(&tmp,
-				here, shell,current))
+				here, shell, current))
 			break ;
 		if (g_signal_status != 0)
 			return (EXIT_FAILURE);
@@ -122,134 +123,4 @@ void	append_char_spe(char *str, char c)
 	new[len + 1] = '\0';
 	ft_free(str);
 	str = new;
-}
-
-void	append_string_spe(char *dst, char *src)
-{
-	char	*new;
-
-	if (!dst || !src)
-		return ;
-	new = ft_strjoin(dst, src);
-	if (!new)
-		return ;
-	ft_free(dst);
-	dst = new;
-}
-
-char	*get_special_value(char c, t_shell *shell)
-{
-	if (c == '?')
-		return (ft_itoa(shell->exit_status));
-	// else if (c == '$')
-	// 	return (ft_itoa(shell->shell_pid));
-	else if (c == '0')
-		return (ft_strdup(shell->shell_name));
-	return (NULL);
-}
-
-static void	handle_special_vars(char *str, int *i, t_shell *shell, char **exp)
-{
-	char	*tmp;
-	char	*new_exp;
-
-	tmp = get_special_value(str[*i], shell);
-	if (!tmp)
-		return ;
-	(*i)++;
-	new_exp = ft_strjoin(*exp, tmp);
-	ft_free(tmp);
-	if (new_exp)
-	{
-		ft_free(*exp);
-		*exp = new_exp;
-	}
-}
-
-static void	handle_simple_dollar(char **expanded)
-{
-	char	*new_expanded;
-
-	new_expanded = ft_strjoin(*expanded, "$");
-	if (new_expanded)
-	{
-		ft_free(*expanded);
-		*expanded = new_expanded;
-	}
-}
-
-static void	handle_var_expansion(char *str, int *i, t_shell *shell, char **exp)
-{
-	char	*var_name;
-	char	*var_value;
-	char	*new_exp;
-	int		len;
-
-	len = get_var_name_length(str + *i);
-	if (len == 0)
-		return (handle_simple_dollar(exp));
-	var_name = ft_substr(str, *i, len);
-	if (!var_name)
-		return ;
-	var_value = get_env_value(var_name, shell);
-	if (var_value)
-	{
-		new_exp = ft_strjoin(*exp, var_value);
-		if (new_exp)
-		{
-			ft_free(*exp);
-			*exp = new_exp;
-		}
-		ft_free(var_value);
-	}
-	ft_free(var_name);
-	*i += len;
-}
-
-static void	handle_exp_hd(char *str, int *i, t_shell *shell, char **expanded)
-{
-	(*i)++;
-	if (!str[*i])
-		return (handle_simple_dollar(expanded));
-	if (str[*i] == '?' || str[*i] == '0')
-		handle_special_vars(str, i, shell, expanded);
-	else
-		handle_var_expansion(str, i, shell, expanded);
-}
-
-static char	*join_char(char *expanded, char c)
-{
-	char	current[2];
-	char	*new_expanded;
-
-	current[0] = c;
-	current[1] = '\0';
-	new_expanded = ft_strjoin(expanded, current);
-	if (new_expanded)
-	{
-		ft_free(expanded);
-		return (new_expanded);
-	}
-	return (NULL);
-}
-
-char	*handle_expand_here_doc(char *str, t_shell *shell)
-{
-	char	*expanded;
-	int		i;
-
-	i = 0;
-	expanded = ft_strdup("");
-	if (!expanded)
-		return (NULL);
-	while (str[i])
-	{
-		if (str[i] == '$')
-			handle_exp_hd(str, &i, shell, &expanded);
-		else
-			expanded = join_char(expanded, str[i++]);
-		if (!expanded)
-			return (NULL);
-	}
-	return (expanded);
 }

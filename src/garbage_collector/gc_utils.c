@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 18:34:25 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/07 20:38:57 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:02:58 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,42 +104,4 @@ void	free_unlock(t_gc *garbage)
 		}
 		current = next;
 	}
-}
-
-void	destroy(t_gc *garbage, void *elem)
-{
-	t_garbage	*current;
-
-	if (!garbage)
-		return ;
-	if (!in_garbage(garbage, elem))
-	{
-		free(elem);
-		return ;
-	}
-	current = garbage->head;
-	while (current->ptr != elem)
-		current = current->next;
-	if (current->prev)
-		current->prev->next = current->next;
-	else
-		garbage->head = current->next;
-	if (current->next)
-		current->next->prev = current->prev;
-	free(current->ptr);
-	free(current);
-}
-
-int	in_garbage(t_gc *garbage, void *elem)
-{
-	t_garbage	*current;
-
-	current = garbage->head;
-	while (current)
-	{
-		if (current->ptr == elem)
-			return (1);
-		current = current->next;
-	}
-	return (0);
 }

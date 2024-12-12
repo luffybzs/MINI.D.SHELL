@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fonction_exec.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 15:12:19 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 01:53:19 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 15:54:11 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ int	ft_len_env(t_shell *shell)
 	return (i);
 }
 
-char **ft_putflag(char **cmd)
+char	**ft_putflag(char **cmd)
 {
-	char **res;
-	int i;
-	
+	char	**res;
+	int		i;
+
 	if (!cmd)
 		return (NULL);
 	i = ft_strlen_2d(cmd);
@@ -93,7 +93,7 @@ char **ft_putflag(char **cmd)
 	return (res);
 }
 
-int ft_cmp_flag(char *cmd)
+int	ft_cmp_flag(char *cmd)
 {
 	if (ft_strcmp(cmd, "ls") == 0)
 		return (EXIT_SUCCESS);

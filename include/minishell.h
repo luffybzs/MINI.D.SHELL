@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 02:20:50 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:25:10 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include "gc.h"
 # include "ft_s_printf.h"
+# include "gc.h"
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -58,9 +58,9 @@ extern volatile sig_atomic_t	g_signal_status;
 
 typedef struct s_redir
 {
-	char *heredoc; 
-	char *file;    
-	int type;      
+	char						*heredoc;
+	char						*file;
+	int							type;
 	struct s_redir				*next;
 }								t_redir;
 
@@ -71,8 +71,8 @@ typedef struct s_redir_line
 
 typedef struct s_exec
 {
-	char **cmd;   
-	t_redir *redir;
+	char						**cmd;
+	t_redir						*redir;
 	int							pidt;
 	struct s_exec				*next;
 }								t_exec;
@@ -121,11 +121,11 @@ typedef struct s_shell
 	char						**env;
 	char						**env_upt;
 	char						**path;
-	char *shell_name; 
+	char						*shell_name;
 	int							previous_pipe_fd;
-	pid_t shell_pid;  
-	int exit_status;  
-	int nb_line;
+	pid_t						shell_pid;
+	int							exit_status;
+	int							nb_line;
 
 	t_signal_handler			sig_handler;
 }								t_shell;
@@ -138,29 +138,28 @@ typedef struct s_expand_state
 }								t_expand_state;
 
 //-------------------------------------//
-char *ft_print_color(int i);
-void	fill_redir(t_redir *file, t_token *current);
-void	set_signal_child(void);
-int ft_add_flag(t_exec *current);
-char **ft_putflag(char **cmd);
-int ft_cmp_flag(char *cmd);
-void	ft_fill_data(t_shell *shell, char **av);
+char							*ft_print_color(int i);
+void							fill_redir(t_redir *file, t_token *current);
+void							set_signal_child(void);
+int								ft_add_flag(t_exec *current);
+char							**ft_putflag(char **cmd);
+int								ft_cmp_flag(char *cmd);
+void							ft_fill_data(t_shell *shell, char **av);
 int								ft_len_env(t_shell *shell);
 char							**ft_lst_strdup(t_shell *shell);
 int								ft_open_file(t_shell *shell, t_redir *current);
-void	ft_open_heredoc(t_redir *current,
-						t_shell *shell);
-void	ft_open_outfile_append(char *file,
-							t_shell *shell);
+void							ft_open_heredoc(t_redir *current,
+									t_shell *shell);
+void							ft_open_outfile_append(char *file,
+									t_shell *shell);
 void							ft_open_outfile(char *file, t_shell *shell);
 void							ft_open_infile(char *file, t_shell *shell);
 int								ft_check_heredoc(t_shell *shell);
-t_token	*ft_add_redir_exec(t_token *current,
-							t_redir *file,
-							t_exec *new_cmd);
+t_token							*ft_add_redir_exec(t_token *current,
+									t_redir *file, t_exec *new_cmd);
 int								ft_start_exec(t_shell *shell);
-void	ft_lstadd_back_exec(t_exec **current,
-							t_exec *newcmd);
+void							ft_lstadd_back_exec(t_exec **current,
+									t_exec *newcmd);
 void							ft_print_exec(t_shell *shell);
 char							*ft_good_path(t_shell *shell, t_exec *current);
 int								ft_get_env(t_shell *shell);
@@ -168,15 +167,15 @@ int								ft_check_open_quote(char *prompt);
 int								ft_exec_loop(t_shell *shell);
 t_command_line					*ft_init_queue(void);
 int								is_redirect(char *content);
-void	ft_add_token(char *content,
-					t_command_line *command);
+void							ft_add_token(char *content,
+									t_command_line *command);
 int								ft_compute_token(t_token *before, char *new);
-int								ft_parsing_prompt_and_exec(char *prompt, t_shell *shell);
+int								ft_parsing_prompt_and_exec(char *prompt,
+									t_shell *shell);
 void							ft_add_cmd(char *command, t_command_line *line,
 									int *i);
-void	ft_add_redirect(char *command,
-						t_command_line *line,
-						int *i);
+void							ft_add_redirect(char *command,
+									t_command_line *line, int *i);
 int								ft_skip_spaces(char *str, int *i);
 void							ft_next_char(char *str, char c, int *i, int *j);
 int								ft_len_word(char *command, int i, char c);
@@ -205,7 +204,12 @@ int								ft_findchar(const char *str, int c);
 char							*ft_supp_quote2(char *command, char c, int i);
 void							update_underscore_var(t_shell *shell,
 									char *last_arg);
-									
+char							*get_incremented_shlvl(char *current_shlvl);
+void							add_to_env_list(t_env *new, t_shell *shell);
+
+t_env							*create_shlvl_node(char *shlvl_value);
+char							*get_shell_level(char **env);
+
 // expand
 
 int								ft_expand(t_command_line *line, t_shell *shell);
@@ -213,8 +217,8 @@ int								ft_find_dollar(char *content, int *i);
 char							*get_var_name(char *content);
 int								get_var_len(char *str);
 char							*get_var_value(char *var_name, t_shell *shell);
-int	check_expand_state(char *str,
-						t_expand_state *exp);
+int								check_expand_state(char *str,
+									t_expand_state *exp);
 int								should_expand(t_expand_state *exp);
 
 char							*expand_var(char *input, t_shell *shell,
@@ -227,22 +231,33 @@ int								handle_special_var(char c, int *i,
 int								get_var_name_length(const char *str);
 void							append_char(char **str, char c);
 void							append_string(char **dst, const char *src);
-char	*get_env_value(const char *name,
-					t_shell *shell);
+char							*get_env_value(const char *name,
+									t_shell *shell);
+char							*handle_empty_word(char *result, char *input,
+									int type);
 
 /* expand hd*/
 
-char	*handle_expand_here_doc(char *str,
-								t_shell *shell);
-char	*handle_expand_here_doc(char *str,
-								t_shell *shell);
+char							*handle_expand_here_doc(char *str,
+									t_shell *shell);
+char							*handle_expand_here_doc(char *str,
+									t_shell *shell);
 void							append_char_spe(char *str, char c);
+
+char							*join_char(char *expanded, char c);
+void							handle_exp_hd(char *str, int *i, t_shell *shell,
+									char **expanded);
+void							handle_var_expansion(char *str, int *i,
+									t_shell *shell, char **exp);
+void							handle_simple_dollar(char **expanded);
+void							handle_special_vars(char *str, int *i,
+									t_shell *shell, char **exp);
 
 // test
 
 void							print_list(t_shell *list);
-int	ft_execute_command(t_exec *current,
-						t_shell *shell);
+int								ft_execute_command(t_exec *current,
+									t_shell *shell);
 
 /* signaux */
 

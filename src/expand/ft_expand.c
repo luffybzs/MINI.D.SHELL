@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 13:48:57 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:19:12 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,30 +52,27 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)
 		else
 			append_char(&state.result, input[i++]);
 	}
-	/*tentative de reglage du probleme mauvais expand au debut*/
-	if (state.result[0] == '\0' && current->type == WORD)
-	{
-		ft_free(state.result);
-		state.result = ft_strdup("b*54w/afq8974d");
-		if (!state.result)
-			return (NULL);
-	}
-	else if (state.result[0] == '\0' && current->type == FILE_TOKEN)
-	{
-		ft_free(state.result);
-		state.result = ft_strdup(input);
-		if (!state.result)
-			return (NULL);
-	}
+	/* modif ici a verifier plus check valgrind */
+	if (state.result[0] == '\0')
+		state.result = handle_empty_word(state.result, input, current->type);
+	if (!state.result)
+		return (NULL);
 	return (state.result);
 }
-
-/*
-state in quote :
-0 : pas de quote
-1 : double quote
-2 : single quote
-*/
+// if (state.result[0] == '\0' && current->type == WORD)
+// {
+// 	ft_free(state.result);
+// 	state.result = ft_strdup("b*54w/afq8974d");
+// 	if (!state.result)
+// 		return (NULL);
+// }
+// else if (state.result[0] == '\0' && current->type == FILE_TOKEN)
+// {
+// 	ft_free(state.result);
+// 	state.result = ft_strdup(input);
+// 	if (!state.result)
+// 		return (NULL);
+// }
 
 int	handle_quotes(char c, t_expand_state *state)
 {
@@ -138,84 +135,6 @@ int	get_var_name_length(const char *str)
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
 	return (i);
-}
-
-void	append_char(char **str, char c)
-{
-	char	*new;
-	int		len;
-
-	if (!*str)
-		return ;
-	len = ft_strlen(*str);
-	new = ft_malloc(len + 2);
-	if (!new)
-		return ;
-	ft_strlcpy(new, *str, len + 1);
-	new[len] = c;
-	new[len + 1] = '\0';
-	ft_free(*str);
-	*str = new;
-}
-
-void	append_string(char **dst, const char *src)
-{
-	char	*new;
-
-	if (!*dst || !src)
-		return ;
-	new = ft_strjoin(*dst, src);
-	if (!new)
-		return ;
-	ft_free(*dst);
-	*dst = new;
-}
-
-char	*get_env_value(const char *name, t_shell *shell)
-{
-	char	*full_var;
-	t_env	*env;
-
-	env = shell->head;
-	while (env)
-	{
-		full_var = env->key;
-		if (ft_strcmp(full_var, name) == 0 && env->value[0] != 0)
-		{
-			return (ft_strdup(env->value));
-		}
-		env = env->next;
-	}
-	return (ft_strdup(""));
-}
-
-int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
-{
-	char	*tmp;
-
-	if (c == '?')
-	{
-		tmp = ft_itoa(shell->exit_status);
-		append_string(&state->result, tmp);
-		ft_free(tmp);
-		(*i)++;
-		return (1);
-	}
-	// else if (c == '$')
-	// {
-	// 	tmp = ft_itoa(shell->shell_pid);
-	// 	append_string(&state->result, tmp);
-	// 	ft_free(tmp);
-	// 	(*i)++;
-	// 	return (1);
-	// }
-	else if (c == '0')
-	{
-		append_string(&state->result, shell->shell_name);
-		(*i)++;
-		return (1);
-	}
-	return (0);
 }
 
 /*

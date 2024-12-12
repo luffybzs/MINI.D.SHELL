@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isseparator.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: utilisateur <utilisateur@student.42.fr>    +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:04:12 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/11/14 17:04:56 by utilisateur      ###   ########.fr       */
+/*   Updated: 2024/12/12 17:02:21 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_isseparator(char c)
+int	ft_isseparator(char c)
 {
 	if (c == '|' || c == '<' || c == '>')
 		return (1);

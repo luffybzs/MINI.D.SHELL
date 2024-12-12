@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_queue_functions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 02:16:44 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 02:16:51 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 15:59:29 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../include/minishell.h"
 
@@ -26,17 +25,17 @@ t_command_line	*ft_init_queue(void)
 
 int	is_redirect(char *content)
 {
-	if (ft_strncmp(content, "||", 2) == 0) /*	error	*/
+	if (ft_strncmp(content, "||", 2) == 0)
 		return (-1);
 	if (ft_strncmp(content, "|", 1) == 0)
 		return (PIPE);
-	if (ft_strncmp(content, ">>>", 3) == 0) /*	error	*/
+	if (ft_strncmp(content, ">>>", 3) == 0)
 		return (-1);
 	if (ft_strncmp(content, ">>", 2) == 0)
 		return (RR_RED);
 	if (ft_strncmp(content, ">", 1) == 0)
 		return (R_RED);
-	if (ft_strncmp(content, "<<<", 3) == 0) /*	error	*/
+	if (ft_strncmp(content, "<<<", 3) == 0)
 		return (-1);
 	if (ft_strncmp(content, "<<", 2) == 0)
 		return (LL_RED);
@@ -86,7 +85,7 @@ void	ft_add_token(char *content, t_command_line *command)
 
 t_token	*ft_lstlast_mini(t_command_line *lst)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	if (!lst)
 		return (NULL);

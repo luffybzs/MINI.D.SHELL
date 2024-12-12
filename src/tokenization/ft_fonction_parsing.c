@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fonction_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:07:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 01:59:48 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:01:26 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,22 @@ int	ft_check_open_quote(char *prompt)
 	return (EXIT_SUCCESS);
 }
 
-char *ft_print_color(int i)
+char	*ft_print_color(int i)
 {
-	static char str[100000];
-	int r;
-	int g;
-	int b;
+	static char	str[100000];
+	int			r;
+	int			g;
+	int			b;
 
 	r = 255 - i;
 	g = 0 + i;
 	b = 0;
-	
-	ft_s_printf(str, "\033[38;2;%d;%d;%dm%s\033[0m", r, g, b, "Mini.D.Shell -> ");
+	ft_s_printf(str, "\033[38;2;%d;%d;%dm%s\033[0m", r, g, b, "Mini.D.Shell-> ");
 	return (str);
 }
+
 void	ft_fill_data(t_shell *shell, char **av)
 {
-	//shell->shell_pid = getpid();
 	shell->shell_name = ft_strdup(av[0]);
 	shell->exit_status = 0;
 	g_signal_status = 0;

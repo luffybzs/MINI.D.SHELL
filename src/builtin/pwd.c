@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:48:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 01:37:19 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:26:36 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int	ft_pwd(t_shell *shell)
 {
-	char *cwd;
+	char	*cwd;
 
 	(void)shell;
-
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
@@ -26,7 +25,7 @@ int	ft_pwd(t_shell *shell)
 		return (1);
 	}
 	if (ft_print_pwd(cwd, 1) == EXIT_FAILURE)
-		return (shell->exit_status = 1,ft_free(cwd) ,1);
+		return (shell->exit_status = 1, ft_free(cwd), 1);
 	ft_free(cwd);
 	shell->exit_status = 0;
 	return (0);
@@ -38,9 +37,9 @@ int	ft_print_pwd(char *s, int fd)
 
 	check = 0;
 	check = write(fd, s, ft_strlen(s));
-	check += write(fd,"\n",1);
-	if (check != (ft_strlen(s)+1))
+	check += write(fd, "\n", 1);
+	if (check != (ft_strlen(s) + 1))
 		return (ft_putstr_fd("pwd: write error: No space left on device\n", 2),
-				EXIT_FAILURE);
+			EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

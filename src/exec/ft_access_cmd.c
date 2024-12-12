@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 13:08:51 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:57:13 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	ft_error_access(t_shell *shell, t_exec *current)
 	(void)shell;
 	if (ft_strcmp(current->cmd[0], "b*54w/afq8974d") == 0)
 	{
-			shell->exit_status = 0;
-			ft_free(DESTROY);
-			exit(0);
+		shell->exit_status = 0;
+		ft_free(DESTROY);
+		exit(0);
 	}
 	tmp = ft_strjoin("Mini.D.Shell: ", current->cmd[0]);
 	if (!tmp)
@@ -42,7 +42,7 @@ char	*ft_good_path(t_shell *shell, t_exec *current)
 		return (ft_error_access(shell, current), NULL);
 	if (access(current->cmd[0], F_OK | X_OK) == 0)
 		return (current->cmd[0]);
-	if (!shell->path) 
+	if (!shell->path)
 		return (ft_error_access(shell, current), NULL);
 	while (shell->path[i])
 	{
@@ -60,6 +60,7 @@ char	*ft_good_path(t_shell *shell, t_exec *current)
 	ft_error_access(shell, current);
 	return (NULL);
 }
+
 int	ft_add_flag(t_exec *current)
 {
 	if (ft_cmp_flag(current->cmd[0]) == EXIT_SUCCESS)
@@ -96,76 +97,30 @@ void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
 	(perror("execve failed"), ft_free(DESTROY), exit(EXIT_FAILURE));
 }
 
- int	ft_fork(t_shell *shell, t_exec *current)
- {
- 	int	fd[2];
+int	ft_fork(t_shell *shell, t_exec *current)
+{
+	int	fd[2];
 
- 	while (current)
- 	{
- 		if (current->next != NULL)
- 			if (pipe(fd) == -1)
- 				return (perror("pipe"), EXIT_FAILURE);
- 		current->pidt = fork();
- 		if (current->pidt == -1)
- 			return (close(fd[0]), close(fd[1]), EXIT_FAILURE);
- 		if (current->pidt == 0)
- 		{
- 			set_signal_child();
+	while (current)
+	{
+		if (current->next != NULL)
+			if (pipe(fd) == -1)
+				return (perror("pipe"), EXIT_FAILURE);
+		current->pidt = fork();
+		if (current->pidt == -1)
+			return (close(fd[0]), close(fd[1]), EXIT_FAILURE);
+		if (current->pidt == 0)
+		{
+			set_signal_child();
 			ft_get_env(shell);
- 			ft_child_exec(current, shell, fd);
- 		}
- 		if (current->next)
- 			close(fd[1]);
- 		if (shell->previous_pipe_fd != -1)
- 			close(shell->previous_pipe_fd);
- 		shell->previous_pipe_fd = fd[0];
- 		current = current->next; 
+			ft_child_exec(current, shell, fd);
+		}
+		if (current->next)
+			close(fd[1]);
+		if (shell->previous_pipe_fd != -1)
+			close(shell->previous_pipe_fd);
+		shell->previous_pipe_fd = fd[0];
+		current = current->next;
 	}
- 	return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
-
-void	ft_check_signal_fork(t_shell *shell)
-{
-	if (shell->exit_status == 128 + SIGINT)
-		printf("\n");
-	else if (shell->exit_status == 128 + SIGQUIT)
-		printf("Quit (core dumped)\n");
-	return ;
-}
-
-int	get_exit_status(int status)
-{
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
-	else if (WIFSTOPPED(status))
-		return (128 + WSTOPSIG(status));
-	return (1);
-}
-
-int ft_exec_loop(t_shell *shell)
-{
-    t_exec *current;
-    int status;
-
-   	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
-    current = shell->first_exec;
-    shell->previous_pipe_fd = -1;
-	if (current->next == NULL && ft_execute_command(current, shell) != 0)
-		return (EXIT_SUCCESS);
-    if (ft_fork(shell, current) == EXIT_FAILURE)
-        return (EXIT_FAILURE);
-    while (current)
-    {
-        if (waitpid(current->pidt, &status, 0) > 0)
-			shell->exit_status = get_exit_status(status);
-        current = current->next;
-    }
-	ft_check_signal_fork(shell);
-    return (EXIT_SUCCESS);
-}
-
-

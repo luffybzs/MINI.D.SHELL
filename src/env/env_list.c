@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:49:34 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 02:15:05 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:25:36 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/gc.h"
 #include "../../include/minishell.h"
 
-static char	*get_incremented_shlvl(char *current_shlvl);
-
-static char	*get_shell_level(char **env)
+char	*get_shell_level(char **env)
 {
 	int		i;
 	char	*shlvl_value;
@@ -33,7 +31,7 @@ static char	*get_shell_level(char **env)
 	return (ft_strdup("1"));
 }
 
-static t_env	*create_shlvl_node(char *shlvl_value)
+t_env	*create_shlvl_node(char *shlvl_value)
 {
 	t_env	*new;
 
@@ -49,7 +47,7 @@ static t_env	*create_shlvl_node(char *shlvl_value)
 	return (new);
 }
 
-static void	add_to_env_list(t_env *new, t_shell *shell)
+void	add_to_env_list(t_env *new, t_shell *shell)
 {
 	t_env	*current;
 
@@ -87,6 +85,7 @@ int	fill_env_list(t_shell *shell)
 	}
 	return (ft_free(shlvl_value), 0);
 }
+
 t_env	*create_env_node(char *env_str)
 {
 	t_env	*new;
@@ -111,65 +110,4 @@ t_env	*create_env_node(char *env_str)
 	ft_lock(new->value);
 	new->next = NULL;
 	return (new);
-}
-
-void	free_env_list(t_shell *shell)
-{
-	t_env	*current;
-	t_env	*next;
-
-	if (!shell || !shell->head)
-		return ;
-	current = shell->head;
-	while (current)
-	{
-		next = current->next;
-		free_env_node(current);
-		current = next;
-	}
-	shell->head = NULL;
-}
-
-void	free_env_node(t_env *node)
-{
-	if (!node)
-		return ;
-	if (node->key)
-		ft_free(node->key);
-	if (node->value)
-		ft_free(node->value);
-	ft_free(node);
-}
-
-int	ft_findchar(const char *str, int c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == (char)c)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-static char	*get_incremented_shlvl(char *current_shlvl)
-{
-	int		level;
-	char	*new_shlvl;
-
-	if (!current_shlvl || !*current_shlvl)
-		level = 1;
-	else
-	{
-		level = ft_atoi(current_shlvl);
-		if (level < 0)
-			level = 0;
-		else
-			level++;
-	}
-	new_shlvl = ft_itoa(level);
-	return (new_shlvl);
 }
