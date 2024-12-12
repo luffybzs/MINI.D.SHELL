@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_find_the_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 00:42:24 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/09 18:46:21 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 01:50:01 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	**ft_search_path(t_shell *shell)
 	return (tab);
 }
 
+
 int	ft_get_env(t_shell *shell)
 {
 	char	**tab;
@@ -66,7 +67,6 @@ int	ft_get_env(t_shell *shell)
 
 int	ft_start_exec(t_shell *shell)
 {
-	ft_get_env(shell);
 	if (ft_exec_loop(shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

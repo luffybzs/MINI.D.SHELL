@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/11 21:23:44 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 01:56:07 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static int	check_delimiter(char *here, char *file, t_shell *shell)
 
 int	append_line(char **tmp, char *here, t_shell *shell, t_redir *current)
 {
-	if (ft_strchr(here, '$') /*&& (!ft_strchr(current->file, '\'') && !ft_strchr(current->file,'"'))*/)
+	(void) current;
+	if (ft_strchr(here, '$'))
 		here = handle_expand_here_doc(here, shell);
 	*tmp = ft_strjoin_free(*tmp, here);
 	ft_free(here);
@@ -66,7 +67,6 @@ int	ft_loop_heredoc(t_redir *current, t_shell *shell)
 	while (1)
 	{
 		here = readline(">");
-		printf ("delimiter %s\n", current->file);/*ici*/
 		if (check_delimiter(here, current->file, shell) || !append_line(&tmp,
 				here, shell,current))
 			break ;
@@ -140,7 +140,7 @@ void	append_string_spe(char *dst, char *src)
 char	*get_special_value(char c, t_shell *shell)
 {
 	if (c == '?')
-		return (ft_itoa(/*g_signal_status*/ shell->exit_status));
+		return (ft_itoa(shell->exit_status));
 	else if (c == '$')
 		return (ft_itoa(shell->shell_pid));
 	else if (c == '0')

@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/11 20:11:10 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 02:02:12 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,14 @@ int	main(int ac, char **av, char **env)
 	t_shell	shell;
 
 	(void)ac;
-	/* signaux*/
-	// setup_interactive_signals();
 	prompt = NULL;
-	memset(&shell, 0, sizeof(t_shell));
+	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.env = env;
 	ft_fill_data(&shell, av);
 	if (!isatty(0))
 		return (printf("tty required!!\n"), 1);
 	if (fill_env_list(&shell) != 0)
-		return (printf("Failed to initialize the linked environement list\n"),
-				1); // needed to be freed later + retour d erreur
+		return (printf("Failed to initialize the linked environement list\n"),1);
 	if (ft_loop_shell(prompt, &shell) == EXIT_FAILURE)
 		return (ft_free(DESTROY), EXIT_FAILURE);
 	return (ft_free(DESTROY), 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:48:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 17:03:18 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 01:37:19 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,13 @@ int	ft_pwd(t_shell *shell)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		// g_signal_status = 1;
 		shell->exit_status = 1;
 		perror("pwd");
 		return (1);
 	}
 	if (ft_print_pwd(cwd, 1) == EXIT_FAILURE)
-		return (shell->exit_status= 1,/*g_signal_status = 1*/1);
+		return (shell->exit_status = 1,ft_free(cwd) ,1);
 	ft_free(cwd);
-	// g_signal_status = 0;
 	shell->exit_status = 0;
 	return (0);
 }

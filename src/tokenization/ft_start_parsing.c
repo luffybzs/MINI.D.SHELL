@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/10 16:10:10 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/12/12 02:17:17 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,6 @@ t_command_line	*ft_loop_token(char *prompt)
 			ft_add_elem(line, prompt, &i);
 	}
 	return (line);
-}
-
-void	ft_display(t_command_line *line)
-{
-	t_token	*current;
-
-	current = line->first;
-	while (current)
-	{
-		printf("CONTENT -> [%s] | TOKEN -> [%d]\n ", current->content,
-			current->type);
-		// printf("[%s]", current->content);
-		current = current->next;
-		// if (current)
-		// printf(" -> ");
-		if (current)
-			printf("           |\n"); //             \\/\n
-	}
-	printf("\nFIN DE LA PREMIER LIST\n");
 }
 
 void	free_line(t_command_line *line)

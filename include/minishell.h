@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/11 20:09:33 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 02:20:50 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ extern volatile sig_atomic_t	g_signal_status;
 
 typedef struct s_redir
 {
-	char *heredoc; // cpy le contenu du heredoc
-	char *file;    // le nom du ficher a open et dup2
-	int type;      // soit infile ou outfile
+	char *heredoc; 
+	char *file;    
+	int type;      
 	struct s_redir				*next;
 }								t_redir;
 
@@ -71,8 +71,8 @@ typedef struct s_redir_line
 
 typedef struct s_exec
 {
-	char **cmd;     // le double tableau avc les suffix exemple "ls", "-la"
-	t_redir *redir; // la liste de redir (pide, <, >, >> )
+	char **cmd;   
+	t_redir *redir;
 	int							pidt;
 	struct s_exec				*next;
 }								t_exec;
@@ -121,11 +121,10 @@ typedef struct s_shell
 	char						**env;
 	char						**env_upt;
 	char						**path;
-	char *shell_name; // $0
+	char *shell_name; 
 	int							previous_pipe_fd;
-	// gerer les cas speciaux de l expand
-	pid_t shell_pid;  //$$
-	int exit_status;  // $?
+	pid_t shell_pid;  
+	int exit_status;  
 	int nb_line;
 
 	t_signal_handler			sig_handler;
@@ -140,6 +139,7 @@ typedef struct s_expand_state
 
 //-------------------------------------//
 char *ft_print_color(int i);
+void	fill_redir(t_redir *file, t_token *current);
 void	set_signal_child(void);
 int ft_add_flag(t_exec *current);
 char **ft_putflag(char **cmd);

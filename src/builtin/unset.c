@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:02:25 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 17:03:06 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 02:11:42 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ int	ft_unset(t_exec *current, t_shell *shell)
 	int	status;
 	int	i;
 
-	// t_exec	*current;
 	i = 1;
 	status = 0;
-	// g_signal_status = 0;
 	shell->exit_status = 0;
 	if (!shell || !shell->first_exec || !current->cmd)
 		return (shell->exit_status = 1, 1);
@@ -30,7 +28,6 @@ int	ft_unset(t_exec *current, t_shell *shell)
 	{
 		if (is_name_ok_unset(current->cmd[i], shell))
 		{
-			// g_signal_status = 1;
 			shell->exit_status = 1;
 			status = 1;
 		}

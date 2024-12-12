@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:49:24 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/02 14:46:53 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 02:21:49 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,11 @@ int	ft_is_file(int token)
 	else if (token == LL_RED)
 		return (END_OF_FILE);
 	return (-1);
+}
+void	fill_redir(t_redir *file, t_token *current)
+{
+	file->file = current->next->content;
+	file->type = ft_is_file(current->type);
+	file->heredoc = NULL;
+	file->next = NULL;
 }

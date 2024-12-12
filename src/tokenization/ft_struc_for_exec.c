@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/06 17:17:01 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 02:21:02 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,6 @@ int	ft_struc_for_exec(t_shell *shell)
 	return (EXIT_SUCCESS);
 }
 
-void	fill_redir(t_redir *file, t_token *current)
-{
-	file->file = current->next->content;
-	file->type = ft_is_file(current->type);
-	file->heredoc = NULL;
-	file->next = NULL;
-}
 t_token	*ft_add_redir_exec(t_token *current, t_redir *file, t_exec *new_cmd)
 {
 	t_redir	*buff;

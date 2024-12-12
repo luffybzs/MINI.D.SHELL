@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 15:12:19 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/08 17:18:12 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 01:53:19 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ char	*ft_cpy_env(char *key, char *value)
 {
 	char	*res;
 
-	res = ft_strdup(key);
-	if (!res)
-		return (NULL);
-	res = ft_strjoin_free(res, "=");
+	res = ft_strjoin(key, "=");
 	if (!res)
 		return (NULL);
 	res = ft_strjoin_free(res, value);

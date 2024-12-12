@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:48:42 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 17:06:23 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 02:16:04 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	signal_handler(int sig)
 	{
 		rl_done = 1;
 		g_signal_status = sig + 128;
-		// shell->status = sig + 128;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:12:38 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/06 15:28:28 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 02:11:15 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_execute_command(t_exec *current, t_shell *shell)
 		execute_builtin(current, shell);
 		return (1);
 	}
-	return (0); // envoyer vers gestion hors builtin
+	return (0);
 }
 int	is_builtin(char *cmd)
 {

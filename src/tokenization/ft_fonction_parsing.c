@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:07:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/11 20:09:25 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 01:59:48 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char *ft_print_color(int i)
 }
 void	ft_fill_data(t_shell *shell, char **av)
 {
-	shell->shell_pid = getpid();
+	//shell->shell_pid = getpid();
 	shell->shell_name = ft_strdup(av[0]);
 	shell->exit_status = 0;
 	g_signal_status = 0;

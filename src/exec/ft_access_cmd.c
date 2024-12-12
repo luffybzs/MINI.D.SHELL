@@ -6,7 +6,7 @@
 /*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/11 17:39:12 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 01:54:48 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_good_path(t_shell *shell, t_exec *current)
 	if (access(current->cmd[0], F_OK | X_OK) == 0)
 		return (current->cmd[0]);
 	if (!shell->path)
-		return (ft_error_access(shell, current), NULL);
+		return (ft_error_access(shell, current) , NULL);
 	while (shell->path[i])
 	{
 		res = ft_strjoin(shell->path[i], "/");
@@ -105,6 +105,7 @@ void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
  		if (current->pidt == 0)
  		{
  			set_signal_child();
+			ft_get_env(shell);
  			ft_child_exec(current, shell, fd);
  		}
  		if (current->next)
@@ -117,61 +118,6 @@ void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
  	return (EXIT_SUCCESS);
 }
 
-/*
-int	ft_fork(t_shell *shell, t_exec *current)
-{
-	int		fd[2];
-	char	*goodpath;
-
-	while (current)
-	{
-		if (current->next != NULL)
-		{
-			if (pipe(fd) == -1)
-				return (perror("pipe"), EXIT_FAILURE);
-		}
-		current->pidt = fork();
-		if (current->pidt == -1)
-		{
-			if (current->next)
-				(close(fd[0]), close(fd[1]));
-			return (perror("fork"), EXIT_FAILURE);
-		}
-		if (current->pidt == 0)
-		{
-			set_signal_child();
-			if (current->next)
-				(close(fd[0]), dup2(fd[1], STDOUT_FILENO), close(fd[1]));
-			if (shell->previous_pipe_fd != -1)
-				(dup2(shell->previous_pipe_fd, STDIN_FILENO),
-					close(shell->previous_pipe_fd));
-			if (current->redir)
-				if (ft_open_file(shell, current->redir) == EXIT_FAILURE)
-					(ft_free(DESTROY), exit(EXIT_FAILURE));
-			if (!current->cmd || !current->cmd[0])
-				(ft_free(DESTROY), exit(EXIT_SUCCESS));
-			if (ft_execute_command(current, shell) != 0)
-				(ft_free(DESTROY), exit(shell->exit_status));
-			ft_add_flag(current);
-			goodpath = ft_good_path(shell, current);
-			if (!goodpath)
-				(ft_free(DESTROY), exit(127));
-			execve(goodpath, current->cmd, shell->env_upt);
-			(perror("execve failed"), ft_free(DESTROY), exit(EXIT_FAILURE));
-		}
-		if (current->next)
-			close(fd[1]);
-		if (shell->previous_pipe_fd != -1)
-			close(shell->previous_pipe_fd);
-		if (current->next)
-			shell->previous_pipe_fd = fd[0];
-		else
-			shell->previous_pipe_fd = -1;
-		current = current->next;
-	}
-	return (EXIT_SUCCESS);
-}
-*/
 void	ft_check_signal_fork(t_shell *shell)
 {
 	if (shell->exit_status == 128 + SIGINT)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:49:34 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/09 15:13:31 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 02:15:05 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "../../include/minishell.h"
 
 static char	*get_incremented_shlvl(char *current_shlvl);
-//static void	initialize_minimal_env(t_shell *shell);
 
 static char	*get_shell_level(char **env)
 {
@@ -155,38 +154,7 @@ int	ft_findchar(const char *str, int c)
 	}
 	return (-1);
 }
-/*
-static int	add_env_node(t_shell *shell, const char *key, const char *value)
-{
-	t_env	*node;
-	t_env	*current;
 
-	node = ft_malloc(sizeof(t_env));
-	if (!node)
-		return (1);
-	node->key = ft_strdup(key);
-	node->value = ft_strdup(value);
-	node->next = NULL;
-	if (!node->key || !node->value)
-	{
-		free_env_node(node);
-		return (1);
-	}
-	ft_lock(node);
-	ft_lock(node->key);
-	ft_lock(node->value);
-	if (!shell->head)
-		shell->head = node;
-	else
-	{
-		current = shell->head;
-		while (current->next)
-			current = current->next;
-		current->next = node;
-	}
-	return (0);
-}
-*/
 static char	*get_incremented_shlvl(char *current_shlvl)
 {
 	int		level;
@@ -205,25 +173,3 @@ static char	*get_incremented_shlvl(char *current_shlvl)
 	new_shlvl = ft_itoa(level);
 	return (new_shlvl);
 }
-/*
-static void	initialize_minimal_env(t_shell *shell)
-{
-	char	*cwd;
-
-	shell->head = NULL;
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		cwd = ft_strdup("/");
-	if (add_env_node(shell, "PWD", cwd) != 0)
-		return ;
-	ft_free(cwd);
-	if (add_env_node(shell, "SHLVL", "1") != 0)
-		return ;
-	if (add_env_node(shell, "PATH", "/usr/local/bin:/usr/bin:/bin") != 0)
-		return ;
-	if (add_env_node(shell, "HOME", "/") != 0)
-		return ;
-	if (add_env_node(shell, "_", "/usr/bin/env") != 0)
-		return ;
-}
-*/
