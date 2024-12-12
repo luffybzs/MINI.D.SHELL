@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 11:25:53 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:48:57 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 
 char	*expand_var(char *input, t_shell *shell, t_token *current)
 {
-	t_expand_state state;
-	int i;
+	t_expand_state	state;
+	int				i;
 
 	i = 0;
 	state.in_quote = 0;
@@ -52,6 +52,21 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)
 		else
 			append_char(&state.result, input[i++]);
 	}
+	/*tentative de reglage du probleme mauvais expand au debut*/
+	if (state.result[0] == '\0' && current->type == WORD)
+	{
+		ft_free(state.result);
+		state.result = ft_strdup("b*54w/afq8974d");
+		if (!state.result)
+			return (NULL);
+	}
+	else if (state.result[0] == '\0' && current->type == FILE_TOKEN)
+	{
+		ft_free(state.result);
+		state.result = ft_strdup(input);
+		if (!state.result)
+			return (NULL);
+	}
 	return (state.result);
 }
 
@@ -62,7 +77,7 @@ state in quote :
 2 : single quote
 */
 
-int	handle_quotes(char c, t_expand_state *state) 
+int	handle_quotes(char c, t_expand_state *state)
 {
 	if (c == '"' && state->in_quote != 2)
 	{
@@ -83,11 +98,12 @@ int	handle_quotes(char c, t_expand_state *state)
 	return (0);
 }
 
-void	handle_expansion(char *input,int *i,t_expand_state *state,t_shell *shell)
+void	handle_expansion(char *input, int *i, t_expand_state *state,
+		t_shell *shell)
 {
-	char *var_name;
-	char *var_value;
-	int len;
+	char	*var_name;
+	char	*var_value;
+	int		len;
 
 	(*i)++;
 	if (!input[*i])
@@ -109,7 +125,7 @@ void	handle_expansion(char *input,int *i,t_expand_state *state,t_shell *shell)
 	var_value = get_env_value(var_name, shell);
 	if (var_value)
 		append_string(&state->result, var_value);
-	(ft_free(var_name),ft_free(var_value),*i += len);
+	(ft_free(var_name), ft_free(var_value), *i += len);
 }
 
 int	get_var_name_length(const char *str)
@@ -178,7 +194,7 @@ int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 	char	*tmp;
 
 	if (c == '?')
-	{		
+	{
 		tmp = ft_itoa(shell->exit_status);
 		append_string(&state->result, tmp);
 		ft_free(tmp);
@@ -203,7 +219,7 @@ int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 }
 
 /*
-$$ -> pid du shell
+$$ -> pid du shell // pas devoir gerer
 $? -> statut de sortie
 $0 -> nom du shell
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 02:02:12 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 13:35:27 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,16 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 			continue ;
 		}
 		if (!prompt)
-			break ;
+			{
+				printf("exit\n");
+				break;
+			}
 		if (*prompt)
 			add_history(prompt);
 		ft_parsing_prompt_and_exec(prompt, shell);
 		i += 10;
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	main(int ac, char **av, char **env)
@@ -59,8 +62,8 @@ int	main(int ac, char **av, char **env)
 	if (!isatty(0))
 		return (printf("tty required!!\n"), 1);
 	if (fill_env_list(&shell) != 0)
-		return (printf("Failed to initialize the linked environement list\n"),1);
-	if (ft_loop_shell(prompt, &shell) == EXIT_FAILURE)
-		return (ft_free(DESTROY), EXIT_FAILURE);
+		return (printf("Failed to initialize the environement\n"),1);
+	if (ft_loop_shell(prompt, &shell) == EXIT_SUCCESS)
+		return (ft_free(DESTROY), EXIT_SUCCESS);
 	return (ft_free(DESTROY), 0);
 }

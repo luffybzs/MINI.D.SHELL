@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 03:10:44 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 16:49:59 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:50:34 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_echo(t_exec *current, t_shell *shell)
 {
 	int		i;
 	bool	newline;
-
+//gerer le cas ou l expand == b*54w/afq8974d
 	(void)shell;
 	i = 1;
 	newline = true;

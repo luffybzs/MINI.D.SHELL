@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_struc_for_exec.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 02:21:02 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 13:08:27 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,14 @@ void	ft_cpy_cmd(t_token *current, t_exec *exec_current)
 	tab = ft_malloc(sizeof(char *) * (len + 1));
 	while (current && current->type != PIPE)
 	{
-		if (current->type == WORD || current->type == SFX)
+		if (current && (current->type == WORD || current->type == SFX))
 		{
-			tab[i] = current->content;
-			i++;
+			if (ft_strcmp(current->content, "b*54w/afq8974d") == 0 && current->next)
+			{
+				current = current->next;
+				continue;
+			}
+				tab[i++] = current->content;
 		}
 		current = current->next;
 	}
