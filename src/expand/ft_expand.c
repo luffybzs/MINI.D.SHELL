@@ -6,14 +6,11 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/10 17:05:02 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:25:53 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-// penser a initialiser dans la struccture shell le pid, le nom,
-// et le code d exit
 
 int	ft_expand(t_command_line *line, t_shell *shell)
 {
@@ -44,8 +41,7 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)
 	state.result = ft_strdup("");
 	if (!state.result)
 		return (NULL);
-	state.exit_status = shell->exit_status/*g_signal_status*/;
-	// recuperer le code d erreur plus tard lors de l exec ?
+	state.exit_status = shell->exit_status;
 	i = 0;
 	while (input[i])
 	{
@@ -182,24 +178,21 @@ int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
 	char	*tmp;
 
 	if (c == '?')
-	{
-		// tmp = ft_itoa(g_signal_status);
-		
+	{		
 		tmp = ft_itoa(shell->exit_status);
-		// printf("shell->exit_status = %s et g_signal = %s\n",tmp,ft_itoa(g_signal_status));
 		append_string(&state->result, tmp);
 		ft_free(tmp);
 		(*i)++;
 		return (1);
 	}
-	else if (c == '$')
-	{
-		tmp = ft_itoa(shell->shell_pid);
-		append_string(&state->result, tmp);
-		ft_free(tmp);
-		(*i)++;
-		return (1);
-	}
+	// else if (c == '$')
+	// {
+	// 	tmp = ft_itoa(shell->shell_pid);
+	// 	append_string(&state->result, tmp);
+	// 	ft_free(tmp);
+	// 	(*i)++;
+	// 	return (1);
+	// }
 	else if (c == '0')
 	{
 		append_string(&state->result, shell->shell_name);

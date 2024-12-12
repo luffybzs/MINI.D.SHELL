@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:29:37 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 01:56:07 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 11:27:19 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,8 @@ char	*get_special_value(char c, t_shell *shell)
 {
 	if (c == '?')
 		return (ft_itoa(shell->exit_status));
-	else if (c == '$')
-		return (ft_itoa(shell->shell_pid));
+	// else if (c == '$')
+	// 	return (ft_itoa(shell->shell_pid));
 	else if (c == '0')
 		return (ft_strdup(shell->shell_name));
 	return (NULL);
@@ -211,7 +211,7 @@ static void	handle_exp_hd(char *str, int *i, t_shell *shell, char **expanded)
 	(*i)++;
 	if (!str[*i])
 		return (handle_simple_dollar(expanded));
-	if (str[*i] == '?' || str[*i] == '$' || str[*i] == '0')
+	if (str[*i] == '?' || str[*i] == '0')
 		handle_special_vars(str, i, shell, expanded);
 	else
 		handle_var_expansion(str, i, shell, expanded);
