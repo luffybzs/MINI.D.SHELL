@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 19:48:09 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 16:49:37 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:41:58 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,20 +89,20 @@ int	check_numeric_arg(char *arg)
 	return (1);
 }
 
-void	ft_end_exit(t_shell *shell, int status, t_exec *current)
-{
-	(void)shell;
-	if (current->pidt != 0)
-	{
-		ft_free(DESTROY);
-		exit(status);
-	}
-	else
-	{
-		ft_free(PROMPT);
-		exit(status);
-	}
-}
+// void	ft_end_exit(t_shell *shell, int status, t_exec *current)
+// {
+// 	(void)shell;
+// 	if (current->pidt != 0)
+// 	{
+// 		ft_free(DESTROY);
+// 		exit(status);
+// 	}
+// 	else
+// 	{
+// 		ft_free(PROMPT);
+// 		exit(status);
+// 	}
+// }
 
 // int	ft_exit(t_exec *current, t_shell *shell)
 // {

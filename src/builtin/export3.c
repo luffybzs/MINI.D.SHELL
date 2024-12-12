@@ -6,26 +6,26 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:30:36 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 16:30:57 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:40:25 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
-void	add_to_env_list(t_shell *shell, t_env *new)
-{
-	t_env	*current;
+// void	add_to_env_list(t_shell *shell, t_env *new)
+// {
+// 	t_env	*current;
 
-	if (!shell->head)
-		shell->head = new;
-	else
-	{
-		current = shell->head;
-		while (current->next)
-			current = current->next;
-		current->next = new;
-	}
-}
+// 	if (!shell->head)
+// 		shell->head = new;
+// 	else
+// 	{
+// 		current = shell->head;
+// 		while (current->next)
+// 			current = current->next;
+// 		current->next = new;
+// 	}
+// }
 
 void	add_new_env(char *str, t_shell *shell)
 {
@@ -43,7 +43,7 @@ void	add_new_env(char *str, t_shell *shell)
 		ft_free_env_node(new);
 		return ;
 	}
-	add_to_env_list(shell, new);
+	add_to_env_list(new, shell);
 }
 
 int	ft_export_without_arg(t_shell *shell)

@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:55:51 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 17:02:39 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:41:23 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		check_empty_name(char *str, t_shell *shell);
 int		check_first_char(char *str, t_shell *shell);
 t_env	*init_env_node(void);
 int		set_key_value(t_env *new, char *str, char *equal_sign);
-void	add_to_env_list(t_shell *shell, t_env *new);
+// void	add_to_env_list(t_shell *shell, t_env *new);
 
 /* unset */
 
@@ -71,7 +71,7 @@ int		handle_overflow(long res, char digit);
 long	ft_atoi_spe(char *str);
 void	ft_end_exit(t_shell *shell, int status, t_exec *current);
 int		check_numeric_arg(char *arg);
-void	ft_end_exit(t_shell *shell, int status, t_exec *current);
+// void	ft_end_exit(t_shell *shell, int status, t_exec *current);
 int		handle_no_args(t_exec *current, t_shell *shell);
 int		handle_numeric_error(t_exec *current, t_shell *shell);
 

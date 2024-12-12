@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 16:19:12 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:44:31 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)
 		else
 			append_char(&state.result, input[i++]);
 	}
-	/* modif ici a verifier plus check valgrind */
 	if (state.result[0] == '\0')
 		state.result = handle_empty_word(state.result, input, current->type);
 	if (!state.result)

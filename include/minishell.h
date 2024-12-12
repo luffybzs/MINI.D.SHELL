@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 16:25:10 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:42:54 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ void							add_to_env_list(t_env *new, t_shell *shell);
 
 t_env							*create_shlvl_node(char *shlvl_value);
 char							*get_shell_level(char **env);
+int								ft_fork(t_shell *shell, t_exec *current);
 
 // expand
 
