@@ -58,3 +58,9 @@ Se wrap autour pour rester dans cette plage
 
 
 valgrind --show-leak-kinds=all --trace-children=yes --track-fds=yes --suppressions=ayoub.supp ./minishell 
+
+
+gerer les difference entre < $SSSSS
+et < \0
+et < 
+different code d erreur gerer ambigouus redirect via la tokenisation 

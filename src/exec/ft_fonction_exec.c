@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 15:12:19 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 15:54:11 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:48:12 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ char	**ft_putflag(char **cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		res[i] = ft_strdup(cmd[i]);
-		if (!res[i])
-			return (NULL);
+		res[i] = cmd[i];
 		i++;
 	}
 	res[i] = ft_strdup("--color");
@@ -95,6 +93,7 @@ char	**ft_putflag(char **cmd)
 
 int	ft_cmp_flag(char *cmd)
 {
+
 	if (ft_strcmp(cmd, "ls") == 0)
 		return (EXIT_SUCCESS);
 	else if (ft_strcmp(cmd, "grep") == 0)
