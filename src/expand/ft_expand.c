@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 17:44:31 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:02:17 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 	current = line->first;
 	while (current)
 	{
-		expanded = expand_var(current->content, shell, current);
+			expanded = expand_var(current->content, shell, current);
 		if (expanded)
 		{
 			ft_free(current->content);
@@ -38,7 +38,7 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)
 
 	i = 0;
 	state.in_quote = 0;
-	state.result = ft_strdup("");
+	state.result = ft_strdup(""); // si ya que des quote
 	if (!state.result)
 		return (NULL);
 	state.exit_status = shell->exit_status;

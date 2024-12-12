@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:02:25 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 02:11:42 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/12 18:27:14 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	ft_unset(t_exec *current, t_shell *shell)
 	shell->exit_status = 0;
 	if (!shell || !shell->first_exec || !current->cmd)
 		return (shell->exit_status = 1, 1);
-	if (!current->cmd[1])
+	if (!current->cmd[1] || current->cmd[1][0] == '\0')
 		return (shell->exit_status = 0, 0);
 	while (current->cmd[i])
 	{
 		if (is_name_ok_unset(current->cmd[i], shell))
 		{
-			shell->exit_status = 1;
-			status = 1;
+			shell->exit_status = 0;
+			return (1);
 		}
 		else
 		{
@@ -45,17 +45,15 @@ int	is_name_ok_unset(char *str, t_shell *shell)
 	int	i;
 
 	i = 0;
+	(void)shell;
 	if (!str || !*str)
-		return (printf("%s: unset '%s': not a valid identifier\n",
-				shell->shell_name, str), 1);
+		return (1);
 	if (str[0] != '_' && !ft_isalpha(str[0]))
-		return (printf("%s: unset '%s': not a valid identifier\n",
-				shell->shell_name, str), 1);
+		return (1);
 	while (str[i])
 	{
 		if (str[i] != '_' && !ft_isalnum(str[i]))
-			return (printf("%s: unset '%s': not a valid identifier\n",
-					shell->shell_name, str), 1);
+			return (1);
 		i++;
 	}
 	return (0);

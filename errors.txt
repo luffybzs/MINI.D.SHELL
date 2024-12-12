@@ -55,3 +55,6 @@ Code 255 : Exit avec statut out of range
 
 Valeur de retour hors de la plage 0-255
 Se wrap autour pour rester dans cette plage
+
+
+valgrind --show-leak-kinds=all --trace-children=yes --track-fds=yes --suppressions=ayoub.supp ./minishell 
