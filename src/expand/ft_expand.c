@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 16:44:53 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:48:40 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 		expanded = expand_var(current->content, shell, current);
 		if (expanded)
 		{
-			//gerer le split et la creation de token ici
 			ft_free(current->content);
+			//handle_part_expand(expanded)
+			//gerer le split et la creation de token ici
 			current->content = expanded;
 		}
 		current = current->next;
@@ -60,7 +61,7 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)
 		state.result = handle_empty_word(&state,current, input);
 	if (!state.result)
 		return (NULL);
-	printf("je test %s\n", state.result);
+	// printf("je test %s\n", state.result);
 	return (state.result);
 }
 // if (state.result[0] == '\0' && current->type == WORD)

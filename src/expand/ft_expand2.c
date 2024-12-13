@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 17:00:47 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:53:53 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@ char	*handle_empty_word(t_expand_state *state, t_token *current, char *input)
 	if (input)
 	{
 		state->result = ft_strdup(input);
-		if (current->type == 0 || current->type == 1)
+		if ((current->type == 0 || current->type == 1) && !ft_strcmp(input,"$"))
 			current->type = -3;
 	}
 	else
+	{
+		
+		printf("input nexiste pas\n");
 		state->result = ft_strdup("\0");
+	}
+	printf("result = %s et type = %d\n",state->result, current->type);
 	return (state->result);
 }
 
