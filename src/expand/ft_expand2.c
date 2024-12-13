@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 18:09:45 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:26:49 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,42 @@ char	*handle_empty_word(t_expand_state *state, t_token *current, char *input)
 	ft_free(state->result);
 	if (input)
 	{
-		if ((current->type == 0 || current->type == 1) && !ft_strcmp(input,"$"))
-		{	
-		state->result = ft_strdup(input);
+		if ((current->type == 0 || current->type == 1) && !ft_strncmp_spe(input,
+				"$", 1))
+		{
+			state->result = ft_strdup(input);
 			current->type = -3;
 		}
 		else
 			state->result = ft_strdup("\0");
 	}
 	else
-	{
-		
-		printf("input nexiste pas\n");
 		state->result = ft_strdup("\0");
-	}
-	printf("result = %s et type = %d\n",state->result, current->type);
+	// printf("result = %s et type = %d\n",state->result, current->type);
 	return (state->result);
+}
+size_t	ft_strncmp_spe(char *str1, char *str2, size_t n)
+{
+	size_t	i;
+	size_t	j;
+
+	j = 0;
+	i = 0;
+	while (str1[i] == ' ')
+		i++;
+	while (j < n && str1[i] && str2[i])
+	{
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i++;
+		j++;
+	}
+	if (j < n)
+	{
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+	}
+	return (0);
 }
 
 void	append_char(char **str, char c)

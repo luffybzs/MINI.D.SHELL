@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 18:06:18 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:27:45 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 # define OUTFILE 22
 # define INFILE 23
 # define APPEND 24
-#define ERROR_EXPAND -1
+# define ERROR_EXPAND -1
 
 extern volatile sig_atomic_t	g_signal_status;
 
@@ -85,9 +85,9 @@ typedef struct s_exec_line
 
 typedef struct s_token // gerer l expand ici
 {
-	char						*content;
-	int							type;
-	struct s_token				*next;
+	char *content;
+	int type;
+	struct s_token *next;
 }								t_token;
 
 typedef struct s_command_line
@@ -237,8 +237,10 @@ void							append_char(char **str, char c);
 void							append_string(char **dst, const char *src);
 char	*get_env_value(const char *name,
 					t_shell *shell);
-char	*handle_empty_word(t_expand_state *state,t_token *current,
+char	*handle_empty_word(t_expand_state *state,
+						t_token *current,
 						char *input);
+size_t								ft_strncmp_spe(char *str1, char *str2, size_t n);
 
 /* expand hd*/
 
