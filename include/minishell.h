@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 11:28:46 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:58:57 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 # define OUTFILE 22
 # define INFILE 23
 # define APPEND 24
-#define ERROR_EXPAND 17
+#define ERROR_EXPAND -1
 
 extern volatile sig_atomic_t	g_signal_status;
 

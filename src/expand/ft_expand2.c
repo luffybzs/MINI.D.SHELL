@@ -6,17 +6,24 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 11:29:07 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:00:47 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*handle_empty_word(t_expand_state *state,t_token *current, char *input)
+char	*handle_empty_word(t_expand_state *state, t_token *current, char *input)
 {
+	(void)current;
 	ft_free(state->result);
-	state->result = ft_strdup(input);
-	current->type = ERROR_EXPAND;
+	if (input)
+	{
+		state->result = ft_strdup(input);
+		if (current->type == 0 || current->type == 1)
+			current->type = -3;
+	}
+	else
+		state->result = ft_strdup("\0");
 	return (state->result);
 }
 
