@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 15:57:13 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 23:20:42 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@ void	ft_error_access(t_shell *shell, t_exec *current)
 	char	*tmp;
 
 	(void)shell;
-	if (ft_strcmp(current->cmd[0], "b*54w/afq8974d") == 0)
-	{
-		shell->exit_status = 0;
-		ft_free(DESTROY);
-		exit(0);
-	}
 	tmp = ft_strjoin("Mini.D.Shell: ", current->cmd[0]);
 	if (!tmp)
 		return ;

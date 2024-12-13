@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 16:57:56 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 23:11:58 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 		ft_signal();
 		prompt = readline(ft_print_color(i));
 		ret = handle_prompt_input(prompt, shell);
+		i += 3;
 		if (ret == -1)
 			break ;
 		if (ret == 1)
 			continue ;
-		i += 10;
 	}
 	return (EXIT_SUCCESS);
 }
@@ -77,11 +77,11 @@ int	main(int ac, char **av, char **env)
 {
 	char	*prompt;
 	t_shell	shell;
-
 	(void)ac;
 	prompt = NULL;
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.env = env;
+//	tcgetattr(STDIN_FILENO, )
 	ft_fill_data(&shell, av);
 	if (!isatty(0))
 		return (printf("tty required!!\n"), 1);

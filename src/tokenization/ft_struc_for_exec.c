@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_struc_for_exec.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 15:58:15 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 20:38:40 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,6 @@ void	ft_cpy_cmd(t_token *current, t_exec *exec_current)
 	{
 		if (current && (current->type == WORD || current->type == SFX))
 		{
-			if (ft_strcmp(current->content, "b*54w/afq8974d") == 0
-				&& current->next)
-			{
-				current = current->next;
-				continue ;
-			}
 			tab[i++] = current->content;
 		}
 		current = current->next;

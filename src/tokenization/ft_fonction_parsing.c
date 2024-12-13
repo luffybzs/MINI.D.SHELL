@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fonction_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:07:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 16:01:26 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 23:27:33 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ char	*ft_print_color(int i)
 	int			g;
 	int			b;
 
-	r = 255 - i;
-	g = 0 + i;
-	b = 0;
+	r = 122;
+	g = 255 - i;
+	b = i;
 	ft_s_printf(str, "\033[38;2;%d;%d;%dm%s\033[0m", r, g, b, "Mini.D.Shell-> ");
 	return (str);
 }
