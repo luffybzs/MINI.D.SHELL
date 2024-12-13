@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:28:19 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 16:59:05 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:43:52 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,5 @@ int					ft_strcmp(const char *s1, const char *s2);
 int					ft_isseparator(char c);
 int					ft_strlen_2d(char **tab);
 char				**ft_strjoin_2d(char **tab, char *str);
-
+void				ft_free_2d(char **tab);
 #endif

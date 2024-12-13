@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 18:27:45 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:50:26 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,12 @@ char	*get_env_value(const char *name,
 char	*handle_empty_word(t_expand_state *state,
 						t_token *current,
 						char *input);
-size_t								ft_strncmp_spe(char *str1, char *str2, size_t n);
+size_t							ft_strncmp_spe(char *str1, char *str2,
+									size_t n);
+int	handle_part_expand(char *expanded,
+						t_token *prev,
+						t_token *current,
+						t_command_line *line);
 
 /* expand hd*/
 

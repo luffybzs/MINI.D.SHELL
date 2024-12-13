@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 18:26:49 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:06:10 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ char	*handle_empty_word(t_expand_state *state, t_token *current, char *input)
 			state->result = ft_strdup(input);
 			current->type = -3;
 		}
+		else if(current->type == 20)
+			state->result = ft_strdup(input);
 		else
 			state->result = ft_strdup("\0");
+			
 	}
 	else
 		state->result = ft_strdup("\0");
