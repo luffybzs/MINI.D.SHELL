@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 20:53:31 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:30:14 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 		}
 		current = current->next;
 	}
-	printf ("fin ft expand\n");
+	// printf ("fin ft expand\n");
 	return (EXIT_SUCCESS);
 }
 
@@ -42,8 +42,6 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)
 	state.result = ft_strdup("");
 	if (!state.result)
 		return (NULL); // gerer probleme printf au plus tot verifier invalid read size
-	// if (ft_strcmp(input,"\"\"") || ft_strcmp(input, "''"))
-	// 	return (ft_strdup("\0"));
 	state.exit_status = shell->exit_status;
 	i = 0;
 	while (input[i])
@@ -56,7 +54,7 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)
 			append_char(&state.result, input[i++]);
 	}
 	if (state.result[0] == '\0')
-		state.result = handle_empty_word(state.result, input, current->type);
+		state.result = handle_empty_word(&state,current, input);
 	if (!state.result)
 		return (NULL);
 	printf("je test %s\n", state.result);

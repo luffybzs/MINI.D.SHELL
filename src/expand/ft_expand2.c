@@ -6,20 +6,18 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 16:22:26 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:29:07 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*handle_empty_word(char *result, char *input, int type)
+char	*handle_empty_word(t_expand_state *state,t_token *current, char *input)
 {
-	ft_free(result);
-	if (type == WORD)
-		result = ft_strdup("b*54w/afq8974d");
-	else if (type == FILE_TOKEN)
-		result = ft_strdup(input);
-	return (result);
+	ft_free(state->result);
+	state->result = ft_strdup(input);
+	current->type = ERROR_EXPAND;
+	return (state->result);
 }
 
 void	append_char(char **str, char c)

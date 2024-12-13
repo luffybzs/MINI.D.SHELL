@@ -64,3 +64,7 @@ gerer les difference entre < $SSSSS
 et < \0
 et < 
 different code d erreur gerer ambigouus redirect via la tokenisation 
+faire attention export abc="a  b"
+$abc -> a : command not found et pas a b: command not found
+lors du passage dans l expand deuxieme tour en cas de $X lors de l expand 
+split "a b" et creer un token **cmd cmd[0][0] = a cmd[1][0] = b 
