@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 17:48:40 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:09:59 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,28 @@
 int	ft_expand(t_command_line *line, t_shell *shell)
 {
 	t_token	*current;
+	t_token *prev;
 	char	*expanded;
+	
 	int i;
 	i = 0;
 	(void)i;
+	prev = NULL;
+	(void)prev;
 	current = line->first;
 	while (current)
 	{
 		expanded = expand_var(current->content, shell, current);
+		
 		if (expanded)
 		{
 			ft_free(current->content);
-			//handle_part_expand(expanded)
+			//handle_part_expand(expanded,prev,current,line)
 			//gerer le split et la creation de token ici
 			current->content = expanded;
 		}
-		current = current->next;
+		prev = current;
+		current = current->next; 
 	}
 	// printf ("fin ft expand\n");
 	return (EXIT_SUCCESS);

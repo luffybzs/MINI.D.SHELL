@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:46:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 16:58:57 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:06:18 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_exec_line
 	t_exec						*first;
 }								t_exec_line;
 
-typedef struct s_token
+typedef struct s_token // gerer l expand ici
 {
 	char						*content;
 	int							type;
