@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 11:30:14 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:40:03 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)
 	state.in_quote = 0;
 	state.result = ft_strdup("");
 	if (!state.result)
-		return (NULL); // gerer probleme printf au plus tot verifier invalid read size
+		return (NULL);
 	state.exit_status = shell->exit_status;
 	i = 0;
 	while (input[i])
