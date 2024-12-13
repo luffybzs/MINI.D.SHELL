@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 11:40:03 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:44:53 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 {
 	t_token	*current;
 	char	*expanded;
-
+	int i;
+	i = 0;
+	(void)i;
 	current = line->first;
 	while (current)
 	{
 		expanded = expand_var(current->content, shell, current);
 		if (expanded)
 		{
+			//gerer le split et la creation de token ici
 			ft_free(current->content);
 			current->content = expanded;
 		}
