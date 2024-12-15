@@ -6,13 +6,11 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 17:18:09 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 19:42:11 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/15 13:30:45 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	ft_display(t_command_line *line);
 
 int	handle_part_expand(char *expanded, t_token *current, t_token *prev,
 		t_command_line *line)

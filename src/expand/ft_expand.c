@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/15 11:45:14 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/15 13:28:32 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 // 			ft_free(current->content);
 // 			// if (handle_part_expand(expanded,current,prev,line) == 1)
 // 			current->content = expanded;
-// 			//gerer le split et la creation de token ici
 // 		}
 // 		prev = current;
 // 		current = current->next;
@@ -62,7 +61,7 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 		{
 			if (current->type == WORD && ft_strchr(expanded, ' '))
 			{
-				if (handle_command_expansion(expanded, current, prev,
+				if (handle_part_expand(expanded, current, prev,
 						line) == EXIT_FAILURE)
 					return (EXIT_FAILURE);
 				if (prev)
