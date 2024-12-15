@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/15 13:28:32 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/15 18:00:56 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,44 +40,46 @@
 // 	return (EXIT_SUCCESS);
 // }
 
-int	ft_expand(t_command_line *line, t_shell *shell)
-{
-	t_token	*current;
-	t_token	*prev;
-	char	*expanded;
+// int	ft_expand(t_command_line *line, t_shell *shell)
+// {
+// 	t_token	*current;
+// 	t_token	*prev;
+// 	char	*expanded;
 
-	current = line->first;
-	prev = NULL;
-	while (current)
-	{
-		if (current->type == END_OF_FILE)
-		{
-			prev = current;
-			current = current->next;
-			continue ;
-		}
-		expanded = expand_var(current->content, shell, current);
-		if (expanded)
-		{
-			if (current->type == WORD && ft_strchr(expanded, ' '))
-			{
-				if (handle_part_expand(expanded, current, prev,
-						line) == EXIT_FAILURE)
-					return (EXIT_FAILURE);
-				if (prev)
-					current = prev->next;
-				else
-					current = line->first;
-				continue ;
-			}
-			ft_free(current->content);
-			current->content = expanded;
-		}
-		prev = current;
-		current = current->next;
-	}
-	return (EXIT_SUCCESS);
-}
+// 	current = line->first;
+// 	prev = NULL;
+// 	while (current)
+// 	{
+// 		if (current->type == END_OF_FILE)
+// 		{
+// 			prev = current;
+// 			current = current->next;
+// 			continue ;
+// 		}
+// 		expanded = expand_var(current->content, shell, current);
+// 		if (expanded)
+// 		{
+// 			if (current->type == WORD && ft_strchr(expanded, ' '))
+// 			{
+// 				if (handle_part_expand(expanded, current, prev,
+// 						line) == EXIT_FAILURE)
+// 					return (EXIT_FAILURE);
+// 				if (prev)
+// 					current = prev->next;
+// 				else
+// 					current = line->first;
+// 				continue ;
+// 			}
+// 			ft_free(current->content);
+// 			current->content = expanded;
+// 		}
+// 		prev = current;
+// 		current = current->next;
+// 	}
+// 	return (EXIT_SUCCESS);
+// }
+
+
 
 char	*expand_var(char *input, t_shell *shell, t_token *current)
 {

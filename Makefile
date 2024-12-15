@@ -6,7 +6,7 @@
 #    By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 02:37:51 by ayarab            #+#    #+#              #
-#    Updated: 2024/12/13 17:18:54 by wdaoudi-         ###   ########.fr        #
+#    Updated: 2024/12/15 18:09:19 by wdaoudi-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ builtin/cd.c builtin/export.c builtin/unset.c exec/ft_access_cmd.c exec/ft_find_
 builtin/exit.c  signal/signals.c exec/ft_open_file.c exec/ft_fonction_exec.c ft_s_printf/ft_s_base_printf.c ft_s_printf/ft_s_printf.c ft_s_printf/ft_s_printf_str.c exec/ft_heredoc2.c \
 exec/ft_heredoc3.c exec/ft_access_cmd2.c garbage_collector/gc_utils2.c expand/ft_expand2.c \
 env/env_list2.c builtin/export2.c builtin/export3.c builtin/exit2.c builtin/cd2.c  \
-expand/ft_expand3.c )
+expand/ft_expand3.c expand/ft_expand4.c  )
 
 INCLUDES = ./includes
 
