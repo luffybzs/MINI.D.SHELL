@@ -6,38 +6,77 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 19:44:49 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/15 11:45:14 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+// int	ft_expand(t_command_line *line, t_shell *shell)
+// {
+// 	t_token	*current;
+// 	t_token *prev;
+// 	char	*expanded;
+
+// 	int i;
+// 	i = 0;
+// 	(void)i;
+// 	prev = NULL;
+// 	(void)prev;
+// 	current = line->first;
+// 	while (current)
+// 	{
+// 		expanded = expand_var(current->content, shell, current);
+// 		if (expanded)
+// 		{
+// 			ft_free(current->content);
+// 			// if (handle_part_expand(expanded,current,prev,line) == 1)
+// 			current->content = expanded;
+// 			//gerer le split et la creation de token ici
+// 		}
+// 		prev = current;
+// 		current = current->next;
+// 	}
+// 	// printf ("fin ft expand\n");
+// 	return (EXIT_SUCCESS);
+// }
+
 int	ft_expand(t_command_line *line, t_shell *shell)
 {
 	t_token	*current;
-	t_token *prev;
+	t_token	*prev;
 	char	*expanded;
-	
-	int i;
-	i = 0;
-	(void)i;
-	prev = NULL;
-	(void)prev;
+
 	current = line->first;
+	prev = NULL;
 	while (current)
 	{
+		if (current->type == END_OF_FILE)
+		{
+			prev = current;
+			current = current->next;
+			continue ;
+		}
 		expanded = expand_var(current->content, shell, current);
 		if (expanded)
 		{
+			if (current->type == WORD && ft_strchr(expanded, ' '))
+			{
+				if (handle_command_expansion(expanded, current, prev,
+						line) == EXIT_FAILURE)
+					return (EXIT_FAILURE);
+				if (prev)
+					current = prev->next;
+				else
+					current = line->first;
+				continue ;
+			}
 			ft_free(current->content);
-			// if (handle_part_expand(expanded,current,prev,line) == 1)
-			current->content = expanded;		
-			//gerer le split et la creation de token ici
+			current->content = expanded;
 		}
 		prev = current;
-		current = current->next; 
+		current = current->next;
 	}
-	// printf ("fin ft expand\n");
 	return (EXIT_SUCCESS);
 }
 
@@ -63,7 +102,7 @@ char	*expand_var(char *input, t_shell *shell, t_token *current)
 			append_char(&state.result, input[i++]);
 	}
 	if (state.result[0] == '\0')
-		state.result = handle_empty_word(&state,current, input);
+		state.result = handle_empty_word(&state, current, input);
 	if (!state.result)
 		return (NULL);
 	return (state.result);
