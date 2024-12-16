@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 15:12:19 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/12 19:48:12 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:55:23 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ char	**ft_putflag(char **cmd)
 
 int	ft_cmp_flag(char *cmd)
 {
-
 	if (ft_strcmp(cmd, "ls") == 0)
 		return (EXIT_SUCCESS);
 	else if (ft_strcmp(cmd, "grep") == 0)

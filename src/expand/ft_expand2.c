@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:59 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/13 19:06:10 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:55:17 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,16 @@ char	*handle_empty_word(t_expand_state *state, t_token *current, char *input)
 			state->result = ft_strdup(input);
 			current->type = -3;
 		}
-		else if(current->type == 20)
+		else if (current->type == 20)
 			state->result = ft_strdup(input);
 		else
 			state->result = ft_strdup("\0");
-			
 	}
 	else
 		state->result = ft_strdup("\0");
-	// printf("result = %s et type = %d\n",state->result, current->type);
 	return (state->result);
 }
+
 size_t	ft_strncmp_spe(char *str1, char *str2, size_t n)
 {
 	size_t	i;
@@ -106,25 +105,4 @@ char	*get_env_value(const char *name, t_shell *shell)
 		env = env->next;
 	}
 	return (ft_strdup(""));
-}
-
-int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
-{
-	char	*tmp;
-
-	if (c == '?')
-	{
-		tmp = ft_itoa(shell->exit_status);
-		append_string(&state->result, tmp);
-		ft_free(tmp);
-		(*i)++;
-		return (1);
-	}
-	else if (c == '0')
-	{
-		append_string(&state->result, shell->shell_name);
-		(*i)++;
-		return (1);
-	}
-	return (0);
 }

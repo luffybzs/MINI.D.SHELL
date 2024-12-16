@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:46:26 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/15 12:06:27 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:56:10 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,6 @@ void	free_line(t_command_line *line)
 	}
 	ft_free(line);
 }
-void	ft_display(t_command_line *line)
-{
-	t_token	*current;
-	current = line->first;
-	while (current)
-	{
-		printf("CONTENT -> [%s] | TOKEN -> [%d]\n ", current->content,
-			current->type);
-		// printf("[%s]", current->content);
-		current = current->next;
-		// if (current)
-		// printf(" -> ");
-		if (current)
-			printf("           |\n"); //             \\/\n
-	}
-	printf("\nFIN DE LA PREMIER LIST\n");
-}
-
-
 
 int	ft_parsing_prompt_and_exec(char *prompt, t_shell *shell)
 {
@@ -86,16 +67,32 @@ int	ft_parsing_prompt_and_exec(char *prompt, t_shell *shell)
 		return (ft_free(line), EXIT_FAILURE);
 	if (ft_check_all_list(line) == EXIT_FAILURE)
 		return (free_line(line), EXIT_FAILURE);
-	// ft_display(line);
 	if (ft_expand(line, shell) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	shell->command = line;
 	if (ft_struc_for_exec(shell) == EXIT_FAILURE)
 		return (free_line(line), EXIT_FAILURE);
-	ft_display(line);
 	if (ft_check_heredoc(shell) == EXIT_FAILURE)
 		return (free_line(line), EXIT_FAILURE);
 	if (ft_start_exec(shell) == EXIT_FAILURE)
 		return (free_line(line), EXIT_FAILURE);
 	return (0);
 }
+// void	ft_display(t_command_line *line)
+// {
+// 	t_token	*current;
+
+// 	current = line->first;
+// 	while (current)
+// 	{
+// 		printf("CONTENT -> [%s] | TOKEN -> [%d]\n ", current->content,
+// 			current->type);
+// 		// printf("[%s]", current->content);
+// 		current = current->next;
+// 		// if (current)
+// 		// printf(" -> ");
+// 		if (current)
+// 			printf("           |\n"); //             \\/\n
+// 	}
+// 	printf("\nFIN DE LA PREMIER LIST\n");
+// }

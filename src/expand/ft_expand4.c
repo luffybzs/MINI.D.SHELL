@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:01:17 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/15 18:08:54 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:58:39 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static t_token	*get_next_token(t_token *prev, t_command_line *line)
 	return (line->first);
 }
 
-static void    ft_define_expand(t_token **current,t_token **prev,t_command_line *line)
+static void	ft_define_expand(t_token **current, t_token **prev,
+		t_command_line *line)
 {
 	*current = line->first;
 	*prev = NULL;
@@ -50,10 +51,10 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 	t_token	*prev;
 	int		expand_status;
 
-    ft_define_expand(&current,&prev,line);
+	ft_define_expand(&current, &prev, line);
 	while (current)
 	{
-		if ((current->type == END_OF_FILE))
+		if (current->type == END_OF_FILE)
 		{
 			prev = current;
 			current = current->next;
@@ -71,4 +72,25 @@ int	ft_expand(t_command_line *line, t_shell *shell)
 		current = current->next;
 	}
 	return (EXIT_SUCCESS);
+}
+
+int	handle_special_var(char c, int *i, t_expand_state *state, t_shell *shell)
+{
+	char	*tmp;
+
+	if (c == '?')
+	{
+		tmp = ft_itoa(shell->exit_status);
+		append_string(&state->result, tmp);
+		ft_free(tmp);
+		(*i)++;
+		return (1);
+	}
+	else if (c == '0')
+	{
+		append_string(&state->result, shell->shell_name);
+		(*i)++;
+		return (1);
+	}
+	return (0);
 }

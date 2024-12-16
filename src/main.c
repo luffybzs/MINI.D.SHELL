@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:34:03 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/13 23:11:58 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/16 13:57:11 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,30 +58,16 @@ int	ft_loop_shell(char *prompt, t_shell *shell)
 	}
 	return (EXIT_SUCCESS);
 }
-// if (g_signal_status != 0)
-// {
-// 	shell->exit_status = g_signal_status;
-// 	g_signal_status = 0;
-// 	continue ;
-// }
-// if (!prompt)
-// {
-// 	printf("exit\n");
-// 	break ;
-// }
-// if (*prompt)
-// 	add_history(prompt);
-// ft_parsing_prompt_and_exec(prompt, shell);
 
 int	main(int ac, char **av, char **env)
 {
 	char	*prompt;
 	t_shell	shell;
+
 	(void)ac;
 	prompt = NULL;
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.env = env;
-//	tcgetattr(STDIN_FILENO, )
 	ft_fill_data(&shell, av);
 	if (!isatty(0))
 		return (printf("tty required!!\n"), 1);

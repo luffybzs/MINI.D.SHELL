@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:48:03 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/15 18:00:56 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:54:20 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@
 // 	}
 // 	return (EXIT_SUCCESS);
 // }
-
-
 
 char	*expand_var(char *input, t_shell *shell, t_token *current)
 {

@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:01:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/15 13:13:40 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:56:40 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,34 +31,22 @@ void	ft_cpy_cmd(t_token *current, t_exec *exec_current)
 	int		len;
 	char	**tab;
 	int		i;
-	//ajout
-	// char **temp;
 
 	i = 0;
 	len = ft_nb_cmd(current);
 	if (len == 0)
 		return ;
-	// printf("contenue vaut %s et son type %d\n",current->content, current->type);//gerer ici le split
 	tab = ft_malloc(sizeof(char *) * (len + 1));
 	while (current && current->type != PIPE)
 	{
 		if (current && (current->type == WORD || current->type == SFX))
 		{
-			// temp = ft_split(current->content, ' ');
-			// while (temp[i])
-			// {
-			// 	tab[i] = temp[i];
-			// 	i++;
-			// }
 			tab[i++] = current->content;
 		}
 		current = current->next;
 	}
 	tab[i] = NULL;
 	exec_current->cmd = tab;
-	// int j = -1;
-	// while (tab[j++])
-	// 	printf("tab[%d]= %s\n",j,tab[j]);;
 }
 
 int	ft_struc_for_exec(t_shell *shell)
