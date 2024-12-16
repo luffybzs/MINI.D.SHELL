@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access_cmd2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayarab < ayarab@student.42.fr >            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:55:43 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/12 15:57:17 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:28:30 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,21 @@ int	get_exit_status(int status)
 
 int	ft_exec_loop(t_shell *shell)
 {
-	t_exec	*current;
-	int		status;
+	t_exec			*current;
+	struct termios	ter;
+	int				status;
 
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
+	tcgetattr(STDOUT_FILENO, &ter);
 	current = shell->first_exec;
 	shell->previous_pipe_fd = -1;
 	if (current->next == NULL && ft_execute_command(current, shell) != 0)
-		return (EXIT_SUCCESS);
+		return (tcsetattr(STDOUT_FILENO, TCSANOW, &ter), EXIT_SUCCESS);
 	if (ft_fork(shell, current) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		return (tcsetattr(STDOUT_FILENO, TCSANOW, &ter), EXIT_FAILURE);
+	tcsetattr(STDOUT_FILENO, TCSANOW, &ter);
 	while (current)
 	{
 		if (waitpid(current->pidt, &status, 0) > 0)

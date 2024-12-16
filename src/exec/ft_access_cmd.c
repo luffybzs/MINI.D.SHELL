@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayarab <ayarab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayarab < ayarab@student.42.fr >            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:35 by ayarab            #+#    #+#             */
-/*   Updated: 2024/12/13 23:20:42 by ayarab           ###   ########.fr       */
+/*   Updated: 2024/12/16 14:23:32 by ayarab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	ft_child_exec(t_exec *current, t_shell *shell, int *fd)
 {
 	char	*goodpath;
 
+	set_signal_child();
+	ft_get_env(shell);
 	if (current->next)
 		(close(fd[0]), dup2(fd[1], STDOUT_FILENO), close(fd[1]));
 	if (shell->previous_pipe_fd != -1)
@@ -104,11 +106,7 @@ int	ft_fork(t_shell *shell, t_exec *current)
 		if (current->pidt == -1)
 			return (close(fd[0]), close(fd[1]), EXIT_FAILURE);
 		if (current->pidt == 0)
-		{
-			set_signal_child();
-			ft_get_env(shell);
 			ft_child_exec(current, shell, fd);
-		}
 		if (current->next)
 			close(fd[1]);
 		if (shell->previous_pipe_fd != -1)
